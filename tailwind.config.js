@@ -14,6 +14,7 @@ export default {
       colors: {
         primaryTest: withOpacity("--color-primary-test"),
         background: withOpacity("--color-background"),
+        chrisTest: "#1B6788",
       },
     },
   },

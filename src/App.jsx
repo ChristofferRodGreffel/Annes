@@ -5,8 +5,8 @@ function App() {
   return (
     <>
       <PageWrapperContainer>
-        <div className="bg-red-500">
-          <p className="text-primaryTest">test</p>
+        <div className="bg-chrisTest">
+          <p className="text-primaryTest text-2xl">Test</p>
         </div>
       </PageWrapperContainer>
     </>
