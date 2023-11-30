@@ -32,7 +32,7 @@ function CreateMenuProduct() {
   };
 
   return (
-    <>
+    <div className="flex flex-col m-10">
       <PageH1Title>Tilføj nyt produkt</PageH1Title>
 
       <form ref={formRef} onSubmit={handleAddProduct}>
@@ -46,7 +46,7 @@ function CreateMenuProduct() {
 
         <button type="submit">Tilføj</button>
       </form>
-    </>
+    </div>
   );
 }
 

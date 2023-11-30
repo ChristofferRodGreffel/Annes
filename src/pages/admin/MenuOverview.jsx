@@ -8,9 +8,7 @@ const MenuOverview = () => {
     <>
       <div className="flex flex-row">
         <AdminSidebar />
-        <PageWrapperContainer>
-          <CreateMenuProduct />
-        </PageWrapperContainer>
+        <CreateMenuProduct />
       </div>
     </>
   );
