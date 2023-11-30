@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/opret-produkt" element={<CreateMenuProduct />} />
+        <Route path="/menu-oversigt/opret-produkt" element={<CreateMenuProduct />} />
         <Route path="/menu-oversigt" element={<MenuOverview />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
