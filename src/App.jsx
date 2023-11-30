@@ -7,6 +7,7 @@ function App() {
       <PageWrapperContainer>
         <div className="bg-chrisTest">
           <p className="text-primaryTest text-2xl">Test</p>
+          <p className="text-primaryTest text-2xl">Hola</p>
         </div>
       </PageWrapperContainer>
     </>
