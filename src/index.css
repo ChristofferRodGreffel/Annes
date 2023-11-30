@@ -6,17 +6,18 @@
 
 @layer base {
   :root {
-    --color-primary: #1B6788;
+    --color-primary: #1b6788;
     --color-dark: #373737;
-    --color-white: #FFFFFF;
-    --color-main-grey: #EAEAEA;
-    --color-light-grey: #F2F2F2;
+    --color-white: #ffffff;
+    --color-main-grey: #eaeaea;
+    --color-light-grey: #f2f2f2;
     --color-grey: #777777;
-    --color-red: #B72626;
-    --color-green: #38773B;
+    --color-red: #b72626;
+    --color-green: #38773b;
   }
   html {
     font-family: "Montserrat", sans-serif;
+    color: var(--color-dark);
   }
 }
 
@@ -25,18 +26,13 @@
   --content-max-width: 90%;
   --breakout-max-width: 95%;
 
-  --breakout-size: calc(
-    (var(--breakout-max-width) - var(--content-max-width)) / 2
-  );
+  --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
 
   display: grid;
   grid-template-columns:
     [full-width-start] minmax(var(--padding-inline), 1fr)
     [breakout-start] minmax(0, var(--breakout-size))
-    [content-start] min(
-      90% - (var(--padding-inline) * 2),
-      var(--content-max-width)
-    )
+    [content-start] min(90% - (var(--padding-inline) * 2), var(--content-max-width))
     [content-end]
     minmax(0, var(--breakout-size)) [breakout-end]
     minmax(var(--padding-inline), 1fr) [full-width-end];
