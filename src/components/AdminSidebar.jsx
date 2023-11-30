@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
   return (
-    <div className="flex flex-col bg-mainGrey w-96 sticky top-0 h-screen drop-shadow-lg">
+    <div className="flex flex-col bg-mainGrey w-80 min-w-sidebarMinWidth min-w sticky top-0 h-screen drop-shadow-lg">
       <NavLink to={"/LandingPage"} className="m-auto mt-10 mb-20">
         <img src={logo} alt="logo" />
       </NavLink>
