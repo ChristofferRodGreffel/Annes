@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const AdminSidebar = () => {
   return (
-    <div className="flex flex-col bg-mainGrey w-72 fixed h-screen">
+    <div className="flex flex-col bg-mainGrey w-72 sticky top-0 h-screen drop-shadow-lg">
       <Link to={"/LandingPage"} className="m-auto mt-10 mb-20">
         <img src={logo} alt="logo" />
       </Link>
@@ -33,7 +33,7 @@ const AdminSidebar = () => {
             Statistik
           </Link>
           <Link
-            to={"#"}
+            to={"/menu-oversigt"}
             className="flex gap-3 items-center font-medium text-xl p-4 pl-10 active:bg-primary active:text-white"
           >
             <i className="fa-solid fa-utensils text-xl"></i>

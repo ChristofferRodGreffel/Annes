@@ -1,14 +1,21 @@
-import React from 'react'
+import React from "react";
 
 function CustomInputWithLabel(props) {
-
   return (
     <>
       {props.type == "text" && (
         <>
-          <div className='flex flex-col gap-1'>
-            <label className='font-semibold' htmlFor={props.name}>{props.label}</label>
-            <input className='border-2 border-dark' type={props.type} name={props.name} placeholder={props.placeholder} id={props.name} />
+          <div className="flex flex-col gap-1">
+            <label className="font-semibold" htmlFor={props.name}>
+              {props.label}
+            </label>
+            <input
+              className="border-2 border-dark"
+              type={props.type}
+              name={props.name}
+              placeholder={props.placeholder}
+              id={props.name}
+            />
           </div>
         </>
       )}
@@ -38,9 +45,8 @@ function CustomInputWithLabel(props) {
           </ul>
         </>
       )}
-
     </>
-  )
+  );
 }
 
-export default CustomInputWithLabel
+export default CustomInputWithLabel;
