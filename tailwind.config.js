@@ -4,6 +4,10 @@ export default {
     extend: {
       minWidth: {
         sidebarMinWidth: "20rem",
+        productOverviewMinWidth: "400px",
+      },
+      minHeight: {
+        productOverviewMinHeight: "70%",
       },
       colors: {
         primary: "var(--color-primary)",

@@ -69,3 +69,12 @@ img.full-width {
   max-height: 45vh;
   object-fit: cover;
 }
+
+input[type="text"] {
+  padding: 8px 15px !important;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-dark);
+  width: 15px;
+}

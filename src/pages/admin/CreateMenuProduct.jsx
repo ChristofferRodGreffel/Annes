@@ -1,21 +1,25 @@
 import React, { useRef, useState, useEffect } from "react";
-import PageWrapperContainer from "../../components/PageWrapperContainer";
 import PageH1Title from "../../components/PageH1Title";
 import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import AdminSidebar from "../../components/AdminSidebar";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import { compare } from "../../helperfunctions/Compare";
+import BackButtonWithArrow from "../../components/BackButtonWithArrow";
+import { toast } from "react-toastify";
+import CustomButton from "../../components/CustomButton";
+
+// Udviklet i fællesskab blandt begge gruppemedlemmer
 
 function CreateMenuProduct() {
-  // Sætter ttitlen på siden
+  // Sætter titlen på siden
   useEffect(() => {
-    document.title = "Anne's - Opret Nyt Produkt";
+    document.title = "Anne's - Opret Produkt";
   }, []);
 
   const formRef = useRef(null);
 
   const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("");
+  const [productPrice, setProductPrice] = useState("59");
   const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
   const [chosenIngredients, setChosenIngredients] = useState([]);
 
@@ -73,22 +77,50 @@ function CreateMenuProduct() {
     }
   };
 
+  const containsNumbers = (str) => {
+    return /\d/.test(str);
+  };
+
   const handleAddCustomIngredient = (e) => {
     e.preventDefault();
 
     let ingredient = formRef.current.customIngredientsName.value;
+    if (!ingredient) {
+      toast.warn("Indtast en ingrediens...", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    } else if (containsNumbers(ingredient)) {
+      toast.warn("Må ikke indeholde tal", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
 
     const capitalizedFirstLetterIngredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1).toLowerCase();
 
-        const addObject = {
-            name: capitalizedFirstLetterIngredient
-        }
+    const addObject = {
+      name: capitalizedFirstLetterIngredient,
+    };
 
-        const updatedArray = [...chosenIngredients, addObject]
-        // find compare function in helperfunctions folder "Compare.js"
-        const sorted = [...updatedArray].sort(compare)
-        setChosenIngredients(sorted);
-
+    const updatedArray = [...chosenIngredients, addObject];
+    // find compare function in helperfunctions folder "Compare.js"
+    const sorted = [...updatedArray].sort(compare);
+    setChosenIngredients(sorted);
 
     formRef.current.customIngredientsName.value = "";
   };
@@ -111,13 +143,14 @@ function CreateMenuProduct() {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex justify-center flex-row">
         <AdminSidebar />
         <AdminContentWrapper>
+          <BackButtonWithArrow linkTo="/menu-oversigt" linkText="Tilbage til valgmuligheder" />
           <PageH1Title>Tilføj nyt produkt</PageH1Title>
-          <div className="flex gap-40">
-            <div className="w-3/5">
-              <form ref={formRef} onSubmit={handleAddProduct}>
+          <div className="flex flex-row w-2/3 min-w-productOverviewMinWidth">
+            <div className="w-full">
+              <form ref={formRef} onSubmit={handleAddProduct} className="flex flex-col gap-7">
                 <CustomInputWithLabel
                   label="Navn på produkt"
                   type="text"
@@ -157,14 +190,18 @@ function CreateMenuProduct() {
                   name="productPrice"
                   placeholder="Pris på produkt..."
                 />
-
-                <button type="submit">Tilføj produkt til menu</button>
+                <CustomButton title="Upload billede" icon="fa-solid fa-cloud-arrow-up" />
               </form>
             </div>
+          </div>
+        </AdminContentWrapper>
 
-            <div className="bg-mainGrey w-full p-8 rounded-lg">
-              <div className="flex flex-col mb-2">
-                <p className="font-bold">Navn</p>
+        <div className="sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">
+          <div className="relative bg-mainGrey w-full h-5/6 rounded-l-xl overflow-scroll">
+            <div className="flex flex-col gap-8 p-8">
+              <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">Produktoversigt</h3>
+              <div className="flex flex-col">
+                <p className="font-semibold">Navn</p>
                 {productName ? (
                   <>
                     <p>{productName}</p>
@@ -176,7 +213,7 @@ function CreateMenuProduct() {
                 )}
               </div>
               <div className="flex flex-col">
-                <p className="font-bold">Pris</p>
+                <p className="font-semibold">Pris</p>
                 {productPrice ? (
                   <>
                     <p>{productPrice} kr.</p>
@@ -188,7 +225,7 @@ function CreateMenuProduct() {
                 )}
               </div>
               <div className="flex flex-col">
-                <p className="font-bold">Brød</p>
+                <p className="font-semibold">Brød</p>
                 {chosenBreadTypes.length != 0 ? (
                   <>
                     {chosenBreadTypes.map((bread, key) => {
@@ -210,7 +247,7 @@ function CreateMenuProduct() {
                 )}
               </div>
               <div className="flex flex-col">
-                <p className="font-bold">Ingredienser</p>
+                <p className="font-semibold">Ingredienser</p>
                 {chosenIngredients.length != 0 ? (
                   <>
                     {chosenIngredients.map((ingredient, key) => {
@@ -232,8 +269,11 @@ function CreateMenuProduct() {
                 )}
               </div>
             </div>
+            <button className="absolute bottom-0 w-full bg-primary text-white text-lg font-semibold p-3">
+              Tilføj til menu
+            </button>
           </div>
-        </AdminContentWrapper>
+        </div>
       </div>
     </>
   );
