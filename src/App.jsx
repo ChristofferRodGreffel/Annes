@@ -6,8 +6,6 @@ import LandingPage from "./pages/customer/LandingPage";
 
 function App() {
 
-
-
   return (
     <>
       <Routes>
