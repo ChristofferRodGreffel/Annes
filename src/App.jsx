@@ -1,4 +1,3 @@
-import "./App.css";
 import PageWrapperContainer from "./components/PageWrapperContainer";
 
 function App() {
