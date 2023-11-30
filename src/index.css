@@ -6,38 +6,37 @@
 
 @layer base {
   :root {
-    --color-primary-test: 0, 0, 0;
-  }
-  .theme-swiss {
-    --color-primary-test: 30, 144, 255;
-    --color-background: 0, 0, 0;
-  }
-  .theme-neon {
-    --color-primary-test: 255, 255, 0;
-    --color-background: 100, 100, 100;
+    --color-primary: #1B6788;
+    --color-dark: #373737;
+    --color-white: #FFFFFF;
+    --color-main-grey: #EAEAEA;
+    --color-light-grey: #F2F2F2;
+    --color-grey: #777777;
+    --color-red: #B72626;
+    --color-green: #38773B;
   }
   html {
     font-family: "Montserrat", sans-serif;
   }
 }
 
-.theme-swiss,
-.theme-neon {
-  background-color: rgb(var(--color-background));
-}
-
 .content-grid {
   --padding-inline: 1rem;
-  --content-max-width: 900px;
-  --breakout-max-width: 1200px;
+  --content-max-width: 90%;
+  --breakout-max-width: 95%;
 
-  --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
+  --breakout-size: calc(
+    (var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
 
   display: grid;
   grid-template-columns:
     [full-width-start] minmax(var(--padding-inline), 1fr)
     [breakout-start] minmax(0, var(--breakout-size))
-    [content-start] min(100% - (var(--padding-inline) * 2), var(--content-max-width))
+    [content-start] min(
+      90% - (var(--padding-inline) * 2),
+      var(--content-max-width)
+    )
     [content-end]
     minmax(0, var(--breakout-size)) [breakout-end]
     minmax(var(--padding-inline), 1fr) [full-width-end];
@@ -57,11 +56,6 @@
 
   display: grid;
   grid-template-columns: inherit;
-}
-
-img {
-  max-width: 100%;
-  display: block;
 }
 
 img.full-width {
