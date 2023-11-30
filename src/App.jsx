@@ -13,7 +13,6 @@ function App() {
         <Route path="/admin-sidebar" element={<AdminSidebar />} />
         <Route path="/opret-produkt" element={<CreateMenuProduct />} />
         <Route path="*" element={<LandingPage />} />
-        <Route path="*" element={<LandingPage />} />
       </Routes>
       <PageWrapperContainer>
         <div className="bg-primary">
