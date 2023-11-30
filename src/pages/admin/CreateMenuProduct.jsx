@@ -88,10 +88,12 @@ function CreateMenuProduct() {
         const addObject = {
             name: capitalizedFirstLetterIngredient
         }
-        setChosenIngredients([
-            ...chosenIngredients,
-            addObject
-        ]);
+
+        const updatedArray = [...chosenIngredients, addObject]
+        // find compare function in helperfunctions folder "Compare.js"
+        const sorted = [...updatedArray].sort(compare)
+        setChosenIngredients(sorted);
+
 
         formRef.current.customIngredientsName.value = ""
     }
