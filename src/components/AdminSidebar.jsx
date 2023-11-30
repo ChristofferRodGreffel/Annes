@@ -9,6 +9,11 @@ const AdminSidebar = () => {
       <nav>
         <Link to={"#"}>
           <i className="fa-solid fa-house"></i>
+          Ordre oversigt
+        </Link>
+        <Link to={"#"}>
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          Ordre historik
         </Link>
       </nav>
     </div>
