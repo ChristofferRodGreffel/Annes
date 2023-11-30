@@ -12,33 +12,33 @@ const AdminSidebar = () => {
       <nav className="flex justify-between flex-col h-full">
         <div className="flex flex-col gap-5">
           <NavLink
-            to={"/ordrer"}
+            to={"/ordre-oversigt"}
             className={({ isActive }) =>
               isActive
-                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
-                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+                ? "flex gap-3 items-center font-normal text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-normal text-xl p-4 pl-10"
             }
           >
             <i className="fa-solid fa-house text-xl"></i>
             Ordre oversigt
           </NavLink>
           <NavLink
-            to={"#"}
+            to={"/ordre-historik"}
             className={({ isActive }) =>
               isActive
-                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
-                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+                ? "flex gap-3 items-center font-normal text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-normal text-xl p-4 pl-10"
             }
           >
             <i className="fa-solid fa-clock-rotate-left text-xl"></i>
             Ordre historik
           </NavLink>
           <NavLink
-            to={"#"}
+            to={"/statistik"}
             className={({ isActive }) =>
               isActive
-                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
-                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+                ? "flex gap-3 items-center font-normal text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-normal text-xl p-4 pl-10"
             }
           >
             <i className="fa-solid fa-chart-column text-xl"></i>
@@ -48,19 +48,19 @@ const AdminSidebar = () => {
             to={"/menu-oversigt"}
             className={({ isActive }) =>
               isActive
-                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
-                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+                ? "flex gap-3 items-center font-normal text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-normal text-xl p-4 pl-10"
             }
           >
             <i className="fa-solid fa-utensils text-xl"></i>
             Menu
           </NavLink>
           <NavLink
-            to={"#"}
+            to={"/indstillinger"}
             className={({ isActive }) =>
               isActive
-                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
-                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+                ? "flex gap-3 items-center font-normal text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-normal text-xl p-4 pl-10"
             }
           >
             <i className="fa-solid fa-sliders text-xl"></i>
@@ -68,7 +68,7 @@ const AdminSidebar = () => {
           </NavLink>
         </div>
         <div className="justify-self-end">
-          <NavLink to={"#"} className="flex gap-3 items-center font-medium text-xl p-4 pl-10 mb-5">
+          <NavLink to={"#"} className="flex gap-3 items-center font-normal text-xl p-4 pl-10 mb-5">
             <i className="fa-solid fa-arrow-right-from-bracket text-xl"></i>
             Log ud
           </NavLink>
