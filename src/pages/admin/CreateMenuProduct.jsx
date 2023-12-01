@@ -6,17 +6,23 @@ import AdminContentWrapper from "../../components/AdminContentWrapper";
 import { compare } from "../../helperfunctions/Compare";
 import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import { toast } from "react-toastify";
-import CustomButton from "../../components/CustomButton";
 import ImageUpload from "../../components/ImageUpload";
 import { doc, setDoc } from "firebase/firestore";
-import { FIREBASE_STORAGE } from "../../../firebase-config";
+import { FIREBASE_DB, FIREBASE_STORAGE } from "../../../firebase-config";
+import firebase from 'firebase/compat/app';
+
+
+
 import {
     ref,
     uploadBytes,
     getDownloadURL,
     listAll,
     list,
-  } from "firebase/storage";
+    uploadBytesResumable,
+} from "firebase/storage";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { PulseLoader } from "react-spinners";
 
 // Denne komponent er udviklet i fællesskab blandt begge gruppemedlemmer
 
@@ -28,6 +34,7 @@ function CreateMenuProduct() {
 
     const formRef = useRef(null);
 
+    const [addingProductLoader, setAddingProductLoader] = useState(false)
     const [productName, setProductName] = useState("");
     const [productPrice, setProductPrice] = useState("59");
     const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
@@ -138,27 +145,79 @@ function CreateMenuProduct() {
 
     const handleAddProduct = async (e) => {
         e.preventDefault();
+        setAddingProductLoader(true)
+
         const imageName = images[0]?.file.name
 
-        if(!imageName) {
-            return
+        switch (true) {
+            case !productName:
+                toast.info("Tilføj venligst et navn", DefaultToastifySettings);
+                setAddingProductLoader(false)
+                return
+            case !productPrice:
+                toast.info("Tilføj venligst en pris", DefaultToastifySettings);
+                setAddingProductLoader(false)
+                return
+            case chosenBreadTypes.length == 0:
+                toast.info("Vælg mindst én brødtype", DefaultToastifySettings);
+                setAddingProductLoader(false)
+                return
+            case chosenIngredients.length == 0:
+                toast.info("Vælg mindst én ingrediens", DefaultToastifySettings);
+                setAddingProductLoader(false)
+                return
+            case !images[0]?.file || !imageName:
+                toast.info("Tilføj venligst et billede", DefaultToastifySettings);
+                setAddingProductLoader(false)
+                return
+            default:
+                break;
         }
-        const imageRef = ref(FIREBASE_STORAGE, `images/${imageName}`)
 
-        uploadBytes(imageRef, images[0].file).then(() => {
-            alert("Image uploaded")
+        let chosenBreadNames = []
+        let chosenIngredientNames = []
+
+        chosenBreadTypes.forEach((breadName) => {
+            chosenBreadNames.push(breadName.name)
+        })
+        chosenIngredients.forEach((ingredientName) => {
+            chosenIngredientNames.push(ingredientName.name)
         })
 
+        let storagePath = 'images/' + imageName;
+        const storageRef = ref(FIREBASE_STORAGE, storagePath);
+        const uploadTask = uploadBytesResumable(storageRef, images[0].file);
 
-        // console.log(productName, productPrice, chosenBreadTypes, chosenIngredients, images);
+        uploadTask.on('state_changed', (snapshot) => {
+            // progrss function ....
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-        // await setDoc(doc(db, "menu", productName), {
-        //     name: productName,
-        //     price: productPrice,
-        //     chosenBreadTypes: chosenBreadTypes,
-        //     chosenIngredients: chosenIngredients,
-        // });
+            
 
+            console.log('Upload is ' + progress + '% done');
+        },
+            (error) => {
+                // error function ....
+                setAddingProductLoader(false)
+                console.log(error);
+            },
+            () => {
+                // complete function ....
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+
+                    setDoc(doc(FIREBASE_DB, "menu", productName), {
+                        name: productName,
+                        price: productPrice,
+                        chosenBreadTypes: chosenBreadNames,
+                        chosenIngredients: chosenIngredientNames,
+                        imageURL: downloadURL,
+                    });
+                }).then(() => {
+                    setAddingProductLoader(false)
+                    toast.success("Produkt tilføjet til menu", DefaultToastifySettings);
+                })
+            });
     };
 
     const handleRemoveBreadType = (breadToDelete) => {
@@ -306,12 +365,24 @@ function CreateMenuProduct() {
                             </div>
                         </div>
                     </div>
+
                     <button
                         onClick={handleAddProduct}
                         className="w-full bg-primary text-white text-lg rounded-bl-lg font-semibold p-3"
                     >
-                        Tilføj til menu
+                        {addingProductLoader ?
+                            <>
+                                <div className="flex items-center justify-center">
+                                    <PulseLoader color="#FFFFFF" />
+                                </div>
+                            </>
+                            :
+                            <>
+                                Tilføj til menu
+                            </>
+                        }
                     </button>
+
                 </div>
             </div>
         </>
