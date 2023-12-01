@@ -7,8 +7,9 @@ import { compare } from "../../helperfunctions/Compare";
 import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import { toast } from "react-toastify";
 import CustomButton from "../../components/CustomButton";
+import ImageUpload from "../../components/ImageUpload";
 
-// Udviklet i fællesskab blandt begge gruppemedlemmer
+// Denne komponent er udviklet i fællesskab blandt begge gruppemedlemmer
 
 function CreateMenuProduct() {
   // Sætter titlen på siden
@@ -22,6 +23,7 @@ function CreateMenuProduct() {
   const [productPrice, setProductPrice] = useState("59");
   const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
   const [chosenIngredients, setChosenIngredients] = useState([]);
+  const [images, setImages] = useState([]);
 
   // skal evt. komme fra Firebase
   const breadTypes = [
@@ -86,7 +88,7 @@ function CreateMenuProduct() {
 
     let ingredient = formRef.current.customIngredientsName.value;
     if (!ingredient) {
-      toast.warn("Indtast en ingrediens...", {
+      toast.info("Indtast en ingrediens...", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -98,7 +100,7 @@ function CreateMenuProduct() {
       });
       return;
     } else if (containsNumbers(ingredient)) {
-      toast.warn("Må ikke indeholde tal", {
+      toast.info("Må ikke indeholde tal", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -128,7 +130,7 @@ function CreateMenuProduct() {
   const handleAddProduct = (e) => {
     e.preventDefault();
 
-    console.log(productName, productPrice, chosenBreadTypes, chosenIngredients);
+    console.log(productName, productPrice, chosenBreadTypes, chosenIngredients, images);
   };
 
   const handleRemoveBreadType = (breadToDelete) => {
@@ -139,6 +141,13 @@ function CreateMenuProduct() {
   const handleRemoveIngredient = (ingredientToDelete) => {
     setChosenIngredients(chosenIngredients.filter((ingredient) => ingredient.name !== ingredientToDelete.name));
     handleOnIngredientsChange(ingredientToDelete.index, ingredientToDelete.name);
+  };
+
+  // Function used in the ImageUpload component.
+  const onImageChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
   };
 
   return (
@@ -190,14 +199,14 @@ function CreateMenuProduct() {
                   name="productPrice"
                   placeholder="Pris på produkt..."
                 />
-                <CustomButton title="Upload billede" icon="fa-solid fa-cloud-arrow-up" />
+                <ImageUpload onImageChange={onImageChange} imageState={images} />
               </form>
             </div>
           </div>
         </AdminContentWrapper>
 
         <div className="sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">
-          <div className="relative bg-mainGrey w-full h-5/6 rounded-l-xl overflow-scroll">
+          <div className="relative bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
             <div className="flex flex-col gap-8 p-8">
               <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">Produktoversigt</h3>
               <div className="flex flex-col">
@@ -234,7 +243,7 @@ function CreateMenuProduct() {
                           <li>{bread.name}</li>
                           <i
                             onClick={() => handleRemoveBreadType(bread)}
-                            className="fa-solid fa-circle-minus text-red"
+                            className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"
                           ></i>
                         </ul>
                       );
@@ -256,7 +265,7 @@ function CreateMenuProduct() {
                           <li>{ingredient.name}</li>
                           <i
                             onClick={() => handleRemoveIngredient(ingredient)}
-                            className="fa-solid fa-circle-minus text-red"
+                            className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"
                           ></i>
                         </ul>
                       );
@@ -269,10 +278,13 @@ function CreateMenuProduct() {
                 )}
               </div>
             </div>
-            <button className="absolute bottom-0 w-full bg-primary text-white text-lg font-semibold p-3">
-              Tilføj til menu
-            </button>
           </div>
+          <button
+            onClick={handleAddProduct}
+            className="w-full bg-primary text-white text-lg rounded-bl-lg font-semibold p-3"
+          >
+            Tilføj til menu
+          </button>
         </div>
       </div>
     </>
