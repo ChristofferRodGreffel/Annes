@@ -246,7 +246,7 @@ function CreateMenuProduct() {
           <PageH1Title>Tilføj nyt produkt</PageH1Title>
           <div className="flex flex-row w-2/3 min-w-productOverviewMinWidth">
             <div className="w-full">
-              <form ref={formRef} onSubmit="return false" className="flex flex-col gap-7">
+              <div className="flex flex-col gap-7">
                 <CustomInputWithLabel
                   label="Navn på produkt"
                   type="text"
@@ -269,15 +269,17 @@ function CreateMenuProduct() {
                   CustomCheckedItems={checkedIngredients}
                   CustomOptions={ingredients}
                 />
-                <CustomInputWithLabel
-                  button={true}
-                  buttonText="Tilføj ingrediens"
-                  customOnClick={handleAddCustomIngredient}
-                  label="Tilføj ingredienser manuelt"
-                  type="text"
-                  name="customIngredientsName"
-                  placeholder="Tilføj en ingrediens her..."
-                />
+                <form ref={formRef}>
+                  <CustomInputWithLabel
+                    button={true}
+                    buttonText="Tilføj ingrediens"
+                    customOnClick={handleAddCustomIngredient}
+                    label="Tilføj ingredienser manuelt"
+                    type="text"
+                    name="customIngredientsName"
+                    placeholder="Tilføj en ingrediens her..."
+                  />
+                </form>
                 <CustomInputWithLabel
                   label="Tilføj pris på produkt"
                   value={productPrice}
@@ -287,7 +289,7 @@ function CreateMenuProduct() {
                   placeholder="Pris på produkt..."
                 />
                 <ImageUpload onImageChange={onImageChange} imageState={images} />
-              </form>
+              </div>
             </div>
           </div>
         </AdminContentWrapper>

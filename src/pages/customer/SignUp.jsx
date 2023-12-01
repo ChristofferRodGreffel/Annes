@@ -1,14 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
+import { firebaseErrorsCodes } from "../../../firebaseErrorCodes";
 import { FIREBASE_AUTH } from "../../../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { PulseLoader } from "react-spinners";
 
 const SignUp = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleShowPassword = () => {
     const passwordInput = formRef.current.password;
@@ -23,6 +28,7 @@ const SignUp = () => {
   };
 
   const userSignUp = () => {
+    setLoading(true);
     const userEmail = formRef.current.email.value;
     const userPassword = formRef.current.password.value;
 
@@ -30,15 +36,16 @@ const SignUp = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        navigate("/log-ind");
+        navigate("/bestil-online");
+        setLoading(false);
 
         // ...
       })
       .catch((error) => {
+        setLoading(false);
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
+        const errorMessage = firebaseErrorsCodes[errorCode];
+        toast.error(errorMessage, DefaultToastifySettings);
       });
   };
   return (
@@ -53,22 +60,22 @@ const SignUp = () => {
           <form ref={formRef} onSubmit={userSignUp} className="flex flex-col gap-5">
             <div className="flex flex-col">
               <label htmlFor="email">Dit navn</label>
-              <input type="text" name="name" />
+              <input type="text" required name="name" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="phone">Dit telefonnr.</label>
-              <input type="number" name="phone" />
+              <input type="number" required name="phone" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="email">Din email*</label>
-              <input type="email" name="email" />
+              <input type="email" required name="email" />
               <p className="italic text-sm">*Du modtager en mail mod verifikation</p>
             </div>
 
             <div className="flex flex-col">
               <label htmlFor="password">Adgangskode**</label>
               <div className="flex flex-col relative">
-                <input type="password" name="password" />
+                <input type="password" required name="password" />
                 <i
                   id="eyeIcon"
                   onClick={handleShowPassword}
@@ -77,7 +84,15 @@ const SignUp = () => {
               </div>
               <p className="italic text-sm">**Skal være mindst (6) karakterer</p>
             </div>
-            <CustomButton title="Opret profil" function={userSignUp} s />
+            {loading ? (
+              <>
+                <CustomButton title={<PulseLoader color="#FFFFFF" size={11} className="p-1" />} function={userSignUp} />
+              </>
+            ) : (
+              <>
+                <CustomButton title="Log ind" function={userSignUp} />
+              </>
+            )}
           </form>
         </div>
         <p className="text-center mt-10 w-full">

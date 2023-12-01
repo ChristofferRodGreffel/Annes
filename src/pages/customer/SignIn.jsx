@@ -1,29 +1,37 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
 import { FIREBASE_AUTH } from "../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+import { firebaseErrorsCodes } from "../../../firebaseErrorCodes";
+import { toast } from "react-toastify";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 
 const SignIn = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const userSignIn = () => {
+  const userSignIn = (e) => {
+    e.preventDefault();
+    setLoading(true);
     const userEmail = formRef.current.email.value;
     const userPassword = formRef.current.password.value;
 
     signInWithEmailAndPassword(FIREBASE_AUTH, userEmail, userPassword)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in
         navigate("/bestil-online");
-        // ...
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        const errorMessage = firebaseErrorsCodes[errorCode];
+        toast.error(errorMessage, DefaultToastifySettings);
       });
   };
 
@@ -51,12 +59,12 @@ const SignIn = () => {
           <form ref={formRef} onSubmit={userSignIn} className="flex flex-col gap-5">
             <div className="flex flex-col">
               <label htmlFor="email">Email</label>
-              <input type="text" name="email" />
+              <input type="text" required name="email" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="password">Adgangskode</label>
               <div className="flex flex-col relative">
-                <input type="password" name="password" />
+                <input type="password" required name="password" />
                 <i
                   id="eyeIcon"
                   onClick={handleShowPassword}
@@ -64,10 +72,22 @@ const SignIn = () => {
                 ></i>
               </div>
             </div>
-            <CustomButton title="Log ind" function={userSignIn} />
+            {loading ? (
+              <>
+                <CustomButton
+                  disabled={true}
+                  title={<PulseLoader color="#FFFFFF" size={11} className="p-1" />}
+                  function={userSignIn}
+                />
+              </>
+            ) : (
+              <>
+                <CustomButton title="Log ind" function={userSignIn} />
+              </>
+            )}
           </form>
         </div>
-        <p className="text-center absolute bottom-10 w-full">
+        <p className="text-center mt-10 w-full">
           Har du ikke en bruger?{" "}
           <Link className="underline" to={"/opret-profil"}>
             Opret dig her

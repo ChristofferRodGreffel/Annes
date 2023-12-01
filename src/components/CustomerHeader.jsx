@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomerNavigation from "./CustomerNavigation";
 
 const CustomerHeader = (props) => {
@@ -26,7 +26,9 @@ const CustomerHeader = (props) => {
           ></i>
         )}
 
-        <img src={logo} alt="logo" className="w-40" />
+        <Link to={"/bestil-online"}>
+          <img src={logo} alt="logo" className="w-40" />
+        </Link>
         {props.iconRight && <i className={`${props.iconRight} text-3xl p-2`}></i>}
       </header>
     </>
