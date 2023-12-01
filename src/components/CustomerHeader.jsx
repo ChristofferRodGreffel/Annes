@@ -19,10 +19,13 @@ const CustomerHeader = (props) => {
     <>
       <CustomerNavigation />
       <header className="flex justify-around items-center w-full pt-5">
-        <i
-          onClick={props.nav == true ? handleOpenNavigation : handleGoBack}
-          className={`${props.iconLeft} text-3xl p-2`}
-        ></i>
+        {props.iconLeft && (
+          <i
+            onClick={props.nav == true ? handleOpenNavigation : handleGoBack}
+            className={`${props.iconLeft} text-3xl p-2`}
+          ></i>
+        )}
+
         <img src={logo} alt="logo" className="w-40" />
         {props.iconRight && <i className={`${props.iconRight} text-3xl p-2`}></i>}
       </header>

@@ -1,7 +1,27 @@
-import React from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FIREBASE_AUTH } from "../../firebase-config";
 
 const CustomerNavigation = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        setLoggedIn(true);
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        setLoggedIn(false);
+      }
+    });
+  }, []);
+
   const handleCloseNav = () => {
     const customerNav = document.querySelector("#customerNav");
     customerNav.style.left = "-80%";
@@ -29,10 +49,21 @@ const CustomerNavigation = () => {
           <i className="fa-solid fa-heart"></i>
         </Link>
         <hr />
-        <Link to={"/profil"} className="flex items-center gap-2 py-7 pl-8">
-          <h3>Profil</h3>
-          <i className="fa-solid fa-user"></i>
-        </Link>
+        {loggedIn ? (
+          <>
+            <Link to={"/profil"} className="flex items-center gap-2 py-7 pl-8">
+              <h3>Profil</h3>
+              <i className="fa-solid fa-user"></i>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to={"/log-ind"} className="flex items-center gap-2 py-7 pl-8">
+              <h3>Log ind</h3>
+              <i className="fa-solid fa-arrow-right-to-bracket"></i>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
