@@ -4,7 +4,7 @@ import AdminSidebar from "../../components/AdminSidebar";
 
 const OrderOverview = () => {
   return (
-    <div className="">
+    <div className="flex justify-center flex-row">
       <AdminSidebar />
       <AdminContentWrapper></AdminContentWrapper>
     </div>

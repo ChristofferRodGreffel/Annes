@@ -17,6 +17,7 @@ const ImageUpload = (props) => {
               className={`${isDragging ? "text-green" : null} gap-2 bg-primary rounded-lg p-2 text-white font-semibold`}
               onClick={onImageUpload}
               {...dragProps}
+              type="button"
             >
               <i className="fa-solid fa-cloud-arrow-up text-lg"></i> Upload billede
             </button>
@@ -25,7 +26,7 @@ const ImageUpload = (props) => {
                 <p>{image.file.name}</p>
                 <div className="image-item__btn-wrapper ">
                   {/* <button onClick={() => onImageUpdate(index)}>Update</button> */}
-                  <button className="text-red font-semibold" onClick={() => onImageRemove(index)}>
+                  <button type="button" className="text-red font-semibold" onClick={() => onImageRemove(index)}>
                     Fjern billede
                   </button>
                 </div>
