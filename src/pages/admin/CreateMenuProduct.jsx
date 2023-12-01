@@ -27,7 +27,7 @@ function CreateMenuProduct() {
 
   const [addingProductLoader, setAddingProductLoader] = useState(false);
   const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("59");
+  const [productPrice, setProductPrice] = useState(59);
   const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
   const [chosenIngredients, setChosenIngredients] = useState([]);
   const [images, setImages] = useState([]);
@@ -209,6 +209,13 @@ function CreateMenuProduct() {
           .then(() => {
             setAddingProductLoader(false);
             toast.success("Produkt tilføjet til menu", DefaultToastifySettings);
+            setProductName("");
+            setProductPrice(59);
+            setCheckedIngredients(new Array(breadTypes.length).fill(false));
+            setCheckedBreadTypes(new Array(breadTypes.length).fill(false));
+            setChosenBreadTypes([]);
+            setChosenIngredients([]);
+            setImages([]);
           });
       }
     );
@@ -275,7 +282,7 @@ function CreateMenuProduct() {
                   label="Tilføj pris på produkt"
                   value={productPrice}
                   customSetvalue={setProductPrice}
-                  type="text"
+                  type="number"
                   name="productPrice"
                   placeholder="Pris på produkt..."
                 />

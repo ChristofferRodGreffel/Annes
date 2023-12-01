@@ -21,14 +21,26 @@
   }
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   border: 2px solid var(--color-dark);
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
 }
-input[type="text"]:focus-within {
+input[type="text"]:focus-within,
+input[type="number"]:focus-within {
   outline: none !important;
   border: 3px solid var(--color-primary);
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 8px 15px !important;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-dark);
+  width: 15px;
 }
 
 .content-grid {
@@ -68,13 +80,4 @@ img.full-width {
   width: 100%;
   max-height: 45vh;
   object-fit: cover;
-}
-
-input[type="text"] {
-  padding: 8px 15px !important;
-}
-
-input[type="checkbox"] {
-  accent-color: var(--color-dark);
-  width: 15px;
 }
