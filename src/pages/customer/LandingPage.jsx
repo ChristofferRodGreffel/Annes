@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
+import { collection, getDocs } from "firebase/firestore";
+import { FIREBASE_DB } from "../../../firebase-config";
+import ProductCard from "../../components/ProductCard";
+import { PulseLoader } from "react-spinners";
 
 function LandingPage() {
+  const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const newProducts = [];
+    const getAllProducts = async () => {
+      const querySnapshot = await getDocs(collection(FIREBASE_DB, "menu"));
+      querySnapshot.forEach((doc) => {
+        newProducts.push(doc.data());
+      });
+      setAllProducts(newProducts);
+      setLoading(false);
+    };
+    getAllProducts();
+  }, []);
+
   return (
     <>
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
-        <div className="mt-16">
+        <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">
           <h2 className="text-center mb-3">Vælg mellem 5-6 brødtypper</h2>
           <div className="flex flex-col gap-2">
             <div className="flex justify-between border-b-2 border-grey border-dashed">
@@ -23,6 +43,22 @@ function LandingPage() {
               <p>Fra 23 kr.</p>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col gap-5 mt-10 lg:flex-row lg:flex-wrap lg:justify-center">
+          {!loading ? (
+            allProducts?.map((product, key) => {
+              return (
+                <div key={key}>
+                  <ProductCard key={key} imageSource={product?.imageURL} productName={product?.name} />
+                </div>
+              );
+            })
+          ) : (
+            <div className="flex flex-col items-center gap-1">
+              <p className="font-medium text-xl">Indlæser menu</p>
+              <PulseLoader color="#373737" size={13} />
+            </div>
+          )}
         </div>
       </PageWrapperContainer>
     </>

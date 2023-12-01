@@ -30,7 +30,7 @@ const CustomerNavigation = () => {
   return (
     <nav
       id="customerNav"
-      className="fixed top-0 left-[-80%] bg-primary h-screen w-4/5 text-white text-2xl font-semibold transition-all overflow-auto"
+      className="fixed top-0 left-[-80%] bg-primary h-screen w-4/5 text-white text-2xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
     >
       <i onClick={handleCloseNav} className="fa-solid fa-xmark text-4xl p-8"></i>
       <div className="mt-14">
