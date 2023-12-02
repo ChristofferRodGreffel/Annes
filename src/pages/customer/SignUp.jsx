@@ -4,7 +4,7 @@ import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
 import { firebaseErrorsCodes } from "../../../firebaseErrorCodes";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";

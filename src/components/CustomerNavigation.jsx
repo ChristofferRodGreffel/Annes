@@ -32,33 +32,33 @@ const CustomerNavigation = () => {
       id="customerNav"
       className="fixed top-0 left-[-80%] bg-primary h-screen w-4/5 text-white text-2xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
     >
-      <i onClick={handleCloseNav} className="fa-solid fa-xmark text-4xl p-8"></i>
+      <i onClick={handleCloseNav} className="fa-solid fa-xmark text-4xl p-8 cursor-pointer"></i>
       <div className="mt-14">
-        <Link to={"/bestil-online"} className="flex items-center gap-2 py-7 pl-8">
+        <Link to={"/bestil-online"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
           <h3>Bestil online</h3>
           <i className="fa-solid fa-utensils"></i>
         </Link>
         <hr />
-        <Link to={"/bestillinger"} className="flex items-center gap-2 py-7 pl-8">
+        <Link to={"/bestillinger"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
           <h3>Bestillinger</h3>
           <i className="fa-solid fa-clock-rotate-left"></i>
         </Link>
         <hr />
-        <Link to={"/favoritter"} className="flex items-center gap-2 py-7 pl-8">
+        <Link to={"/favoritter"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
           <h3>Favoritter</h3>
           <i className="fa-solid fa-heart"></i>
         </Link>
         <hr />
         {loggedIn ? (
           <>
-            <Link to={"/profil"} className="flex items-center gap-2 py-7 pl-8">
+            <Link to={"/profil"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
               <h3>Profil</h3>
               <i className="fa-solid fa-user"></i>
             </Link>
           </>
         ) : (
           <>
-            <Link to={"/log-ind"} className="flex items-center gap-2 py-7 pl-8">
+            <Link to={"/log-ind"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
               <h3>Log ind</h3>
               <i className="fa-solid fa-arrow-right-to-bracket"></i>
             </Link>

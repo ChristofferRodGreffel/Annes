@@ -22,14 +22,14 @@ const CustomerHeader = (props) => {
         {props.iconLeft && (
           <i
             onClick={props.nav == true ? handleOpenNavigation : handleGoBack}
-            className={`${props.iconLeft} text-3xl p-2`}
+            className={`${props.iconLeft} text-3xl p-2 cursor-pointer`}
           ></i>
         )}
 
         <Link to={"/bestil-online"}>
           <img src={logo} alt="logo" className="w-40" />
         </Link>
-        {props.iconRight && <i className={`${props.iconRight} text-3xl p-2`}></i>}
+        {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
       </header>
     </>
   );

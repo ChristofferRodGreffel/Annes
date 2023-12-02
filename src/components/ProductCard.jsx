@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductCard = (props) => {
   return (
-    <div className="rounded-xl overflow-clip text-white">
+    <div className="rounded-xl overflow-clip text-white md:w-96">
       <img
         loading="lazy"
         className="h-32 w-full object-cover"
@@ -11,7 +11,7 @@ const ProductCard = (props) => {
       />
       <div className="bg-primary productOverviewMinHeight">
         <div className="flex flex-col justify-evenly h-auto min-h-[132px] w-full px-5 py-3 lg:w-96">
-          <h3 className="font-bold text-xl mb-3">{props.productName}</h3>
+          <h3 className="font-bold text-xl mb-3 productTitle">{props.productName}</h3>
           <button className="bg-white text-dark font-semibold p-1.5 w-full rounded-md text-lg">
             Tilpas <i className="fa-solid fa-utensils"></i>
           </button>

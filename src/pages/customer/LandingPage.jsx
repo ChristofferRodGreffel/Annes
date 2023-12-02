@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import ProductCard from "../../components/ProductCard";
 import { PulseLoader } from "react-spinners";
@@ -13,12 +13,22 @@ function LandingPage() {
   useEffect(() => {
     const newProducts = [];
     const getAllProducts = async () => {
-      const querySnapshot = await getDocs(collection(FIREBASE_DB, "menu"));
-      querySnapshot.forEach((doc) => {
-        newProducts.push(doc.data());
+      const q = query(collection(FIREBASE_DB, "menu"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          newProducts.push(doc.data());
+        });
+        console.log(newProducts);
+        setAllProducts(newProducts);
+        setLoading(false);
       });
-      setAllProducts(newProducts);
-      setLoading(false);
+
+      // const querySnapshot = await getDocs(collection(FIREBASE_DB, "menu"));
+      // querySnapshot.forEach((doc) => {
+      //   newProducts.push(doc.data());
+      // });
+      // setAllProducts(newProducts);
+      // setLoading(false);
     };
     getAllProducts();
   }, []);
@@ -44,7 +54,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 mt-10 lg:flex-row lg:flex-wrap lg:justify-center">
+        <div className="flex flex-col gap-5 mt-10 md:flex-row md:flex-wrap md:justify-center">
           {!loading ? (
             allProducts?.map((product, key) => {
               return (

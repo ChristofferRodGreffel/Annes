@@ -87,3 +87,7 @@ img.full-width {
   max-height: 45vh;
   object-fit: cover;
 }
+
+.productTitle {
+  text-wrap: balance;
+}

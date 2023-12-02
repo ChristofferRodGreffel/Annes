@@ -55,10 +55,10 @@ const SignIn = () => {
     const eyeIcon = document.querySelector("#eyeIcon");
     if (passwordInput.type === "password") {
       passwordInput.type = "text";
-      eyeIcon.setAttribute("class", "fa-solid fa-eye absolute right-5 top-3.5");
+      eyeIcon.setAttribute("class", "fa-solid fa-eye-slash absolute right-5 top-2.5 text-xl");
     } else {
       passwordInput.type = "password";
-      eyeIcon.setAttribute("class", "fa-solid fa-eye-slash absolute right-5 top-3.5");
+      eyeIcon.setAttribute("class", "fa-solid fa-eye absolute right-5 top-2.5 text-xl");
     }
   };
 
@@ -83,7 +83,7 @@ const SignIn = () => {
                 <i
                   id="eyeIcon"
                   onClick={handleShowPassword}
-                  className="fa-solid fa-eye-slash absolute right-5 top-3.5"
+                  className="fa-solid fa-eye absolute right-5 top-2.5 text-xl"
                 ></i>
               </div>
             </div>
