@@ -11,10 +11,10 @@ function LandingPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const newProducts = [];
     const getAllProducts = async () => {
       const q = query(collection(FIREBASE_DB, "menu"));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const newProducts = [];
         querySnapshot.forEach((doc) => {
           newProducts.push(doc.data());
         });
@@ -22,13 +22,6 @@ function LandingPage() {
         setAllProducts(newProducts);
         setLoading(false);
       });
-
-      // const querySnapshot = await getDocs(collection(FIREBASE_DB, "menu"));
-      // querySnapshot.forEach((doc) => {
-      //   newProducts.push(doc.data());
-      // });
-      // setAllProducts(newProducts);
-      // setLoading(false);
     };
     getAllProducts();
   }, []);
