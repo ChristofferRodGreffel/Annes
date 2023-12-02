@@ -3,12 +3,13 @@ import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
 import { firebaseErrorsCodes } from "../../../firebaseErrorCodes";
-import { FIREBASE_AUTH } from "../../../firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { PulseLoader } from "react-spinners";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
   const formRef = useRef(null);
@@ -27,7 +28,8 @@ const SignUp = () => {
     }
   };
 
-  const userSignUp = () => {
+  const userSignUp = (e) => {
+    e.preventDefault();
     setLoading(true);
     const userEmail = formRef.current.email.value;
     const userPassword = formRef.current.password.value;
@@ -35,11 +37,12 @@ const SignUp = () => {
     createUserWithEmailAndPassword(FIREBASE_AUTH, userEmail, userPassword)
       .then((userCredential) => {
         // Signed up
-        const user = userCredential.user;
+        const user = userCredential.user.uid;
+        addUserData(user);
+      })
+      .then(() => {
         navigate("/bestil-online");
         setLoading(false);
-
-        // ...
       })
       .catch((error) => {
         setLoading(false);
@@ -48,6 +51,17 @@ const SignUp = () => {
         toast.error(errorMessage, DefaultToastifySettings);
       });
   };
+
+  const addUserData = async (user) => {
+    const username = formRef.current.name.value;
+    const tel = formRef.current.phone.value;
+
+    await setDoc(doc(FIREBASE_DB, "users", user), {
+      name: username,
+      phone: tel,
+    });
+  };
+
   return (
     <>
       <CustomerHeader nav={false} />
@@ -59,7 +73,7 @@ const SignUp = () => {
           </div>
           <form ref={formRef} onSubmit={userSignUp} className="flex flex-col gap-5">
             <div className="flex flex-col">
-              <label htmlFor="email">Dit navn</label>
+              <label htmlFor="name">Dit navn</label>
               <input type="text" required name="name" />
             </div>
             <div className="flex flex-col">
@@ -90,7 +104,7 @@ const SignUp = () => {
               </>
             ) : (
               <>
-                <CustomButton title="Log ind" function={userSignUp} />
+                <CustomButton title="Opret profil" function={userSignUp} />
               </>
             )}
           </form>

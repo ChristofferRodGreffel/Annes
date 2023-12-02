@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import ImageUpload from "../../components/ImageUpload";
 import { doc, setDoc } from "firebase/firestore";
 import { FIREBASE_DB, FIREBASE_STORAGE } from "../../../firebase-config";
-import firebase from "firebase/compat/app";
 
 import { ref, uploadBytes, getDownloadURL, listAll, list, uploadBytesResumable } from "firebase/storage";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";

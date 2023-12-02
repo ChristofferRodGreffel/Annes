@@ -2,30 +2,30 @@ import React, { useRef, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
-import { FIREBASE_AUTH } from "../../../firebase-config";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { firebaseErrorsCodes } from "../../../firebaseErrorCodes";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { collection, getDocs } from "firebase/firestore";
 
 const SignIn = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const userSignIn = (e) => {
+  const userSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     const userEmail = formRef.current.email.value;
     const userPassword = formRef.current.password.value;
 
     signInWithEmailAndPassword(FIREBASE_AUTH, userEmail, userPassword)
-      .then(() => {
+      .then((userCredential) => {
         // Signed in
-        navigate("/bestil-online");
-        setLoading(false);
+        checkAdminStatus(userCredential.user.uid);
       })
       .catch((error) => {
         setLoading(false);
@@ -33,6 +33,21 @@ const SignIn = () => {
         const errorMessage = firebaseErrorsCodes[errorCode];
         toast.error(errorMessage, DefaultToastifySettings);
       });
+  };
+
+  const checkAdminStatus = async (user) => {
+    const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
+    querySnapshot.forEach((doc) => {
+      if (doc.id === user) {
+        console.log("Brugeren er admin!");
+        setLoading(false);
+        navigate("/ordre-oversigt");
+      } else {
+        console.log("Brugeren er ikke admin...");
+        setLoading(false);
+        navigate("/bestil-online");
+      }
+    });
   };
 
   const handleShowPassword = () => {
