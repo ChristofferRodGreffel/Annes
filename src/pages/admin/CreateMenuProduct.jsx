@@ -25,12 +25,12 @@ function CreateMenuProduct() {
 
     const formRef = useRef(null);
 
-    const [addingProductLoader, setAddingProductLoader] = useState(false);
-    const [productName, setProductName] = useState("");
-    const [productPrice, setProductPrice] = useState("59");
-    const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
-    const [chosenIngredients, setChosenIngredients] = useState([]);
-    const [images, setImages] = useState([]);
+  const [addingProductLoader, setAddingProductLoader] = useState(false);
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState(59);
+  const [chosenBreadTypes, setChosenBreadTypes] = useState([]);
+  const [chosenIngredients, setChosenIngredients] = useState([]);
+  const [images, setImages] = useState([]);
 
     // skal evt. komme fra Firebase
     const breadTypes = [
@@ -180,21 +180,28 @@ function CreateMenuProduct() {
                     .then((downloadURL) => {
                         console.log("File available at", downloadURL);
 
-                        setDoc(doc(FIREBASE_DB, "menu", productName), {
-                            name: productName,
-                            price: productPrice,
-                            chosenBreadTypes: chosenBreadNames,
-                            chosenIngredients: chosenIngredientNames,
-                            imageURL: downloadURL,
-                        });
-                    })
-                    .then(() => {
-                        setAddingProductLoader(false);
-                        toast.success("Produkt tilføjet til menu", DefaultToastifySettings);
-                    });
-            }
-        );
-    };
+            setDoc(doc(FIREBASE_DB, "menu", productName), {
+              name: productName,
+              price: productPrice,
+              chosenBreadTypes: chosenBreadNames,
+              chosenIngredients: chosenIngredientNames,
+              imageURL: downloadURL,
+            });
+          })
+          .then(() => {
+            setAddingProductLoader(false);
+            toast.success("Produkt tilføjet til menu", DefaultToastifySettings);
+            setProductName("");
+            setProductPrice(59);
+            setCheckedIngredients(new Array(breadTypes.length).fill(false));
+            setCheckedBreadTypes(new Array(breadTypes.length).fill(false));
+            setChosenBreadTypes([]);
+            setChosenIngredients([]);
+            setImages([]);
+          });
+      }
+    );
+  };
 
     const handleRemoveBreadType = (breadToDelete) => {
         setChosenBreadTypes(chosenBreadTypes.filter((breads) => breads.name !== breadToDelete.name));
@@ -212,60 +219,62 @@ function CreateMenuProduct() {
         setImages(imageList);
     };
 
-    return (
-        <>
-            <div className="flex justify-center flex-row">
-                <AdminSidebar />
-                <AdminContentWrapper>
-                    <BackButtonWithArrow linkTo="/menu-oversigt" linkText="Tilbage til valgmuligheder" />
-                    <PageH1Title>Tilføj nyt produkt</PageH1Title>
-                    <div className="flex flex-row w-2/3 min-w-productOverviewMinWidth">
-                        <div className="w-full">
-                            <form ref={formRef} onSubmit="return false" className="flex flex-col gap-7">
-                                <CustomInputWithLabel
-                                    label="Navn på produkt"
-                                    type="text"
-                                    value={productName}
-                                    customSetvalue={setProductName}
-                                    name="productName"
-                                    placeholder="Skriv produkt navn"
-                                />
-                                <CustomInputWithLabel
-                                    title="Vælg tilgængelige brødtyper"
-                                    type="checkbox"
-                                    CustomHandleChange={handleOnBreadtypeChange}
-                                    CustomCheckedItems={checkedBreadTypes}
-                                    CustomOptions={breadTypes}
-                                />
-                                <CustomInputWithLabel
-                                    title="Vælg basis ingredienser"
-                                    type="checkbox"
-                                    CustomHandleChange={handleOnIngredientsChange}
-                                    CustomCheckedItems={checkedIngredients}
-                                    CustomOptions={ingredients}
-                                />
-                                <CustomInputWithLabel
-                                    button={true}
-                                    buttonText="Tilføj ingrediens"
-                                    customOnClick={handleAddCustomIngredient}
-                                    label="Tilføj ingredienser manuelt"
-                                    type="text"
-                                    name="customIngredientsName"
-                                    placeholder="Tilføj en ingrediens her..."
-                                />
-                                <CustomInputWithLabel
-                                    label="Tilføj pris på produkt"
-                                    value={productPrice}
-                                    customSetvalue={setProductPrice}
-                                    type="text"
-                                    name="productPrice"
-                                    placeholder="Pris på produkt..."
-                                />
-                                <ImageUpload onImageChange={onImageChange} imageState={images} />
-                            </form>
-                        </div>
-                    </div>
-                </AdminContentWrapper>
+  return (
+    <>
+      <div className="flex justify-center flex-row">
+        <AdminSidebar />
+        <AdminContentWrapper>
+          <BackButtonWithArrow linkTo="/menu-oversigt" linkText="Tilbage til valgmuligheder" />
+          <PageH1Title>Tilføj nyt produkt</PageH1Title>
+          <div className="flex flex-row w-2/3 min-w-productOverviewMinWidth">
+            <div className="w-full">
+              <div className="flex flex-col gap-7">
+                <CustomInputWithLabel
+                  label="Navn på produkt"
+                  type="text"
+                  value={productName}
+                  customSetvalue={setProductName}
+                  name="productName"
+                  placeholder="Skriv produkt navn"
+                />
+                <CustomInputWithLabel
+                  title="Vælg tilgængelige brødtyper"
+                  type="checkbox"
+                  CustomHandleChange={handleOnBreadtypeChange}
+                  CustomCheckedItems={checkedBreadTypes}
+                  CustomOptions={breadTypes}
+                />
+                <CustomInputWithLabel
+                  title="Vælg basis ingredienser"
+                  type="checkbox"
+                  CustomHandleChange={handleOnIngredientsChange}
+                  CustomCheckedItems={checkedIngredients}
+                  CustomOptions={ingredients}
+                />
+                <form ref={formRef}>
+                  <CustomInputWithLabel
+                    button={true}
+                    buttonText="Tilføj ingrediens"
+                    customOnClick={handleAddCustomIngredient}
+                    label="Tilføj ingredienser manuelt"
+                    type="text"
+                    name="customIngredientsName"
+                    placeholder="Tilføj en ingrediens her..."
+                  />
+                </form>
+                <CustomInputWithLabel
+                  label="Tilføj pris på produkt"
+                  value={productPrice}
+                  customSetvalue={setProductPrice}
+                  type="number"
+                  name="productPrice"
+                  placeholder="Pris på produkt..."
+                />
+                <ImageUpload onImageChange={onImageChange} imageState={images} />
+              </div>
+            </div>
+          </div>
+        </AdminContentWrapper>
 
                 <div className="sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">
                     <div className="relative bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
