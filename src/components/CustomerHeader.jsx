@@ -26,7 +26,7 @@ const CustomerHeader = (props) => {
           ></i>
         )}
 
-        <Link to={"/bestil-online"}>
+        <Link to={"/"}>
           <img src={logo} alt="logo" className="w-40" />
         </Link>
         {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
