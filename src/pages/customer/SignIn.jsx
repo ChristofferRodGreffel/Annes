@@ -27,6 +27,7 @@ const SignIn = () => {
       .then((userCredential) => {
         // Signed in
         checkAdminStatus(userCredential.user.uid);
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);

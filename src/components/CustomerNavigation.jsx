@@ -1,10 +1,21 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FIREBASE_AUTH } from "../../firebase-config";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
 const CustomerNavigation = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const checkAdminStatus = async (user) => {
+    const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
+    querySnapshot.forEach((doc) => {
+      if (doc.id === user) {
+        setIsAdmin(true)
+      }
+    });
+  };
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -13,6 +24,7 @@ const CustomerNavigation = () => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
         setLoggedIn(true);
+        checkAdminStatus(uid);
         // ...
       } else {
         // User is signed out
@@ -55,6 +67,16 @@ const CustomerNavigation = () => {
               <h3>Profil</h3>
               <i className="fa-solid fa-user"></i>
             </Link>
+
+            {isAdmin && (
+              <>
+                <hr />
+                <Link to={"/ordre-oversigt"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+                  <h3>Admin</h3>
+                  <i className="fa-solid fa-unlock"></i>
+                </Link>
+              </>
+            )}
           </>
         ) : (
           <>
