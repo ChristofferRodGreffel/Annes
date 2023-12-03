@@ -51,7 +51,13 @@ function LandingPage() {
             allProducts?.map((product, key) => {
               return (
                 <div key={key}>
-                  <ProductCard key={key} imageSource={product?.imageURL} productName={product?.name} />
+                  <ProductCard
+                    text="Tilpas"
+                    key={key}
+                    imageSource={product?.imageURL}
+                    productName={product?.name}
+                    icon="fa-solid fa-utensils"
+                  />
                 </div>
               );
             })
