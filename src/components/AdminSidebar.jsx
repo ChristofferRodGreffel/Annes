@@ -82,6 +82,17 @@ const AdminSidebar = () => {
             <i className="fa-solid fa-sliders text-xl"></i>
             Indstillinger
           </NavLink>
+          <NavLink
+            to={"/"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
+                : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
+            }
+          >
+            <i className="fa-solid fa-arrow-left text-xl"></i>
+            Gå til kundeside
+          </NavLink>
         </div>
         <div className="justify-self-end">
           <Link onClick={handleUserLogout} className="flex gap-3 items-center font-medium text-xl p-4 pl-10 mb-5">
