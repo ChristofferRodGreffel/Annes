@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
+import EditMenu from "./pages/admin/EditMenu";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -21,8 +22,6 @@ function App() {
       if (user) {
         const uid = user.uid;
         checkAdminStatus(uid);
-      } else {
-        console.log("Ikke logget ind");
       }
     });
   }, []);
@@ -43,6 +42,7 @@ function App() {
         {admin && (
           <>
             <Route path="/menu-oversigt/opret-produkt" element={<CreateMenuProduct />} />
+            <Route path="/menu-oversigt/rediger-menu" element={<EditMenu />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
           </>

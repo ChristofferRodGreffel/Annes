@@ -17,7 +17,11 @@ const MenuOverview = () => {
               icon="fa-solid fa-plus"
               link="/menu-oversigt/opret-produkt"
             />
-            <MenuCategoryLink title="Rediger eksisterende menu" icon="fa-solid fa-pen-to-square" link="#" />
+            <MenuCategoryLink
+              title="Rediger eksisterende menu"
+              icon="fa-solid fa-pen-to-square"
+              link="/menu-oversigt/rediger-menu"
+            />
             <MenuCategoryLink title="Medarbejder guides" icon="fa-solid fa-book-open" link="#" />
           </div>
         </AdminContentWrapper>

@@ -18,7 +18,6 @@ function LandingPage() {
         querySnapshot.forEach((doc) => {
           newProducts.push(doc.data());
         });
-        console.log(newProducts);
         setAllProducts(newProducts);
         setLoading(false);
       });

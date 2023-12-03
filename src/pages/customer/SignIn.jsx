@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomButton from "../../components/CustomButton";
+import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -39,11 +40,9 @@ const SignIn = () => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
     querySnapshot.forEach((doc) => {
       if (doc.id === user) {
-        console.log("Brugeren er admin!");
         setLoading(false);
         navigate("/ordre-oversigt");
       } else {
-        console.log("Brugeren er ikke admin...");
         setLoading(false);
         navigate("/bestil-online");
       }
@@ -67,6 +66,7 @@ const SignIn = () => {
       <CustomerHeader nav={false} />
       <PageWrapperContainer>
         <div className="mt-40">
+          <BackButtonWithArrow linkText="Fortsæt uden log ind" linkTo="/bestil-online" />
           <div className="mb-5">
             <h1 className="font-bold text-3xl">Velkommen tilbage</h1>
             <p className="text-left">Her kan du logge ind</p>
