@@ -11,12 +11,15 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 const CustomizeProduct = () => {
   const { productName } = useParams();
   const [productInfo, setProductInfo] = useState();
+  const [defaultIngredients, setDefaultIngredients] = useState();
   const [amount, setAmount] = useState(1);
+  const [chosenIngredients, setChosenIngredients] = useState([]);
 
   useEffect(() => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
         setProductInfo(doc.data());
+        setDefaultIngredients(doc.data().chosenIngredients);
       });
     };
     getProductInfo();
@@ -88,7 +91,7 @@ const CustomizeProduct = () => {
                 Standard ingredienser
               </label>
               <form name="ingredientsForm" className="grid grid-cols-2 w-full mt-1">
-                {productInfo?.chosenIngredients?.map((ingredient, key) => {
+                {defaultIngredients?.map((ingredient, key) => {
                   return (
                     <div key={key} className="flex items-center gap-1 py-2 md:py-1">
                       <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} />
