@@ -18,9 +18,10 @@ const CustomerProfile = () => {
   const uid = FIREBASE_AUTH.currentUser?.uid
 
   const [customerName, setCustomerName] = useState("")
+  const [customerPhone, setCustomerPhone] = useState("")
   const [customerProfileMessage, setCustomerProfileMessage] = useState("")
 
-  
+
   useEffect(() => {
     const getCustomerProfileMessage = async () => {
       const q = query(collection(FIREBASE_DB, "admin-settings"));
@@ -38,18 +39,19 @@ const CustomerProfile = () => {
 
   useEffect(() => {
 
-    const getCustomerName = async () => {
+    const getCustomerNameAndPhone = async () => {
       if (uid) {
         const docRef = doc(FIREBASE_DB, "users", uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setCustomerName(docSnap.data().name)
+          setCustomerPhone(docSnap.data().phone)
         } else {
         }
       }
 
     }
-    getCustomerName();
+    getCustomerNameAndPhone();
   }, [uid]);
 
 
@@ -109,45 +111,52 @@ const CustomerProfile = () => {
           :
           <>
             <div className="mt-20">
-              <PageH1Title>
-                <div className="flex flex-col ">
-                  Hej, {customerName}
-                  <span className="text-sm font-normal italic">
-                    {customerProfileMessage}
-                  </span>
+
+              <div className="lg:flex lg:flex-row lg:items-center lg:justify-between">
+                <PageH1Title>
+                  <div className="flex flex-col ">
+                    Hej, {customerName}
+                    <span className="text-sm font-normal italic">
+                      {customerProfileMessage}
+                    </span>
+                  </div>
+                </PageH1Title>
+                  <div className="flex flex-col gap-6 max-w-lg lg:max-w-none lg:flex-row lg:flex-wrap">
+                    <CustomButton title="Vip-fordele" />
+                    <CustomButton title="Indstillinger" />
+                    <CustomButton title="Gå til favoritter" />
+                    <CustomButton title="Gå til bestillinger" />
+                  </div>
+              </div>
+              <div className="max-w-lg">
+
+                <div className="mb-10">
+                  <CustomInputWithLabel
+                    button={true}
+                    buttonText="Opdater"
+                    customOnClick={handleChangePhoneNumber}
+                    label="Opdater telefon nr."
+                    type="text"
+                    name="customerPhoneNumber"
+                    placeholder="Skriv dit nr. her..."
+                  />
+                  <p>Nuværende tlf. nr.: {customerPhone}</p>
                 </div>
-              </PageH1Title>
+
+                <div className="flex flex-col mb-10">
+                  <CustomButton title="Nulstil adgangskode" function={handleResetPassword} />
+                  <p className="text-center italic customBalance">Modtag en mail med instrukser - tjek evt. spam...</p>
+                </div>
+
+                <div className="mb-20 flex flex-col">
+                  <CustomButton title="Log ud" function={handleUserLogOut} />
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-6 mb-12">
-              <CustomButton title="Vip-fordele" />
-              <CustomButton title="Indstillinger" />
-              <CustomButton title="Gå til favoritter" />
-              <CustomButton title="Gå til bestillinger" />
-            </div>
-
-            <div className="mb-10">
-              <CustomInputWithLabel
-                button={true}
-                buttonText="Opdater"
-                customOnClick={handleChangePhoneNumber}
-                label="Opdater telefon nr."
-                type="text"
-                name="customerPhoneNumber"
-                placeholder="Skriv dit nr. her..."
-              />
-            </div>
-
-            <div className="flex flex-col mb-10">
-              <CustomButton title="Nulstil adgangskode" function={handleResetPassword} />
-              <p className="text-center italic customBalance">Modtag en mail med instrukser - tjek evt. spam...</p>
-            </div>
-
-            <div className="mb-20 flex flex-col">
-              <CustomButton title="Log ud" function={handleUserLogOut} />
-            </div>
           </>
         }
+
       </PageWrapperContainer>
     </>
   );
