@@ -29,6 +29,31 @@ function CustomInputWithLabel(props) {
         </>
       )}
 
+      {props.type == "number" && (
+        <>
+          <div className="flex flex-col gap-1">
+            <label className="font-semibold text-lg mb-1" htmlFor={props.name}>
+              {props.label}
+            </label>
+            <input
+              maxLength={50}
+              type={props.type}
+              name={props.name}
+              placeholder={props.placeholder}
+              id={props.name}
+              value={!props.button ? props.value : undefined}
+              onChange={!props.button ? (e) => props.customSetvalue(e.target.value) : undefined}
+            />
+
+            {props.button && (
+              <>
+                <CustomButton title={props.buttonText} function={props.customOnClick} />
+              </>
+            )}
+          </div>
+        </>
+      )}
+
       {props.type == "checkbox" && (
         <div>
           <h2 className="font-semibold text-lg">{props.title}</h2>

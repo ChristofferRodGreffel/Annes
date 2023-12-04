@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import { FIREBASE_DB } from "../../../firebase-config";
@@ -8,16 +8,19 @@ import IngredientCheckbox from "../../components/IngredientCheckbox";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
+import localStorageBasket from "../../helperfunctions/LocalStorageBasket";
 
 const CustomizeProduct = () => {
   const { productName } = useParams();
   const [productInfo, setProductInfo] = useState();
   const [defaultIngredients, setDefaultIngredients] = useState();
+  const [allIngredients, setAllIngredients] = useState();
   const [amount, setAmount] = useState(1);
   const [chosenBread, setChosenBread] = useState("Mørkt");
   const [dressingTop, setDressingTop] = useState("Mayo");
   const [dressingBottom, setDressingBottom] = useState("Mayo");
   const [totalPrice, setTotalPrice] = useState();
+  const [productPrice, setProductPrice] = useState();
 
   useEffect(() => {
     const getProductInfo = () => {
@@ -25,41 +28,29 @@ const CustomizeProduct = () => {
         setProductInfo(doc.data());
         setDefaultIngredients(doc.data().chosenIngredients);
         setTotalPrice(doc.data().price);
+        setProductPrice(doc.data().price);
       });
     };
+
+    const getAllIngredients = () => {
+      const unsub = onSnapshot(doc(FIREBASE_DB, "ingredients/default"), (doc) => {
+        setAllIngredients(doc.data().ingredients);
+      });
+    };
+
+    getAllIngredients();
     getProductInfo();
   }, []);
 
-  const allIngredients = [
-    "Kylling (+10 kr.)",
-    "Bacon (+10 kr.)",
-    "Æg (+5 kr.)",
-    "Rejer (+10 kr.)",
-    "Kalkundelle (+10 kr.)",
-    "Ananas",
-    "Seranoskinke (+10 kr.)",
-    "Mozzarella (+5 kr.)",
-    "Laks (+10 kr.)",
-    "Skinke (+10 kr.)",
-    "Ost (+5 kr.)",
-    "Chorizo (+10 kr.)",
-    "Soltørrede tomater",
-    "Brasolo (+10 kr.)",
-    "jalapeños",
-    "Tunsalat (+10 kr.)",
-    "Guf (+5 kr.)",
-    "Frikadelle (+10 kr.)",
-    "Rødkål",
-    "Avocado (+5 kr.)",
-  ];
-
   const handleAmountIncrease = () => {
     setAmount((amount) => amount + 1);
+    setTotalPrice((price) => price + productPrice);
   };
 
   const handleAmountDecrease = () => {
     if (amount > 1) {
       setAmount((amount) => amount - 1);
+      setTotalPrice((price) => price - productPrice);
     } else {
       toast.error("Vælg mindst én af denne slags", DefaultToastifySettings);
     }
@@ -92,11 +83,25 @@ const CustomizeProduct = () => {
         top: dressingTop,
         bottom: dressingBottom,
       },
-      price: null,
+      price: productPrice * amount,
       amount: amount,
     };
 
-    console.log(completeProduct);
+    localStorageBasket(completeProduct);
+    toast.success("Produkt tilføjet", DefaultToastifySettings);
+    navigation.navigate("/");
+  };
+
+  const handleExtraIngredientChange = (ingredient, e) => {
+    if (e.target.checked) {
+      if (ingredient.price !== 0) {
+        setProductPrice((prevPrice) => prevPrice + ingredient.price);
+      }
+    } else {
+      if (ingredient.price !== 0) {
+        setProductPrice((prevPrice) => prevPrice - ingredient.price);
+      }
+    }
   };
 
   return (
@@ -139,14 +144,7 @@ const CustomizeProduct = () => {
                 {defaultIngredients?.map((ingredient, key) => {
                   return (
                     <div key={key} className="flex items-center gap-1 py-2 md:py-1">
-                      <input
-                        onChange={handleIngredientChange}
-                        type="checkbox"
-                        name={ingredient}
-                        value={ingredient}
-                        id={`${ingredient}`}
-                        defaultChecked
-                      />
+                      <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
                       <label className="font-medium" htmlFor={ingredient}>
                         {ingredient}
                       </label>
@@ -195,10 +193,14 @@ const CustomizeProduct = () => {
             <div className="mt-5">
               <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
               <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
-                {allIngredients.map((ingredient, key) => {
+                {allIngredients?.map((ingredient, key) => {
                   return (
-                    <div key={key} className="flex items-center py-2 gap-1 md:py-1">
-                      <IngredientCheckbox ingredient={ingredient} value={ingredient} />
+                    <div key={key}>
+                      <IngredientCheckbox
+                        ingredient={ingredient}
+                        value={ingredient}
+                        onChange={handleExtraIngredientChange}
+                      />
                     </div>
                   );
                 })}
@@ -218,7 +220,7 @@ const CustomizeProduct = () => {
             </div>
           </div>
         </div>
-        <CustomerBottomInfoContainer function={handleAddProduct} text="Tilføj til kurv" price={totalPrice} />
+        <CustomerBottomInfoContainer function={handleAddProduct} text="Tilføj til kurv" price={productPrice * amount} />
       </PageWrapperContainer>
     </>
   );

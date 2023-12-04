@@ -50,6 +50,7 @@ const Ingredients = () => {
         setLoading(false);
         toast.success(`${ingredient} er tilføjet`, DefaultToastifySettings);
         setIngredient("");
+        formRef.current.price.value = "0";
       })
       .catch((e) => {
         setLoading(false);
@@ -63,6 +64,8 @@ const Ingredients = () => {
 
     await updateDoc(ingredientRef, {
       ingredients: arrayRemove(ingredient),
+    }).then(() => {
+      toast.success(`${ingredient.name} er slettet`, DefaultToastifySettings);
     });
   };
 
