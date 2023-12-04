@@ -55,7 +55,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 mt-10 md:flex-row md:flex-wrap md:justify-center">
+        <div className="flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-center">
           {!loading ? (
             allProducts?.map((product, key) => {
               return (

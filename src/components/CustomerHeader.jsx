@@ -29,7 +29,9 @@ const CustomerHeader = (props) => {
         <Link to={"/"}>
           <img src={logo} alt="logo" className="w-40" />
         </Link>
-        {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
+        <Link to={"/kurv"}>
+          {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
+        </Link>
       </header>
     </>
   );
