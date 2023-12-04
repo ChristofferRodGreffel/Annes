@@ -72,7 +72,7 @@ const AdminSidebar = () => {
             Menu
           </NavLink>
           <NavLink
-            to={"/indstillinger"}
+            to={"/admin-indstillinger"}
             className={({ isActive }) =>
               isActive
                 ? "flex gap-3 items-center font-medium text-xl p-4 pl-10 bg-primary text-white"
@@ -90,7 +90,7 @@ const AdminSidebar = () => {
                 : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
             }
           >
-            <i className="fa-solid fa-arrow-left text-xl"></i>
+            <i className="fa-solid fa-sliders text-xl"></i>
             Gå til kundeside
           </NavLink>
         </div>

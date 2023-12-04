@@ -88,6 +88,7 @@ img.full-width {
   object-fit: cover;
 }
 
-.productTitle {
+
+.customBalance {
   text-wrap: balance;
 }

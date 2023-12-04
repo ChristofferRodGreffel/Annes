@@ -15,6 +15,7 @@ import { collection, getDocs } from "firebase/firestore";
 import EditMenu from "./pages/admin/EditMenu";
 import CustomizeProduct from "./pages/customer/CustomizeProduct";
 import CheckoutOverview from "./pages/customer/CheckoutOverview";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -47,6 +48,7 @@ function App() {
             <Route path="/menu-oversigt/rediger-menu" element={<EditMenu />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
+            <Route path="/admin-indstillinger" element={<AdminSettings />} />
           </>
         )}
         <Route path="/kurv" element={<CheckoutOverview />} />
