@@ -6,6 +6,7 @@ import { FIREBASE_DB } from "../../../firebase-config";
 import ProductCard from "../../components/ProductCard";
 import { PulseLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router-dom";
+import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
 
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
@@ -34,6 +35,7 @@ function LandingPage() {
 
   return (
     <>
+      <CustomerBottomInfoContainer />
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">

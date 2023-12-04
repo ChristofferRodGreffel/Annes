@@ -14,6 +14,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import EditMenu from "./pages/admin/EditMenu";
 import CustomizeProduct from "./pages/customer/CustomizeProduct";
+import CheckoutOverview from "./pages/customer/CheckoutOverview";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -48,6 +49,7 @@ function App() {
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
           </>
         )}
+        <Route path="/kurv" element={<CheckoutOverview />} />
         <Route path="/profil" element={<CustomerProfile />} />
         <Route path="/bestil-online" element={<LandingPage />} />
         <Route path="/log-ind" element={<SignIn />} />
