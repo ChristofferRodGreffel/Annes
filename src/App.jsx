@@ -16,6 +16,7 @@ import EditMenu from "./pages/admin/EditMenu";
 import CustomizeProduct from "./pages/customer/CustomizeProduct";
 import CheckoutOverview from "./pages/customer/CheckoutOverview";
 import AdminSettings from "./pages/admin/AdminSettings";
+import Ingredients from "./pages/admin/Ingredients";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -46,6 +47,7 @@ function App() {
           <>
             <Route path="/menu-oversigt/opret-produkt" element={<CreateMenuProduct />} />
             <Route path="/menu-oversigt/rediger-menu" element={<EditMenu />} />
+            <Route path="/menu-oversigt/ingredienser" element={<Ingredients />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
             <Route path="/admin-indstillinger" element={<AdminSettings />} />

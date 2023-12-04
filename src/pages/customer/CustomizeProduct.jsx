@@ -7,48 +7,50 @@ import { doc, onSnapshot } from "firebase/firestore";
 import IngredientCheckbox from "../../components/IngredientCheckbox";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
 
 const CustomizeProduct = () => {
   const { productName } = useParams();
   const [productInfo, setProductInfo] = useState();
   const [defaultIngredients, setDefaultIngredients] = useState();
   const [amount, setAmount] = useState(1);
-  const [chosenIngredients, setChosenIngredients] = useState([]);
-  const [chosenBread, setChosenBread] = useState("Lyst");
+  const [chosenBread, setChosenBread] = useState("Mørkt");
   const [dressingTop, setDressingTop] = useState("Mayo");
   const [dressingBottom, setDressingBottom] = useState("Mayo");
+  const [totalPrice, setTotalPrice] = useState();
 
   useEffect(() => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
         setProductInfo(doc.data());
         setDefaultIngredients(doc.data().chosenIngredients);
+        setTotalPrice(doc.data().price);
       });
     };
     getProductInfo();
   }, []);
 
   const allIngredients = [
-    "Kylling (+10)",
-    "Bacon (+10)",
-    "Æg (+5)",
-    "Rejer (+10)",
-    "Kalkundelle (+10)",
+    "Kylling (+10 kr.)",
+    "Bacon (+10 kr.)",
+    "Æg (+5 kr.)",
+    "Rejer (+10 kr.)",
+    "Kalkundelle (+10 kr.)",
     "Ananas",
-    "Seranoskinke (+10)",
-    "Mozzarella (+5)",
-    "Laks (+10)",
-    "Skinke (+10)",
-    "Ost (+5)",
-    "Chorizo (+10)",
+    "Seranoskinke (+10 kr.)",
+    "Mozzarella (+5 kr.)",
+    "Laks (+10 kr.)",
+    "Skinke (+10 kr.)",
+    "Ost (+5 kr.)",
+    "Chorizo (+10 kr.)",
     "Soltørrede tomater",
-    "Brasolo (+10)",
+    "Brasolo (+10 kr.)",
     "jalapeños",
-    "Tunsalat (+10)",
-    "Guf (+5)",
-    "Frikadelle (+10)",
+    "Tunsalat (+10 kr.)",
+    "Guf (+5 kr.)",
+    "Frikadelle (+10 kr.)",
     "Rødkål",
-    "Avocado (+5)",
+    "Avocado (+5 kr.)",
   ];
 
   const handleAmountIncrease = () => {
@@ -106,7 +108,7 @@ const CustomizeProduct = () => {
           src={productInfo?.imageURL}
           alt={`Billede af ${productInfo?.name}`}
         />
-        <div className="breakout md:w-3/6 md:m-auto md:flex md:flex-col">
+        <div className="breakout mb-28 md:w-3/6 md:m-auto md:flex md:flex-col">
           <div className="mt-8">
             <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
             <div className="flex flex-col w-fit mt-5">
@@ -137,7 +139,14 @@ const CustomizeProduct = () => {
                 {defaultIngredients?.map((ingredient, key) => {
                   return (
                     <div key={key} className="flex items-center gap-1 py-2 md:py-1">
-                      <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
+                      <input
+                        onChange={handleIngredientChange}
+                        type="checkbox"
+                        name={ingredient}
+                        value={ingredient}
+                        id={`${ingredient}`}
+                        defaultChecked
+                      />
                       <label className="font-medium" htmlFor={ingredient}>
                         {ingredient}
                       </label>
@@ -158,6 +167,7 @@ const CustomizeProduct = () => {
                     defaultValue={"mayo"}
                     onChange={(e) => setDressingTop(e.target.value)}
                   >
+                    <option value="fravalgt">Ingen dressing</option>
                     <option value="mayo">Mayo</option>
                     <option value="karry">Karry</option>
                     <option value="pesto">Grøn pesto</option>
@@ -173,6 +183,7 @@ const CustomizeProduct = () => {
                     defaultValue="mayo"
                     onChange={(e) => setDressingBottom(e.target.value)}
                   >
+                    <option value="fravalgt">Ingen dressing</option>
                     <option value="mayo">Mayo</option>
                     <option value="karry">Karry</option>
                     <option value="pesto">Grøn pesto</option>
@@ -192,21 +203,22 @@ const CustomizeProduct = () => {
                   );
                 })}
               </form>
-              <p className="mt-3">
-                * Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling i butikken.
-              </p>
+              <p className="mt-3">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
             </div>
           </div>
           <div className="mt-5">
             <h2 className="text-lg font-semibold">Vælg antal</h2>
             <div className="flex items-center gap-4 select-none mt-1">
-              <i onClick={handleAmountDecrease} className="fa-solid fa-circle-minus text-xl"></i>
+              <i
+                onClick={handleAmountDecrease}
+                className={`fa-solid fa-circle-minus text-xl ${amount === 1 && `text-grey`}`}
+              ></i>
               <p className="font-bold text-2xl">{amount}</p>
               <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl"></i>
             </div>
           </div>
         </div>
-        <button onClick={handleAddProduct}>Føj til kurv</button>
+        <CustomerBottomInfoContainer function={handleAddProduct} text="Tilføj til kurv" price={totalPrice} />
       </PageWrapperContainer>
     </>
   );

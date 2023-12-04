@@ -5,7 +5,7 @@ const ProductCard = (props) => {
     <div className="rounded-xl overflow-clip text-white md:w-96">
       <img
         loading="lazy"
-        className="h-32 w-full object-cover"
+        className="max-h-28 w-full object-cover"
         src={props.imageSource}
         alt={`Billede af ${props.imageName}`}
       />

@@ -9,7 +9,7 @@ const IngredientCheckbox = (props) => {
         value={props.value}
         id={`checkbox-${props.ingredient}`}
       />
-      <label className="font-medium" htmlFor={`checkbox-${props.ingredient}`}>
+      <label className="font-medium customBalance" htmlFor={`checkbox-${props.ingredient}`}>
         {props.ingredient}
       </label>
     </>
