@@ -25,7 +25,7 @@ const Ingredients = () => {
       });
     };
     getIngredients();
-  });
+  }, []);
 
   const handleAddIngredient = async (e) => {
     setLoading(true);
@@ -48,7 +48,7 @@ const Ingredients = () => {
     })
       .then(() => {
         setLoading(false);
-        toast.success("Ingrediensen er tilføjet", DefaultToastifySettings);
+        toast.success(`${ingredient} er tilføjet`, DefaultToastifySettings);
         setIngredient("");
       })
       .catch((e) => {
@@ -113,12 +113,12 @@ const Ingredients = () => {
                 )}
               </form>
             </div>
-            <div>
+            <div className="w-fit">
               <h2 className="text-lg font-semibold">Dine nuværende ingredienser</h2>
               <hr className="border-b-2 border-dark rounded-full" />
               <div className="mt-5">
                 {allIngredients?.length != 0 ? (
-                  <ul>
+                  <ul className="grid grid-cols-2 gap-y-1 gap-x-16 auto-cols-min">
                     {allIngredients?.map((ingredient, key) => {
                       return (
                         <li className="flex items-center justify-between w-56" key={key}>
