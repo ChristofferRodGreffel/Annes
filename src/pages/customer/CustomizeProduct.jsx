@@ -14,6 +14,9 @@ const CustomizeProduct = () => {
   const [defaultIngredients, setDefaultIngredients] = useState();
   const [amount, setAmount] = useState(1);
   const [chosenIngredients, setChosenIngredients] = useState([]);
+  const [chosenBread, setChosenBread] = useState("Lyst");
+  const [dressingTop, setDressingTop] = useState("Mayo");
+  const [dressingBottom, setDressingBottom] = useState("Mayo");
 
   useEffect(() => {
     const getProductInfo = () => {
@@ -56,15 +59,53 @@ const CustomizeProduct = () => {
     if (amount > 1) {
       setAmount((amount) => amount - 1);
     } else {
-      toast.error("Kan ikke tilføje mindre end 1", DefaultToastifySettings);
+      toast.error("Vælg mindst én af denne slags", DefaultToastifySettings);
     }
+  };
+
+  const handleAddProduct = () => {
+    const defaultIngredients = document.querySelectorAll("#defaultIngredients input[type='checkbox']");
+    const extraIngredientsForm = document.querySelectorAll("#extraIngredients input[type='checkbox']");
+
+    const removedDefaultIngredients = [];
+    const extraIngredients = [];
+
+    // Getting the value of all unchecked boxes in the defaultIngredients form
+    defaultIngredients.forEach((box) => {
+      if (!box.checked) {
+        removedDefaultIngredients.push(box.value);
+      }
+    });
+
+    extraIngredientsForm.forEach((box) => {
+      if (box.checked) {
+        extraIngredients.push(box.value);
+      }
+    });
+
+    const completeProduct = {
+      removed: removedDefaultIngredients,
+      added: extraIngredients,
+      dressing: {
+        top: dressingTop,
+        bottom: dressingBottom,
+      },
+      price: null,
+      amount: amount,
+    };
+
+    console.log(completeProduct);
   };
 
   return (
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
-        <img className="full-width mt-5" src={productInfo?.imageURL} alt={`Billede af ${productInfo?.name}`} />
+        <img
+          className="full-width mt-5 md:content"
+          src={productInfo?.imageURL}
+          alt={`Billede af ${productInfo?.name}`}
+        />
         <div className="breakout md:w-3/6 md:m-auto md:flex md:flex-col">
           <div className="mt-8">
             <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
@@ -76,6 +117,8 @@ const CustomizeProduct = () => {
                 className="border-2 border-dark rounded-full w-full py-1 px-3 font-medium"
                 name="breadSelect"
                 id="breadSelect"
+                value={chosenBread}
+                onChange={(e) => setChosenBread(e.target.value)}
               >
                 {productInfo?.chosenBreadTypes?.map((bread, key) => {
                   return (
@@ -90,11 +133,11 @@ const CustomizeProduct = () => {
               <label className="text-lg font-semibold" htmlFor="ingredientsForm">
                 Standard ingredienser
               </label>
-              <form name="ingredientsForm" className="grid grid-cols-2 w-full mt-1">
+              <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full mt-1">
                 {defaultIngredients?.map((ingredient, key) => {
                   return (
                     <div key={key} className="flex items-center gap-1 py-2 md:py-1">
-                      <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} />
+                      <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
                       <label className="font-medium" htmlFor={ingredient}>
                         {ingredient}
                       </label>
@@ -112,7 +155,8 @@ const CustomizeProduct = () => {
                     className="border-2 border-dark rounded-full py-1 px-3 font-medium w-fit"
                     name="dressingSelect"
                     id="dressingSelect"
-                    defaultValue="mayo"
+                    defaultValue={"mayo"}
+                    onChange={(e) => setDressingTop(e.target.value)}
                   >
                     <option value="mayo">Mayo</option>
                     <option value="karry">Karry</option>
@@ -127,6 +171,7 @@ const CustomizeProduct = () => {
                     name="dressingSelect"
                     id="dressingSelect"
                     defaultValue="mayo"
+                    onChange={(e) => setDressingBottom(e.target.value)}
                   >
                     <option value="mayo">Mayo</option>
                     <option value="karry">Karry</option>
@@ -138,11 +183,11 @@ const CustomizeProduct = () => {
             </div>
             <div className="mt-5">
               <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
-              <form className="grid grid-cols-2 w-full mt-2 gap-2">
+              <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
                 {allIngredients.map((ingredient, key) => {
                   return (
                     <div key={key} className="flex items-center py-2 gap-1 md:py-1">
-                      <IngredientCheckbox ingredient={ingredient} />
+                      <IngredientCheckbox ingredient={ingredient} value={ingredient} />
                     </div>
                   );
                 })}
@@ -161,6 +206,7 @@ const CustomizeProduct = () => {
             </div>
           </div>
         </div>
+        <button onClick={handleAddProduct}>Føj til kurv</button>
       </PageWrapperContainer>
     </>
   );
