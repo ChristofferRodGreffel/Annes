@@ -12,6 +12,26 @@ function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { productName } = useParams();
+
+  const [amountFromBasket, setAmountFromBasket] = useState(0)
+  const [priceFromBasket, setPriceFromBasket] = useState(0)
+
+  useEffect(() => {
+    const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
+
+    if (basketFromStorage) {
+      var totalPriceFromBasket = 0;
+      var totalAmountFromBasket = 0;
+
+      basketFromStorage.forEach(subData => totalPriceFromBasket += subData.price);
+      basketFromStorage.forEach(subData => totalAmountFromBasket += subData.amount);
+
+      setPriceFromBasket(totalPriceFromBasket);
+      setAmountFromBasket(totalAmountFromBasket)
+    }
+
+  }, [])
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +55,7 @@ function LandingPage() {
 
   return (
     <>
-      <CustomerBottomInfoContainer text="Gå til kurv" amount={true} function={() => navigate("/kurv")} />
+      <CustomerBottomInfoContainer text="Gå til kurv" amount={amountFromBasket} price={priceFromBasket} function={() => navigate("/kurv")} />
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">

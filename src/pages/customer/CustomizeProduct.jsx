@@ -224,7 +224,7 @@ const CustomizeProduct = () => {
             </div>
           </div>
         </div>
-        <CustomerBottomInfoContainer function={handleAddProduct} customNavigate={navigate} text="Tilføj til kurv" price={productPrice * amount} />
+        <CustomerBottomInfoContainer function={handleAddProduct} customNavigate={navigate} text="Tilføj til kurv" price={productPrice * amount} amount={amount} />
       </PageWrapperContainer>
     </>
   );

@@ -2,25 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function CustomerBottomInfoContainer(props) {
-  const [amountOfChosenProducts, setAmountOfChosenProducts] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(59);
+  const [amountOfChosenProducts, setAmountOfChosenProducts] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const checkLocalStorageForChosenProducts = () => {
-      const amount = JSON.parse(localStorage.getItem("ChosenProducts"));
-      const price = JSON.parse(localStorage.getItem("ChosenProducts"));
-
-      if (amount && price) {
-        const totalPrice = price;
-        const totalAmount = amount.length;
-
-        setTotalPrice(totalPrice);
-        setAmountOfChosenProducts(totalAmount);
-      }
-    };
-
-    checkLocalStorageForChosenProducts();
-  }, []);
+    if(props.amount && props.price) {
+      setAmountOfChosenProducts(props.amount)
+      setTotalPrice(props.price)
+    }
+  }, [props])
 
   return (
     <>
