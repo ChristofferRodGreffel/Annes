@@ -12,7 +12,7 @@ const CustomerNavigation = () => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
     querySnapshot.forEach((doc) => {
       if (doc.id === user) {
-        setIsAdmin(true)
+        setIsAdmin(true);
       }
     });
   };
@@ -36,13 +36,17 @@ const CustomerNavigation = () => {
 
   const handleCloseNav = () => {
     const customerNav = document.querySelector("#customerNav");
-    customerNav.style.left = "-80%";
+    if (window.innerWidth > 1023) {
+      customerNav.style.left = "-40%";
+    } else {
+      customerNav.style.left = "-80%";
+    }
   };
 
   return (
     <nav
       id="customerNav"
-      className="fixed z-50 top-0 left-[-80%] bg-primary h-screen w-4/5 text-white text-2xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
+      className="fixed z-50 top-0 left-[-80%] bg-primary h-screen w-4/5 md:w-2/5 md:left-[-40%] text-white text-2xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
     >
       <i onClick={handleCloseNav} className="fa-solid fa-xmark text-4xl p-8 cursor-pointer"></i>
       <div className="mt-14">

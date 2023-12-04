@@ -18,7 +18,7 @@ const CustomerHeader = (props) => {
   return (
     <>
       <CustomerNavigation />
-      <header className="flex justify-around items-center w-full pt-5">
+      <header className="flex justify-around md:justify-between md:px-15 items-center w-full pt-5">
         {props.iconLeft && (
           <i
             onClick={props.nav == true ? handleOpenNavigation : handleGoBack}

@@ -62,7 +62,7 @@ const CustomizeProduct = () => {
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <img className="full-width mt-5" src={productInfo?.imageURL} alt={`Billede af ${productInfo?.name}`} />
-        <div className="breakout">
+        <div className="breakout md:w-3/6 md:m-auto md:flex md:flex-col">
           <div className="mt-8">
             <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
             <div className="flex flex-col w-fit mt-5">
@@ -152,9 +152,9 @@ const CustomizeProduct = () => {
           <div className="mt-5">
             <h2 className="text-lg font-semibold">Vælg antal</h2>
             <div className="flex items-center gap-4 select-none mt-1">
-              <i onClick={handleAmountDecrease} className="fa-solid fa-circle-minus text-2xl"></i>
+              <i onClick={handleAmountDecrease} className="fa-solid fa-circle-minus text-xl"></i>
               <p className="font-bold text-2xl">{amount}</p>
-              <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-2xl"></i>
+              <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl"></i>
             </div>
           </div>
         </div>
