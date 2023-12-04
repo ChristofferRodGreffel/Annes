@@ -82,7 +82,7 @@ const AdminSettings = () => {
                                     name="customerProfileMessage"
                                     placeholder="Skriv besked her"
                                 />
-                                <CustomButton title={"Opdater navn"} type="submit" />
+                                <CustomButton title={"Opdater besked"} type="submit" />
                             </form>
                         </div>
                         <div className="">
