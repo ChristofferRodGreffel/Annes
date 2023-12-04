@@ -40,6 +40,7 @@ const EditMenu = () => {
                 return (
                   <div key={key}>
                     <ProductCard
+                      icon="fa-solid fa-pen-to-square"
                       text="Rediger produkt"
                       key={key}
                       imageSource={product?.imageURL}

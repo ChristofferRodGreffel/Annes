@@ -90,8 +90,8 @@ const AdminSidebar = () => {
                 : "flex gap-3 items-center font-medium text-xl p-4 pl-10"
             }
           >
-            <i className="fa-solid fa-sliders text-xl"></i>
-            Gå til kundeside
+            <i className="fa-solid fa-users text-xl"></i>
+            Kundevisning
           </NavLink>
         </div>
         <div className="justify-self-end">
