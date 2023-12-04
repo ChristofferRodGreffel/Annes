@@ -31,9 +31,9 @@ function CustomerBottomInfoContainer(props) {
             <p className="text-3xl font-semibold">{props.price ? props.price : totalPrice} kr.</p>
           </div>
 
-          <Link onClick={props.function}>
+          <button onClick={props.function}>
             <div className="text-white bg-primary px-8 py-2 rounded-full font-semibold">{props.text}</div>
-          </Link>
+          </button>
         </div>
       )}
     </>

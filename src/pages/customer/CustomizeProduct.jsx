@@ -22,6 +22,8 @@ const CustomizeProduct = () => {
   const [totalPrice, setTotalPrice] = useState();
   const [productPrice, setProductPrice] = useState();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
@@ -56,6 +58,7 @@ const CustomizeProduct = () => {
     }
   };
 
+
   const handleAddProduct = () => {
     const defaultIngredients = document.querySelectorAll("#defaultIngredients input[type='checkbox']");
     const extraIngredientsForm = document.querySelectorAll("#extraIngredients input[type='checkbox']");
@@ -89,7 +92,7 @@ const CustomizeProduct = () => {
 
     localStorageBasket(completeProduct);
     toast.success("Produkt tilføjet", DefaultToastifySettings);
-    navigation.navigate("/");
+    navigate("/")
   };
 
   const handleExtraIngredientChange = (ingredient, e) => {
@@ -113,6 +116,7 @@ const CustomizeProduct = () => {
           src={productInfo?.imageURL}
           alt={`Billede af ${productInfo?.name}`}
         />
+
         <div className="breakout mb-28 md:w-3/6 md:m-auto md:flex md:flex-col">
           <div className="mt-8">
             <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
@@ -220,7 +224,7 @@ const CustomizeProduct = () => {
             </div>
           </div>
         </div>
-        <CustomerBottomInfoContainer function={handleAddProduct} text="Tilføj til kurv" price={productPrice * amount} />
+        <CustomerBottomInfoContainer function={handleAddProduct} customNavigate={navigate} text="Tilføj til kurv" price={productPrice * amount} />
       </PageWrapperContainer>
     </>
   );
