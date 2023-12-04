@@ -5,24 +5,66 @@ import PageH1Title from "../../components/PageH1Title";
 import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import CustomButton from "../../components/CustomButton";
-import { doc, onSnapshot } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
+import { PulseLoader } from "react-spinners";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { toast } from "react-toastify";
 
 const Ingredients = () => {
   const [ingredient, setIngredient] = useState("");
-  const [allIngredients, setAllIngredients] = useState();
-  const { formRef } = useRef();
+  const [allIngredients, setAllIngredients] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef(null);
 
   useEffect(() => {
     const getIngredients = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "ingredients/default"), (doc) => {
-        const newIngredients = [];
-        newIngredients.push(doc.data());
-        setAllIngredients(newIngredients);
+        // console.log(doc.data().ingredients);
+        setAllIngredients(doc.data().ingredients);
       });
     };
     getIngredients();
   });
+
+  const handleAddIngredient = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    if (ingredient == "") {
+      toast.info("Tilføj en ingrediens", DefaultToastifySettings);
+      setLoading(false);
+      return;
+    }
+    const ingredientRef = doc(FIREBASE_DB, "ingredients", "default");
+    const price = formRef.current.price.value;
+
+    const ingredientObject = {
+      name: ingredient,
+      price: Number(price),
+    };
+
+    await updateDoc(ingredientRef, {
+      ingredients: arrayUnion(ingredientObject),
+    })
+      .then(() => {
+        setLoading(false);
+        toast.success("Ingrediensen er tilføjet", DefaultToastifySettings);
+        setIngredient("");
+      })
+      .catch((e) => {
+        setLoading(false);
+        console.log("An error ocurred:", e);
+        toast.error("Der er desværre sket en fejl", DefaultToastifySettings);
+      });
+  };
+
+  const handleDeleteIngredient = async (ingredient) => {
+    const ingredientRef = doc(FIREBASE_DB, "ingredients", "default");
+
+    await updateDoc(ingredientRef, {
+      ingredients: arrayRemove(ingredient),
+    });
+  };
 
   return (
     <>
@@ -37,33 +79,60 @@ const Ingredients = () => {
           </p>
           <div className="flex flex-col gap-10 mt-8">
             <div>
-              <form ref={formRef} className="flex flex-col gap-2">
+              <form ref={formRef} onSubmit={handleAddIngredient} className="flex flex-col gap-2">
                 <CustomInputWithLabel
-                  label="Tilføj ny ingrediens"
+                  label="Ingrediens navn"
                   type="text"
                   value={ingredient}
                   customSetvalue={setIngredient}
                   name="addNewIngredient"
                   placeholder="Skriv ingrediens her..."
                 />
-                <CustomButton title={"Tilføj ingrediens"} type="submit" />
+                <label htmlFor="price" className="font-semibold text-lg mb-1">
+                  Ingrediens pris
+                </label>
+                <select
+                  name="price"
+                  id="price"
+                  className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium mb-3"
+                  defaultValue={"0"}
+                >
+                  <option value="0">Ingen ekstra pris</option>
+                  <option value="5">5 kr.</option>
+                  <option value="10">10 kr.</option>
+                  <option value="15">15 kr.</option>
+                </select>
+                {loading ? (
+                  <>
+                    <CustomButton disabled={true} title={<PulseLoader color="#FFFFFF" size={11} className="p-1" />} />
+                  </>
+                ) : (
+                  <>
+                    <CustomButton title="Tilføj ingrediens" type="submit" />
+                  </>
+                )}
               </form>
             </div>
             <div>
               <h2 className="text-lg font-semibold">Dine nuværende ingredienser</h2>
               <hr className="border-b-2 border-dark rounded-full" />
-              <div>
+              <div className="mt-5">
                 {allIngredients?.length != 0 ? (
-                  <>
+                  <ul>
                     {allIngredients?.map((ingredient, key) => {
                       return (
-                        <ul className="list-disc list-inside flex items-center justify-between w-56" key={key}>
-                          <li>{ingredient.name}</li>
-                          <i className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"></i>
-                        </ul>
+                        <li className="flex items-center justify-between w-56" key={key}>
+                          <p>
+                            <b>{ingredient?.name}</b> {ingredient.price != 0 && `- ${ingredient?.price} kr.`}
+                          </p>
+                          <i
+                            onClick={() => handleDeleteIngredient(ingredient)}
+                            className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"
+                          ></i>
+                        </li>
                       );
                     })}
-                  </>
+                  </ul>
                 ) : (
                   <>
                     <p className="italic">Ikke sat...</p>
