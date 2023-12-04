@@ -8,12 +8,14 @@ import { FIREBASE_DB } from "../../../firebase-config";
 import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import CustomButton from "../../components/CustomButton";
 
 const AdminSettings = () => {
 
     const formRef = useRef(null)
 
     const [customerProfileMessage, setCustomerProfileMessage] = useState("")
+    const [prevCustomerProfileMessage, setPrevCustomerProfileMessage] = useState("")
 
     useEffect(() => {
         const getCustomerProfileMessage = async () => {
@@ -21,8 +23,8 @@ const AdminSettings = () => {
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
 
                 querySnapshot.forEach((doc) => {
-                    if(doc.data().Message) {
-                        setCustomerProfileMessage(doc.data().Message)
+                    if (doc.data().Message) {
+                        setPrevCustomerProfileMessage(doc.data().Message)
                     }
                 })
             });
@@ -46,6 +48,7 @@ const AdminSettings = () => {
                 // Password reset email sent!
                 resolve()
                 formRef.current.customerProfileMessage.value = ""
+                setCustomerProfileMessage("")
             })
                 .catch((error) => {
                     reject()
@@ -68,19 +71,40 @@ const AdminSettings = () => {
                 <AdminContentWrapper>
                     <BackButtonWithArrow linkText="Tilbage til Ordre oversigt" linkTo="/ordre-oversigt" />
                     <PageH1Title>Indstillinger for Admin</PageH1Title>
-                    <div className="flex flex-col gap-5 mt-10 md:flex-row md:flex-wrap">
-                        <form ref={formRef} onSubmit={handleUpdateCustomerProfileText}>
-                            <CustomInputWithLabel
-                                button={true}
-                                buttonText="Opdater kunde-profil tekst"
-                                customOnClick={handleUpdateCustomerProfileText}
-                                label="Velkomstbesked ved kundeprofil"
-                                type="text"
-                                name="customerProfileMessage"
-                                placeholder="Skriv beskeden her..."
-                            />
-                            <p><span className="font-semibold">Nuværende besked: </span>{customerProfileMessage}</p>
-                        </form>
+                    <div className="flex flex-col gap-5 mt-10">
+                        <div className="w-3/5">
+                            <form ref={formRef} onSubmit={handleUpdateCustomerProfileText} className="flex flex-col gap-2">
+                                <CustomInputWithLabel
+                                    label="Hilsen til kunde på profilside"
+                                    type="text"
+                                    value={customerProfileMessage}
+                                    customSetvalue={setCustomerProfileMessage}
+                                    name="customerProfileMessage"
+                                    placeholder="Skriv besked her"
+                                />
+                                <CustomButton title={"Opdater besked"} type="submit" />
+                            </form>
+                        </div>
+                        <div className="">
+                            <div className="flex flex-col ">
+                                {customerProfileMessage && (
+                                    <>
+                                        <span className="text-sm font-semibold italic">
+                                            Fremtidige besked...
+                                        </span>
+                                        <span className="text-sm font-normal italic">
+                                            {customerProfileMessage}
+                                        </span>
+                                    </>
+                                )}
+                                <span className="text-sm font-semibold italic">
+                                    Nuværende besked...
+                                </span>
+                                <span className="text-sm font-normal italic">
+                                    {prevCustomerProfileMessage}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </AdminContentWrapper>
             </div>

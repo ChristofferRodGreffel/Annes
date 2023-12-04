@@ -20,8 +20,9 @@ const CustomerProfile = () => {
   const [customerName, setCustomerName] = useState("")
   const [customerProfileMessage, setCustomerProfileMessage] = useState("")
 
+  
   useEffect(() => {
-    const getCustomerProfile = async () => {
+    const getCustomerProfileMessage = async () => {
       const q = query(collection(FIREBASE_DB, "admin-settings"));
 
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -32,7 +33,7 @@ const CustomerProfile = () => {
         })
       });
     };
-    getCustomerProfile();
+    getCustomerProfileMessage();
   }, []);
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const CustomerProfile = () => {
       }
 
     }
-
     getCustomerName();
   }, [uid]);
 
