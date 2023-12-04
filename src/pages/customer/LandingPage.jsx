@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import ProductCard from "../../components/ProductCard";
 import { PulseLoader } from "react-spinners";
+import { useNavigate, useParams } from "react-router-dom";
 
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { productName } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -24,6 +27,10 @@ function LandingPage() {
     };
     getAllProducts();
   }, []);
+
+  const handleOnProductClick = (productName) => {
+    navigate(`/bestil-online/${productName}`);
+  };
 
   return (
     <>
@@ -52,6 +59,7 @@ function LandingPage() {
               return (
                 <div key={key}>
                   <ProductCard
+                    function={() => handleOnProductClick(product?.name)}
                     text="Tilpas"
                     key={key}
                     imageSource={product?.imageURL}

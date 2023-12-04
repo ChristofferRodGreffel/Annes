@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import CreateMenuProduct from "./pages/admin/CreateMenuProduct";
 import LandingPage from "./pages/customer/LandingPage";
 import MenuOverview from "./pages/admin/MenuOverview";
@@ -13,6 +13,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from "../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import EditMenu from "./pages/admin/EditMenu";
+import CustomizeProduct from "./pages/customer/CustomizeProduct";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -51,6 +52,7 @@ function App() {
         <Route path="/bestil-online" element={<LandingPage />} />
         <Route path="/log-ind" element={<SignIn />} />
         <Route path="/opret-profil" element={<SignUp />} />
+        <Route path="/bestil-online/:productName" element={<CustomizeProduct />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
     </>
