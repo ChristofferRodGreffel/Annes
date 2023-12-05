@@ -14,25 +14,24 @@ function LandingPage() {
   const [loading, setLoading] = useState(true);
   const { productName } = useParams();
 
-  const [amountFromBasket, setAmountFromBasket] = useState(0)
-  const [priceFromBasket, setPriceFromBasket] = useState(0)
+  const [amountFromBasket, setAmountFromBasket] = useState(0);
+  const [priceFromBasket, setPriceFromBasket] = useState(0);
 
-  const uid = FIREBASE_AUTH.currentUser?.uid
+  const uid = FIREBASE_AUTH.currentUser?.uid;
 
-  const [customerName, setCustomerName] = useState("")
+  const [customerName, setCustomerName] = useState("");
 
   useEffect(() => {
-
     const getCustomerNameAndPhone = async () => {
       if (uid) {
         const docRef = doc(FIREBASE_DB, "users", uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setCustomerName(docSnap.data().name)
+          setCustomerName(docSnap.data().name);
         } else {
         }
       }
-    }
+    };
     getCustomerNameAndPhone();
   }, [uid]);
 
@@ -43,14 +42,13 @@ function LandingPage() {
       var totalPriceFromBasket = 0;
       var totalAmountFromBasket = 0;
 
-      basketFromStorage.forEach(subData => totalPriceFromBasket += subData.price);
-      basketFromStorage.forEach(subData => totalAmountFromBasket += subData.amount);
+      basketFromStorage.forEach((subData) => (totalPriceFromBasket += subData.price));
+      basketFromStorage.forEach((subData) => (totalAmountFromBasket += subData.amount));
 
       setPriceFromBasket(totalPriceFromBasket);
-      setAmountFromBasket(totalAmountFromBasket)
+      setAmountFromBasket(totalAmountFromBasket);
     }
-
-  }, [])
+  }, []);
 
   const navigate = useNavigate();
 
@@ -75,12 +73,19 @@ function LandingPage() {
 
   return (
     <>
-      <CustomerBottomInfoContainer text="Gå til kurv" amount={amountFromBasket} price={priceFromBasket} function={() => navigate("/kurv")} />
+      <CustomerBottomInfoContainer
+        text="Gå til kurv"
+        amount={amountFromBasket}
+        price={priceFromBasket}
+        function={() => navigate("/kurv")}
+      />
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">
           {customerName && (
-            <PageH1Title>Velkommen, <span className="italic font-normal">{customerName}</span></PageH1Title>
+            <PageH1Title>
+              Velkommen, <span className="italic font-normal">{customerName}</span>
+            </PageH1Title>
           )}
           <h2 className="text-center mb-3">Vælg mellem 5-6 brødtypper</h2>
           <div className="flex flex-col gap-2">
@@ -98,7 +103,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-center">
+        <div className="breakout flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-center">
           {!loading ? (
             allProducts?.map((product, key) => {
               return (
