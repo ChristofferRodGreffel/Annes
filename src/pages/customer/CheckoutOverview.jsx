@@ -46,8 +46,10 @@ function CheckoutOverview() {
       />
       <PageWrapperContainer>
 
+      <div className="breakout">
 
-        <div className="breakout mt-10">
+
+        <div className=" mt-10">
           <h1 className="text-3xl font-bold flex items-center justify-between">
             Din kurv
             <i className="fa-solid fa-basket-shopping"></i>
@@ -55,7 +57,7 @@ function CheckoutOverview() {
 
 
         </div>
-        <div className="breakout mt-5 mb-5">
+        <div className=" mt-5 mb-5">
           {allBasketProducts?.map((product, key) => {
             return (
               <div key={key}>
@@ -110,6 +112,7 @@ function CheckoutOverview() {
               <CustomButton customWidth="w-full" title="Send bestilling til butik" icon={"fa-solid fa-paper-plane"} />
 
           </form>
+        </div>
         </div>
 
       </PageWrapperContainer>
