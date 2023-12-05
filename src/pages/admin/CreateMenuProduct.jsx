@@ -146,6 +146,8 @@ function CreateMenuProduct() {
         break;
     }
 
+    
+
     let chosenBreadNames = [];
     let chosenIngredientNames = [];
 
@@ -181,7 +183,7 @@ function CreateMenuProduct() {
 
             setDoc(doc(FIREBASE_DB, "menu", productName), {
               name: productName,
-              price: productPrice,
+              price: parseInt(productPrice),
               chosenBreadTypes: chosenBreadNames,
               chosenIngredients: chosenIngredientNames,
               imageURL: downloadURL,
