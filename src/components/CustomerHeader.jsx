@@ -40,14 +40,17 @@ const CustomerHeader = (props) => {
         <Link to={"/"}>
           <img src={logo} alt="logo" className="w-40" />
         </Link>
-        <Link to={"/kurv"} className={`${props.hideRightIcon && "pointer-events-none opacity-0"} relative`}>
-          {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
-          {amountFromBasket !== 0 && (
-            <div className="absolute top-0 right-0 bg-primaryLow text-white font-semibold w-6 h-6 flex justify-center items-center rounded-full animate-slowZoom">
-              <p>{amountFromBasket}</p>
-            </div>
-          )}
-        </Link>
+
+        {props.iconRight && (
+          <Link to={"/kurv"} className={`${props.hideRightIcon && "pointer-events-none opacity-0"} relative`}>
+            {props.iconRight && <i className={`${props.iconRight} text-3xl p-2 cursor-pointer`}></i>}
+            {amountFromBasket !== 0 && (
+              <div className="absolute top-0 right-0 bg-primaryLow text-white font-semibold w-6 h-6 flex justify-center items-center rounded-full animate-slowZoom">
+                <p>{amountFromBasket}</p>
+              </div>
+            )}
+          </Link>
+        )}
       </header>
     </>
   );
