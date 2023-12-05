@@ -7,6 +7,7 @@
 @layer base {
   :root {
     --color-primary: #1b6788;
+    --color-primary-opacity: #1b6788c7;
     --color-dark: #373737;
     --color-white: #ffffff;
     --color-main-grey: #eaeaea;

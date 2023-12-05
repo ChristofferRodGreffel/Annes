@@ -11,6 +11,7 @@ export default {
       },
       colors: {
         primary: "var(--color-primary)",
+        primaryLow: "var(--color-primary-opacity)",
         dark: "var(--color-dark)",
         white: "var(--color-white)",
         mainGrey: "var(--color-main-grey)",
