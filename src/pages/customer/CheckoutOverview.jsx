@@ -18,6 +18,8 @@ function CheckoutOverview() {
     updateFromLocalStorage();
   }, []);
 
+  // Funktionen kigger efter "customerCheckout" i localStorage of henter den.
+  // Vores states sættes ud fra indholdet af kurven i localStorage.
   const updateFromLocalStorage = () => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
 
@@ -25,7 +27,7 @@ function CheckoutOverview() {
       let totalPriceFromBasket = 0;
       let totalAmountFromBasket = 0;
 
-      basketFromStorage.forEach((subData) => (totalPriceFromBasket += subData.price));
+      basketFromStorage.forEach((subData) => (totalPriceFromBasket += subData.singlePrice * subData.amount));
       basketFromStorage.forEach((subData) => (totalAmountFromBasket += subData.amount));
 
       setAllBasketProducts(basketFromStorage);
@@ -34,12 +36,9 @@ function CheckoutOverview() {
     }
   };
 
-  const formRef = useRef(null);
-
-  const handlePlaceOrder = (e) => {
-    e.preventDefault();
-  };
-
+  // Bruges til at slette et produkt fra kurven. Den laver en kopi af "kurven" og finder det produkt
+  // Som matcher index nummeret (gives videre fra CheckoutProduct.jsx). Derefter bruges splice til at
+  // trække produktet ud af arrayet og derefter indsættes arrayet igen i localStorage så kurven er opdateret.
   const handleDeleteProduct = (index) => {
     const newBasket = [...allBasketProducts];
     newBasket.splice(index, 1);
@@ -49,6 +48,8 @@ function CheckoutOverview() {
     toast.success("Produkt slettet", DefaultToastifySettings);
   };
 
+  // Bruges til at øge antallet af X produkt i kurven. Giver hele product objektet med videre
+  // fra CheckoutProduct.jsx og øger værdien med 1. Derefter opdateres localStorage.
   const handleIncrease = (product) => {
     product.amount += 1;
     const newBasket = [...allBasketProducts];
@@ -57,6 +58,8 @@ function CheckoutOverview() {
     updateFromLocalStorage();
   };
 
+  // Bruges til at mindske antallet af X produkt i kurven. Giver hele product objektet med videre
+  // fra CheckoutProduct.jsx og øger værdien med 1. Derefter opdateres localStorage.
   const handleDecrease = (product) => {
     let current = product.amount;
     if (current > 1) {
@@ -68,6 +71,13 @@ function CheckoutOverview() {
     } else {
       toast.error("Brug 'slet' knappen til at fjerne et produkt", DefaultToastifySettings);
     }
+  };
+
+  const formRef = useRef(null);
+
+  // Kører når kunden vil sende ordren afsted. Tilføj flere kommentarer her...
+  const handlePlaceOrder = (e) => {
+    e.preventDefault();
   };
 
   return (

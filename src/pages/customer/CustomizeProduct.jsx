@@ -86,6 +86,7 @@ const CustomizeProduct = () => {
         bottom: dressingBottom,
       },
       price: productPrice * amount,
+      singlePrice: productPrice,
       amount: amount,
       bread: chosenBread,
       name: productName,
