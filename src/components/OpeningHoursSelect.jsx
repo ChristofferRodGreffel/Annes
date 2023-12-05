@@ -6,9 +6,11 @@ const OpeningHoursSelect = (props) => {
   const today = new Date().getDay() // 0 for Sunday, 1 for Monday, and so on
   const todayHour = new Date().getHours()
   const todayMinute = new Date().getMinutes()
-  
 
+  const [shopIsClosed, setShopIsClosed] = useState(false)
   const currentDate = new Date()
+
+  const shopClosingTime = "2052"
 
   const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt")
 
@@ -17,9 +19,17 @@ const OpeningHoursSelect = (props) => {
     e.preventDefault()
 
     const time = e.target.value
-    
     setChosenCollectionTime(time)
   }
+
+  useEffect(() => {
+    if (currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString() && `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime) {
+      setShopIsClosed(true)
+    } else {
+      setShopIsClosed(false)
+    }
+  }, [props, currentDate])
+
 
   useEffect(() => {
     // Function to calculate the opening hours based on the current day
@@ -39,11 +49,11 @@ const OpeningHoursSelect = (props) => {
           if ((hour === endHour && minute > 45)) {
             break
           }
-          
+
           // Tjekker om man har valgt den akutelle dag 
-          if(currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString()) {
+          if (currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString()) {
             // sørger for at man ikke kan vælge en tid om mindre end 10 min.
-            if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {  
+            if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {
               continue
             }
           }
@@ -61,17 +71,27 @@ const OpeningHoursSelect = (props) => {
 
   return (
     <div className='flex flex-col gap-2'>
-      <label className='font-semibold'>Vælg afhentningstid*</label>
-      <select className='px-4 py-2 border-2 border-dark rounded-lg' onChange={(e) => {handleChangeTime(e)}}>
-        {openingHours.map((hour, index) => (
-          <option key={index} value={hour}>
-            {hour}
-          </option>
-        ))}
-      </select>
-      {chosenCollectionTime == "Hurtigst muligt" && (
-        <p className='text-sm italic'>Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min. afhængig af størrelsen.</p>
-      )}
+
+      {shopIsClosed ?
+
+        <>
+          <p className='text-sm italic'>Det er desværre for sent at bestille til i dag.</p>
+        </>
+        :
+        <>
+          <label className='font-semibold'>Vælg afhentningstid*</label>
+          <select className='px-4 py-2 border-2 border-dark rounded-lg' onChange={(e) => { handleChangeTime(e) }}>
+            {openingHours.map((hour, index) => (
+              <option key={index} value={hour}>
+                {hour}
+              </option>
+            ))}
+          </select>
+          {chosenCollectionTime == "Hurtigst muligt" && (
+            <p className='text-sm italic'>Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min. afhængig af størrelsen.</p>
+          )}
+        </>
+      }
     </div>
   );
 };
