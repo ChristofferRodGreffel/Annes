@@ -4,16 +4,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import da from 'date-fns/locale/da';
 
 
-function CollectionDatePicker() {
-    const [startDate, setStartDate] = useState(new Date());
+function CollectionDatePicker(props) {
 
     registerLocale('da', da)
 
-
     return (
-        <div className='mt-5'>
+        <div className='my-5'>
             <p className='font-semibold mb-2'>Vælg afhentningsdato</p>
-            <DatePicker locale="da" dateFormat={'dd/MM/yyyy'} minDate={new Date()} registerLocale="da" selected={startDate} onChange={(date) => setStartDate(date)} />
+            <DatePicker locale="da" dateFormat={'dd/MM/yyyy'} minDate={new Date()} registerLocale="da" selected={props.chosenCollectionDay} onChange={(date) => props.setChosenCollectionDay(date)} />
         </div>
     )
 }

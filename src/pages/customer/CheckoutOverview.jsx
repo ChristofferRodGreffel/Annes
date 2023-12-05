@@ -14,6 +14,11 @@ function CheckoutOverview() {
   const [priceFromBasket, setPriceFromBasket] = useState(0);
   const [allBasketProducts, setAllBasketProducts] = useState();
 
+
+
+  const [chosenCollectionDay, setChosenCollectionDay] = useState(new Date());
+
+
   useEffect(() => {
     updateFromLocalStorage();
   }, []);
@@ -131,9 +136,10 @@ function CheckoutOverview() {
               </div>
 
               <div className="my-5">
-                <OpeningHoursSelect />
+                <CollectionDatePicker chosenCollectionDay={chosenCollectionDay} setChosenCollectionDay={setChosenCollectionDay} />
 
-                <CollectionDatePicker />
+                <OpeningHoursSelect chosenCollectionDay={chosenCollectionDay} />
+
 
                 <div className="flex gap-1 items-center my-5">
                   <input type="checkbox" name="bagName" id="bagId" />

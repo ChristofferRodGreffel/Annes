@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-const OpeningHoursSelect = () => {
+const OpeningHoursSelect = (props) => {
   const [openingHours, setOpeningHours] = useState([]);
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const today = new Date().getDay() // 0 for Sunday, 1 for Monday, and so on
   const todayHour = new Date().getHours()
   const todayMinute = new Date().getMinutes()
+  
 
+  const currentDate = new Date()
 
   const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt")
 
@@ -37,10 +39,13 @@ const OpeningHoursSelect = () => {
           if ((hour === endHour && minute > 45)) {
             break
           }
-
-          // sørger for at man ikke kan vælge en tid om mindre end 10 min.
-          if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {  
-            continue
+          
+          // Tjekker om man har valgt den akutelle dag 
+          if(currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString()) {
+            // sørger for at man ikke kan vælge en tid om mindre end 10 min.
+            if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {  
+              continue
+            }
           }
 
           const formattedHour = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
@@ -52,7 +57,7 @@ const OpeningHoursSelect = () => {
     };
 
     calculateOpeningHours();
-  }, []);
+  }, [props.chosenCollectionDay]);
 
   return (
     <div className='flex flex-col gap-2'>
