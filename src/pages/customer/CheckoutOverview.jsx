@@ -34,14 +34,14 @@ function CheckoutOverview() {
         hideRightIcon={true}
       />
       <PageWrapperContainer>
-        <div className="mt-10">
+        <div className="breakout mt-10">
           <h1 className="text-3xl font-bold">Din bestilling </h1>
         </div>
-        <div>
+        <div className="breakout mt-5 mb-5">
           {allBasketProducts?.map((product, key) => {
             return (
               <div key={key}>
-                <CheckoutProduct product={product} />
+                <CheckoutProduct product={product} index={key} length={allBasketProducts?.length} />
               </div>
             );
           })}
