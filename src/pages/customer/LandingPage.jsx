@@ -17,24 +17,6 @@ function LandingPage() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
 
-  const uid = FIREBASE_AUTH.currentUser?.uid;
-
-  const [customerName, setCustomerName] = useState("");
-
-  useEffect(() => {
-    const getCustomerNameAndPhone = async () => {
-      if (uid) {
-        const docRef = doc(FIREBASE_DB, "users", uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setCustomerName(docSnap.data().name);
-        } else {
-        }
-      }
-    };
-    getCustomerNameAndPhone();
-  }, [uid]);
-
   useEffect(() => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
 
