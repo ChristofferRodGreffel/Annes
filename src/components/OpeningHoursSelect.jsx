@@ -10,7 +10,7 @@ const OpeningHoursSelect = (props) => {
   const [shopIsClosed, setShopIsClosed] = useState(false)
   const currentDate = new Date()
 
-  const shopClosingTime = "2052"
+  const shopClosingTime = "1830"
 
   const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt")
 
