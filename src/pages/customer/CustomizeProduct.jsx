@@ -87,6 +87,8 @@ const CustomizeProduct = () => {
       },
       price: productPrice * amount,
       amount: amount,
+      bread: chosenBread,
+      name: productName,
     };
 
     localStorageBasket(completeProduct);
@@ -165,14 +167,14 @@ const CustomizeProduct = () => {
                     className="border-2 border-dark rounded-full py-1 px-3 font-medium w-fit"
                     name="dressingSelect"
                     id="dressingSelect"
-                    defaultValue={"mayo"}
+                    defaultValue={"Mayo"}
                     onChange={(e) => setDressingTop(e.target.value)}
                   >
-                    <option value="fravalgt">Ingen dressing</option>
-                    <option value="mayo">Mayo</option>
-                    <option value="karry">Karry</option>
-                    <option value="pesto">Grøn pesto</option>
-                    <option value="chilimayo">Chilimayo +5 kr.</option>
+                    <option value="Fravalgt">Ingen dressing</option>
+                    <option value="Mayo">Mayo</option>
+                    <option value="Karry">Karry</option>
+                    <option value="Pesto">Grøn pesto</option>
+                    <option value="Chilimayo">Chilimayo +5 kr.</option>
                   </select>
                 </div>
                 <div className="flex flex-row w-full items-center justify-between gap-3">
@@ -181,14 +183,14 @@ const CustomizeProduct = () => {
                     className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium"
                     name="dressingSelect"
                     id="dressingSelect"
-                    defaultValue="mayo"
+                    defaultValue="Mayo"
                     onChange={(e) => setDressingBottom(e.target.value)}
                   >
-                    <option value="fravalgt">Ingen dressing</option>
-                    <option value="mayo">Mayo</option>
-                    <option value="karry">Karry</option>
-                    <option value="pesto">Grøn pesto</option>
-                    <option value="chilimayo">Chilimayo +5 kr.</option>
+                    <option value="Fravalgt">Ingen dressing</option>
+                    <option value="Mayo">Mayo</option>
+                    <option value="Karry">Karry</option>
+                    <option value="Pesto">Grøn pesto</option>
+                    <option value="Chilimayo">Chilimayo +5 kr.</option>
                   </select>
                 </div>
               </div>
