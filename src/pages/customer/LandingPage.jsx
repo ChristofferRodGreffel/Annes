@@ -75,7 +75,7 @@ function LandingPage() {
 
   return (
     <>
-      <CustomerBottomInfoContainer text="Gå til kurv" amount={amountFromBasket} price={priceFromBasket} function={() => navigate("/kurv")} />
+      <CustomerBottomInfoContainer text="Gå til kurv" amount={amountFromBasket} showAmount={true} price={priceFromBasket} function={() => navigate("/kurv")} />
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">
