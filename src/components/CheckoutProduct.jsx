@@ -63,7 +63,9 @@ const CheckoutProduct = (props) => {
             </button>
           </div>
           <div>
-            <p className="font-bold text-2xl">{props.product.price * props.product.amount} kr.</p>
+            <p className="font-bold text-2xl">
+              {(props.product.price * props.product.amount).toLocaleString("da-DK")} kr.
+            </p>
           </div>
         </div>
       </div>

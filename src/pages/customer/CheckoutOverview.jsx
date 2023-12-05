@@ -131,7 +131,7 @@ function CheckoutOverview() {
                 </div>
                 <div className="text-2xl font-bold flex justify-between items-center">
                   <h2>I alt:</h2>
-                  <p>{priceFromBasket} kr.</p>
+                  <p>{priceFromBasket.toLocaleString("da-DK")} kr.</p>
                 </div>
               </div>
 
