@@ -2,6 +2,18 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        slowZoom: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
+          "100%": { transform: "rotate(1)" },
+        },
+      },
+
+      animation: {
+        slowZoom: "slowZoom 1.5s ease-in-out infinite",
+      },
+
       minWidth: {
         sidebarMinWidth: "20rem",
         productOverviewMinWidth: "400px",

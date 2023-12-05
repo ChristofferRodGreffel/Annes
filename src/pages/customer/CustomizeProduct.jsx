@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
@@ -109,6 +109,40 @@ const CustomizeProduct = () => {
     }
   };
 
+  const prevDressingRefTop = useRef(dressingTop);
+  const prevDressingRefBottom = useRef(dressingBottom);
+
+  const changeDressing = (value, target) => {
+    switch (target) {
+      case "dressingTop":
+        setDressingTop(value);
+        if (prevDressingRefTop.current !== "Chilimayo" && value === "Chilimayo") {
+          setProductPrice((price) => price + 5);
+          prevDressingRefTop.current = value;
+          return;
+        } else if (prevDressingRefTop.current === "Chilimayo" && value !== "Chilimayo") {
+          setProductPrice((price) => price - 5);
+          prevDressingRefTop.current = value;
+        }
+        break;
+
+      case "dressingBottom":
+        setDressingBottom(value);
+        if (prevDressingRefBottom.current !== "Chilimayo" && value === "Chilimayo") {
+          setProductPrice((price) => price + 5);
+          prevDressingRefBottom.current = value;
+          return;
+        } else if (prevDressingRefBottom.current === "Chilimayo" && value !== "Chilimayo") {
+          setProductPrice((price) => price - 5);
+          prevDressingRefBottom.current = value;
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
@@ -119,7 +153,7 @@ const CustomizeProduct = () => {
           alt={`Billede af ${productInfo?.name}`}
         />
 
-        <div className="breakout mb-28 md:w-3/6 md:m-auto md:flex md:flex-col">
+        <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
           <div className="mt-8">
             <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
             <div className="flex flex-col w-fit mt-5">
@@ -163,13 +197,13 @@ const CustomizeProduct = () => {
               <h2 className="mb-2 text-lg font-semibold">Vælg dressing</h2>
               <div className="flex flex-col gap-3 w-2/3">
                 <div className="flex flex-row w-full items-center justify-between gap-3">
-                  <label htmlFor="dressingSelect">Top</label>
+                  <label htmlFor="dressingSelectTop">Top</label>
                   <select
                     className="border-2 border-dark rounded-full py-1 px-3 font-medium w-fit"
-                    name="dressingSelect"
-                    id="dressingSelect"
+                    name="dressingTop"
+                    id="dressingSelectTop"
                     defaultValue={"Mayo"}
-                    onChange={(e) => setDressingTop(e.target.value)}
+                    onChange={(e) => changeDressing(e.target.value, e.target.name)}
                   >
                     <option value="Fravalgt">Ingen dressing</option>
                     <option value="Mayo">Mayo</option>
@@ -179,13 +213,13 @@ const CustomizeProduct = () => {
                   </select>
                 </div>
                 <div className="flex flex-row w-full items-center justify-between gap-3">
-                  <label htmlFor="dressingSelect">Bund</label>
+                  <label htmlFor="dressingSelectBottom">Bund</label>
                   <select
                     className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium"
-                    name="dressingSelect"
-                    id="dressingSelect"
+                    name="dressingBottom"
+                    id="dressingSelectBottom"
                     defaultValue="Mayo"
-                    onChange={(e) => setDressingBottom(e.target.value)}
+                    onChange={(e) => changeDressing(e.target.value, e.target.name)}
                   >
                     <option value="Fravalgt">Ingen dressing</option>
                     <option value="Mayo">Mayo</option>
