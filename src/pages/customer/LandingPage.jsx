@@ -16,7 +16,7 @@ function LandingPage() {
 
   const [amountFromBasket, setAmountFromBasket] = useState(0)
   const [priceFromBasket, setPriceFromBasket] = useState(0)
-
+ 
   useEffect(() => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
 
