@@ -80,7 +80,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="breakout flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-center">
+        <div className="breakout flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-evenly">
           {!loading ? (
             allProducts?.map((product, key) => {
               return (
