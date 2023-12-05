@@ -6,13 +6,13 @@ const CheckoutProduct = (props) => {
       <div className={`py-4 border-t-2 border-dark font-medium ${props.index + 1 === props.length && "border-b-2"}`}>
         <div className="flex justify-between items-center mb-3 gap-1">
           <h2 className="text-xl font-bold">{props.product.name}</h2>
-          <div className="flex items-center gap-4 select-none mt-1">
+          <div className="flex items-center justify-between min-w-[95px] select-none mt-1">
             <i
-              onClick={props.product.decrease}
+              onClick={() => props.decrease(props.product)}
               className={`fa-solid fa-circle-minus text-xl ${props.product.amount === 1 && `text-grey`}`}
             ></i>
             <p className="font-bold text-2xl">{props.product.amount}</p>
-            <i onClick={props.product.increase} className="fa-solid fa-circle-plus text-xl"></i>
+            <i onClick={() => props.increase(props.product)} className="fa-solid fa-circle-plus text-xl"></i>
           </div>
         </div>
         <div className="flex justify-between">
@@ -27,7 +27,7 @@ const CheckoutProduct = (props) => {
               <b>Dressing Bund:</b> {props.product.dressing.bottom}
             </p>
           </div>
-          <div className="flex w-min">
+          <div className="flex min-w-max whitespace-pre-wrap">
             <div>
               <div>
                 {props.product?.added?.map((ingredient, key) => {

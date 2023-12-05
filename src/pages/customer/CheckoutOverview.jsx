@@ -6,6 +6,8 @@ import OpeningHoursSelect from "../../components/OpeningHoursSelect";
 import CollectionDatePicker from "../../components/CollectionDatePicker";
 import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import CustomButton from "../../components/CustomButton";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { toast } from "react-toastify";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
@@ -26,7 +28,6 @@ function CheckoutOverview() {
       basketFromStorage.forEach((subData) => (totalPriceFromBasket += subData.price));
       basketFromStorage.forEach((subData) => (totalAmountFromBasket += subData.amount));
 
-      console.log("kører!");
       setAllBasketProducts(basketFromStorage);
       setPriceFromBasket(totalPriceFromBasket);
       setAmountFromBasket(totalAmountFromBasket);
@@ -45,6 +46,28 @@ function CheckoutOverview() {
     localStorage.setItem("customerCheckout", JSON.stringify(newBasket));
     setAllBasketProducts(newBasket);
     updateFromLocalStorage();
+    toast.success("Produkt slettet", DefaultToastifySettings);
+  };
+
+  const handleIncrease = (product) => {
+    product.amount += 1;
+    const newBasket = [...allBasketProducts];
+    localStorage.setItem("customerCheckout", JSON.stringify(newBasket));
+    setAllBasketProducts(newBasket);
+    updateFromLocalStorage();
+  };
+
+  const handleDecrease = (product) => {
+    let current = product.amount;
+    if (current > 1) {
+      product.amount -= 1;
+      const newBasket = [...allBasketProducts];
+      localStorage.setItem("customerCheckout", JSON.stringify(newBasket));
+      setAllBasketProducts(newBasket);
+      updateFromLocalStorage();
+    } else {
+      toast.error("Brug 'slet' knappen til at fjerne et produkt", DefaultToastifySettings);
+    }
   };
 
   return (
@@ -73,6 +96,8 @@ function CheckoutOverview() {
                       index={key}
                       length={allBasketProducts?.length}
                       handleDeleteProduct={handleDeleteProduct}
+                      increase={handleIncrease}
+                      decrease={handleDecrease}
                     />
                   </div>
                 );
@@ -82,7 +107,7 @@ function CheckoutOverview() {
             )}
           </div>
 
-          {allBasketProducts && (
+          {allBasketProducts && allBasketProducts != 0 && (
             <div>
               <div className="flex flex-col gap-3">
                 <div className="text-2xl font-bold flex justify-between items-center">

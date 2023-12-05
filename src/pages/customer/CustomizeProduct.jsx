@@ -215,7 +215,7 @@ const CustomizeProduct = () => {
           </div>
           <div className="mt-5">
             <h2 className="text-lg font-semibold">Vælg antal</h2>
-            <div className="flex items-center gap-4 select-none mt-1">
+            <div className="flex items-center justify-between min-w-[95px] w-fit select-none mt-1">
               <i
                 onClick={handleAmountDecrease}
                 className={`fa-solid fa-circle-minus text-xl ${amount === 1 && `text-grey`}`}
