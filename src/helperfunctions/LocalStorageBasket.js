@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
-
 export default function localStorageBasket(newProduct) {
-  const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
+  const basketFromStorage = localStorage.getItem("customerCheckout");
 
   if (basketFromStorage) {
-    let newBasket = basketFromStorage;
+    let newBasket = JSON.parse(basketFromStorage);
     newBasket.push(newProduct);
     localStorage.setItem("customerCheckout", JSON.stringify(newBasket));
   } else {

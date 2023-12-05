@@ -78,7 +78,7 @@ const SignUp = () => {
             </div>
             <div className="flex flex-col">
               <label htmlFor="phone">Dit telefonnr.</label>
-              <input type="number" required name="phone" />
+              <input type="tel" required name="phone" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="email">Din email*</label>
