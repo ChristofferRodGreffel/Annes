@@ -28,6 +28,55 @@ function CustomInputWithLabel(props) {
           </div>
         </>
       )}
+      {props.type == "textarea" && (
+        <>
+          <div className="flex flex-col gap-1">
+            <label className="font-semibold text-lg mb-1" htmlFor={props.name}>
+              {props.label}
+            </label>
+            <textarea
+              className="py-2 px-3 rounded-xl border-2 border-dark h-40"
+              maxLength={200}
+              type={props.type}
+              name={props.name}
+              placeholder={props.placeholder}
+              id={props.name}
+              value={!props.button ? props.value : undefined}
+              onChange={!props.button ? (e) => props.customSetvalue(e.target.value) : undefined}
+            />
+
+            {props.button && (
+              <>
+                <CustomButton title={props.buttonText} function={props.customOnClick} />
+              </>
+            )}
+          </div>
+        </>
+      )}
+      
+      {props.type == "email" && (
+        <>
+          <div className="flex flex-col gap-1">
+            <label className="font-semibold text-lg mb-1" htmlFor={props.name}>
+              {props.label}
+            </label>
+            <input
+              type={props.type}
+              name={props.name}
+              placeholder={props.placeholder}
+              id={props.name}
+              value={!props.button ? props.value : undefined}
+              onChange={!props.button ? (e) => props.customSetvalue(e.target.value) : undefined}
+            />
+
+            {props.button && (
+              <>
+                <CustomButton title={props.buttonText} function={props.customOnClick} />
+              </>
+            )}
+          </div>
+        </>
+      )}
 
       {props.type == "number" && (
         <>

@@ -27,7 +27,7 @@ const CheckoutProduct = (props) => {
               <b>Dressing Bund:</b> {props.product.dressing.bottom}
             </p>
           </div>
-          <div className="flex">
+          <div className="flex w-min">
             <div>
               <div>
                 {props.product?.added?.map((ingredient, key) => {

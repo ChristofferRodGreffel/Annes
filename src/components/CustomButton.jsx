@@ -3,7 +3,7 @@ import React from "react";
 const CustomButton = (props) => {
   return (
     <button
-      className="flex justify-center items-center gap-2 bg-primary rounded-lg p-2 text-white font-semibold"
+      className={`flex justify-center items-center gap-2 bg-primary rounded-lg p-2 text-white font-semibold ${props.customWidth && props.customWidth}`}
       onClick={props.function}
       disabled={props.disabled ? true : false}
       type={props.type}

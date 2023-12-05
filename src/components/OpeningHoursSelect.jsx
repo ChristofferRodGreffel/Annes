@@ -56,8 +56,8 @@ const OpeningHoursSelect = () => {
 
   return (
     <div className='flex flex-col gap-2'>
-      <label>Vælg afhentningstid*</label>
-      <select className='w-40' onChange={(e) => {handleChangeTime(e)}}>
+      <label className='font-semibold'>Vælg afhentningstid*</label>
+      <select className='px-4 py-2 border-2 border-dark rounded-lg' onChange={(e) => {handleChangeTime(e)}}>
         {openingHours.map((hour, index) => (
           <option key={index} value={hour}>
             {hour}

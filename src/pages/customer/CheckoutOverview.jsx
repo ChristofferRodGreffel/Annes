@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import PageH1Title from "../../components/PageH1Title";
 import CheckoutProduct from "../../components/CheckoutProduct";
 import OpeningHoursSelect from "../../components/OpeningHoursSelect";
+import CollectionDatePicker from "../../components/CollectionDatePicker";
+
+import CustomInputWithLabel from "../../components/CustomInputWithLabel";
+import CustomButton from "../../components/CustomButton";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
@@ -26,6 +30,12 @@ function CheckoutOverview() {
     }
   }, []);
 
+  const formRef = useRef(null)
+
+  const handlePlaceOrder = (e) => {
+    e.preventDefault()
+  }
+
   return (
     <>
       <CustomerHeader
@@ -35,8 +45,15 @@ function CheckoutOverview() {
         hideRightIcon={true}
       />
       <PageWrapperContainer>
+
+
         <div className="breakout mt-10">
-          <h1 className="text-3xl font-bold">Din bestilling </h1>
+          <h1 className="text-3xl font-bold flex items-center justify-between">
+            Din kurv
+            <i className="fa-solid fa-basket-shopping"></i>
+          </h1>
+
+
         </div>
         <div className="breakout mt-5 mb-5">
           {allBasketProducts?.map((product, key) => {
@@ -61,6 +78,38 @@ function CheckoutOverview() {
 
         <div className="my-5">
           <OpeningHoursSelect />
+
+          <CollectionDatePicker />
+
+          <div className="flex gap-2 items-center my-5">
+            <input type="checkbox" name="bagName" id="bagId" />
+            <label htmlFor="bagId">Pakkes i pose (+4 kr.)</label>
+          </div>
+
+          <CustomInputWithLabel type="textarea" label="Evt. kommentar**" name="commentField" placeholder="Skriv kommentar her..." />
+
+          <p className="italic mt-2 mb-5">
+            * Der tages forbehold for forsinkelser
+            <br />
+            ** Vi kan ikke garentere at kunne opfylde
+            dine ønsker
+          </p>
+
+          <form ref={formRef} onSubmit={handlePlaceOrder}>
+            <div className="flex flex-col gap-4">
+              <CustomInputWithLabel type="text" label="Dit navn" name="customerInputName" placeholder="Skriv navn her..." />
+              <CustomInputWithLabel type="number" label="Dit telefonnumer" name="customerInputPhone" placeholder="Skriv nr. her..." />
+              <CustomInputWithLabel type="email" label="Din email" name="customerInputEmail" placeholder="Skriv email her..." />
+            </div>
+
+            <div className="flex gap-2 items-center my-5">
+              <input type="checkbox" name="customerNotification" id="customerNotification" />
+              <label htmlFor="customerNotification">Modtag SMS med statusopdateringer</label>
+            </div>
+
+              <CustomButton customWidth="w-full" title="Send bestilling til butik" icon={"fa-solid fa-paper-plane"} />
+
+          </form>
         </div>
 
       </PageWrapperContainer>
