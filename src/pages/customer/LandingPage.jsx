@@ -7,7 +7,6 @@ import ProductCard from "../../components/ProductCard";
 import { PulseLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
-import PageH1Title from "../../components/PageH1Title";
 
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
@@ -58,6 +57,7 @@ function LandingPage() {
       <CustomerBottomInfoContainer
         text="Gå til kurv"
         amount={amountFromBasket}
+        showAmount={true}
         price={priceFromBasket}
         function={() => navigate("/kurv")}
       />

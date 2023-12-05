@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 function CustomerBottomInfoContainer(props) {
   const [amountOfChosenProducts, setAmountOfChosenProducts] = useState(0);
@@ -17,9 +16,7 @@ function CustomerBottomInfoContainer(props) {
       {amountOfChosenProducts !== 0 && (
         <div className="z-20 bg-dark h-20 p-3 fixed bottom-0 w-screen flex justify-center gap-10 items-center">
           <div className="text-white">
-            {props.showAmount && amountOfChosenProducts != 0 && (
-              <p>{amountOfChosenProducts} stk.</p>
-            )}
+            {props.showAmount && amountOfChosenProducts != 0 && <p>{amountOfChosenProducts} stk.</p>}
             <p className="text-3xl font-semibold">{totalPrice} kr.</p>
           </div>
 
