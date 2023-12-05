@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { FIREBASE_DB } from "../../../firebase-config";
+import { collection, doc, getDoc, onSnapshot, query } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import ProductCard from "../../components/ProductCard";
 import { PulseLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
+import PageH1Title from "../../components/PageH1Title";
 
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
@@ -15,6 +16,25 @@ function LandingPage() {
 
   const [amountFromBasket, setAmountFromBasket] = useState(0)
   const [priceFromBasket, setPriceFromBasket] = useState(0)
+
+  const uid = FIREBASE_AUTH.currentUser?.uid
+
+  const [customerName, setCustomerName] = useState("")
+
+  useEffect(() => {
+
+    const getCustomerNameAndPhone = async () => {
+      if (uid) {
+        const docRef = doc(FIREBASE_DB, "users", uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setCustomerName(docSnap.data().name)
+        } else {
+        }
+      }
+    }
+    getCustomerNameAndPhone();
+  }, [uid]);
 
   useEffect(() => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
@@ -59,6 +79,9 @@ function LandingPage() {
       <CustomerHeader nav={true} iconLeft="fa-solid fa-bars" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <div className="mt-16 lg:w-1/3 lg:m-auto lg:mt-16">
+          {customerName && (
+            <PageH1Title>Velkommen, <span className="italic font-normal">{customerName}</span></PageH1Title>
+          )}
           <h2 className="text-center mb-3">Vælg mellem 5-6 brødtypper</h2>
           <div className="flex flex-col gap-2">
             <div className="flex justify-between border-b-2 border-grey border-dashed">

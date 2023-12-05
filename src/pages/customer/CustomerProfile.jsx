@@ -49,7 +49,6 @@ const CustomerProfile = () => {
         } else {
         }
       }
-
     }
     getCustomerNameAndPhone();
   }, [uid]);
