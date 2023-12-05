@@ -6,11 +6,11 @@ function CustomerBottomInfoContainer(props) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    if(props.amount && props.price) {
-      setAmountOfChosenProducts(props.amount)
-      setTotalPrice(props.price)
+    if (props.amount && props.price) {
+      setAmountOfChosenProducts(props.amount);
+      setTotalPrice(props.price);
     }
-  }, [props])
+  }, [props]);
 
   return (
     <>
