@@ -17,6 +17,7 @@ import CustomizeProduct from "./pages/customer/CustomizeProduct";
 import CheckoutOverview from "./pages/customer/CheckoutOverview";
 import AdminSettings from "./pages/admin/AdminSettings";
 import Ingredients from "./pages/admin/Ingredients";
+import ScrollToTop from "./helperfunctions/ScrollToTop";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -61,6 +62,7 @@ function App() {
         <Route path="/bestil-online/:productName" element={<CustomizeProduct />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
+      <ScrollToTop />
     </>
   );
 }

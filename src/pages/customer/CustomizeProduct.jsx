@@ -58,7 +58,6 @@ const CustomizeProduct = () => {
     }
   };
 
-
   const handleAddProduct = () => {
     const defaultIngredients = document.querySelectorAll("#defaultIngredients input[type='checkbox']");
     const extraIngredientsForm = document.querySelectorAll("#extraIngredients input[type='checkbox']");
@@ -92,7 +91,7 @@ const CustomizeProduct = () => {
 
     localStorageBasket(completeProduct);
     toast.success("Produkt tilføjet", DefaultToastifySettings);
-    navigate("/")
+    navigate("/");
   };
 
   const handleExtraIngredientChange = (ingredient, e) => {
@@ -112,7 +111,7 @@ const CustomizeProduct = () => {
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <PageWrapperContainer>
         <img
-          className="full-width mt-5 md:content"
+          className="full-width mt-5 md:content h-56"
           src={productInfo?.imageURL}
           alt={`Billede af ${productInfo?.name}`}
         />
@@ -224,7 +223,14 @@ const CustomizeProduct = () => {
             </div>
           </div>
         </div>
-        <CustomerBottomInfoContainer function={handleAddProduct} customNavigate={navigate} showAmount={false} text="Tilføj til kurv" price={productPrice * amount} amount={amount} />
+        <CustomerBottomInfoContainer
+          function={handleAddProduct}
+          customNavigate={navigate}
+          showAmount={false}
+          text="Tilføj til kurv"
+          price={productPrice * amount}
+          amount={amount}
+        />
       </PageWrapperContainer>
     </>
   );
