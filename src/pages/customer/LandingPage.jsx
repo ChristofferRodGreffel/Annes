@@ -11,8 +11,6 @@ import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoCont
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { productName } = useParams();
-
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
 

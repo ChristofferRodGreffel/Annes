@@ -55,7 +55,7 @@ const CustomerNavigation = () => {
           <i className="fa-solid fa-utensils"></i>
         </Link>
         <hr />
-        <Link to={"/bestillinger"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+        <Link to={"/følg-bestilling"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
           <h3>Bestillinger</h3>
           <i className="fa-solid fa-clock-rotate-left"></i>
         </Link>

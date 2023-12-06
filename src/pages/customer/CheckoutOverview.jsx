@@ -9,7 +9,7 @@ import CustomButton from "../../components/CustomButton";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 
 function CheckoutOverview() {
@@ -18,7 +18,7 @@ function CheckoutOverview() {
   const [allBasketProducts, setAllBasketProducts] = useState();
 
   const [chosenCollectionDate, setChosenCollectionDate] = useState(new Date());
-  const [chosenCollectionTime, setChosenCollectionTime] = useState();
+  const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt");
   const [comment, setComment] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -85,8 +85,9 @@ function CheckoutOverview() {
     }
   };
 
-  // Kører når kunden vil sende ordren afsted. Tilføj flere kommentarer her...
-  const handlePlaceOrder = (e) => {
+  // Kører når kunden vil sende ordren afsted.
+  // Vi bygger et samlet objekt som indeholder alt information omkring ordren.
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
@@ -105,17 +106,49 @@ function CheckoutOverview() {
       comment: comment,
       bagged: bagCheckbox,
       notifications: smsCheckbox,
+      status: "pending",
+      orderNo: await generateOrderNumber(),
     };
 
-    console.log(completeOrder);
     pushOrderToFirestore(completeOrder);
   };
 
   const pushOrderToFirestore = async (order) => {
     // Add a new document with a generated id.
     const docRef = await addDoc(collection(FIREBASE_DB, "orders"), { order });
-    localStorage.setItem("currentOrder", docRef.id);
-    navigate(`/orderstatus/:${docRef.id}`);
+    localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
+    localStorage.removeItem("customerCheckout");
+    navigate(`/følg-bestilling/${docRef.id}`);
+  };
+
+  // Genereate a order number which is the next in the sequence starting from 1
+  const generateOrderNumber = async () => {
+    let currentOrderNumber = 0;
+
+    // Get 'counter' document
+    const docRef = doc(FIREBASE_DB, "orders", "counter");
+    const docSnap = await getDoc(docRef);
+
+    // If 'counter' exists, set currentOrderNumber to that value + 1
+    // If not, then set the currentOrderNumber to 1 (the first order)
+    if (docSnap.exists()) {
+      currentOrderNumber = docSnap.data().count + 1;
+    } else {
+      currentOrderNumber = 1;
+      await setDoc(doc(FIREBASE_DB, "orders", "counter"), {
+        count: currentOrderNumber,
+      });
+    }
+
+    // Update the counter document to be up to date
+    const orderCounterRef = doc(FIREBASE_DB, "orders", "counter");
+
+    await updateDoc(orderCounterRef, {
+      count: currentOrderNumber,
+    });
+
+    // Then return the order number for the order object to use
+    return currentOrderNumber;
   };
 
   return (
