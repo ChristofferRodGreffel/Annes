@@ -54,7 +54,7 @@ const CustomizeProduct = () => {
       setAmount((amount) => amount - 1);
       setTotalPrice((price) => price - productPrice);
     } else {
-      toast.error("Vælg mindst én af denne slags", DefaultToastifySettings);
+      toast.error("Du kan ikke vælge mindre end én", DefaultToastifySettings);
     }
   };
 

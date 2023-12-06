@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CheckoutProduct from "../../components/CheckoutProduct";
@@ -8,16 +8,23 @@ import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import CustomButton from "../../components/CustomButton";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
+import { FIREBASE_DB } from "../../../firebase-config";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
   const [allBasketProducts, setAllBasketProducts] = useState();
 
+  const [chosenCollectionDate, setChosenCollectionDate] = useState(new Date());
+  const [chosenCollectionTime, setChosenCollectionTime] = useState();
+  const [comment, setComment] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
 
-
-  const [chosenCollectionDay, setChosenCollectionDay] = useState(new Date());
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateFromLocalStorage();
@@ -78,11 +85,37 @@ function CheckoutOverview() {
     }
   };
 
-  const formRef = useRef(null);
-
   // Kører når kunden vil sende ordren afsted. Tilføj flere kommentarer her...
   const handlePlaceOrder = (e) => {
     e.preventDefault();
+    const bagCheckbox = document.querySelector("#bagId").checked;
+    const smsCheckbox = document.querySelector("#customerNotification").checked;
+
+    const completeOrder = {
+      pickup: {
+        date: chosenCollectionDate.toLocaleDateString("en-GB"),
+        time: chosenCollectionTime,
+      },
+      order: allBasketProducts,
+      customerInfo: {
+        name: customerName,
+        tel: customerPhone,
+        email: customerEmail,
+      },
+      comment: comment,
+      bagged: bagCheckbox,
+      notifications: smsCheckbox,
+    };
+
+    console.log(completeOrder);
+    pushOrderToFirestore(completeOrder);
+  };
+
+  const pushOrderToFirestore = async (order) => {
+    // Add a new document with a generated id.
+    const docRef = await addDoc(collection(FIREBASE_DB, "orders"), { order });
+    localStorage.setItem("currentOrder", docRef.id);
+    navigate(`/orderstatus/:${docRef.id}`);
   };
 
   return (
@@ -136,10 +169,16 @@ function CheckoutOverview() {
               </div>
 
               <div className="my-5">
-                <CollectionDatePicker chosenCollectionDay={chosenCollectionDay} setChosenCollectionDay={setChosenCollectionDay} />
+                <CollectionDatePicker
+                  chosenCollectionDate={chosenCollectionDate}
+                  setChosenCollectionDate={setChosenCollectionDate}
+                />
 
-                <OpeningHoursSelect chosenCollectionDay={chosenCollectionDay} />
-
+                <OpeningHoursSelect
+                  chosenCollectionDate={chosenCollectionDate}
+                  setChosenCollectionTime={setChosenCollectionTime}
+                  chosenCollectionTime={chosenCollectionTime}
+                />
 
                 <div className="flex gap-1 items-center my-5">
                   <input type="checkbox" name="bagName" id="bagId" />
@@ -151,6 +190,7 @@ function CheckoutOverview() {
                   label="Evt. kommentar**"
                   name="commentField"
                   placeholder="Skriv kommentar her..."
+                  customSetvalue={setComment}
                 />
 
                 <p className="italic mt-2 mb-5">
@@ -159,25 +199,28 @@ function CheckoutOverview() {
                   ** Vi kan ikke garentere at kunne opfylde dine ønsker
                 </p>
 
-                <form ref={formRef} onSubmit={handlePlaceOrder}>
+                <form onSubmit={handlePlaceOrder}>
                   <div className="flex flex-col gap-4">
                     <CustomInputWithLabel
                       type="text"
                       label="Dit navn"
                       name="customerInputName"
                       placeholder="Skriv navn her..."
+                      customSetvalue={setCustomerName}
                     />
                     <CustomInputWithLabel
                       type="tel"
                       label="Dit telefonnummer"
                       name="customerInputPhone"
                       placeholder="Skriv telefonnr. her..."
+                      customSetvalue={setCustomerPhone}
                     />
                     <CustomInputWithLabel
                       type="email"
                       label="Din email"
                       name="customerInputEmail"
                       placeholder="Skriv email her..."
+                      customSetvalue={setCustomerEmail}
                     />
                   </div>
 

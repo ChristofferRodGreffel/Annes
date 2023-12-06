@@ -18,6 +18,7 @@ import CheckoutOverview from "./pages/customer/CheckoutOverview";
 import AdminSettings from "./pages/admin/AdminSettings";
 import Ingredients from "./pages/admin/Ingredients";
 import ScrollToTop from "./helperfunctions/ScrollToTop";
+import OrderStatus from "./pages/customer/OrderStatus";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -57,6 +58,7 @@ function App() {
         <Route path="/kurv" element={<CheckoutOverview />} />
         <Route path="/profil" element={<CustomerProfile />} />
         <Route path="/bestil-online" element={<LandingPage />} />
+        <Route path="/følg-bestilling/:orderId" element={<OrderStatus />} />
         <Route path="/log-ind" element={<SignIn />} />
         <Route path="/opret-profil" element={<SignUp />} />
         <Route path="/bestil-online/:productName" element={<CustomizeProduct />} />

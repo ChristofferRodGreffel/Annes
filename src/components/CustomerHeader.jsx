@@ -37,7 +37,7 @@ const CustomerHeader = (props) => {
           ></i>
         )}
 
-        <Link to={"/"}>
+        <Link to={"/"} className="md:m-auto">
           <img src={logo} alt="logo" className="w-40" />
         </Link>
 

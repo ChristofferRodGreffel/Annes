@@ -1,35 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const OpeningHoursSelect = (props) => {
   const [openingHours, setOpeningHours] = useState([]);
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const today = new Date().getDay() // 0 for Sunday, 1 for Monday, and so on
-  const todayHour = new Date().getHours()
-  const todayMinute = new Date().getMinutes()
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, and so on
+  const todayHour = new Date().getHours();
+  const todayMinute = new Date().getMinutes();
 
-  const [shopIsClosed, setShopIsClosed] = useState(false)
-  const currentDate = new Date()
+  const [shopIsClosed, setShopIsClosed] = useState(false);
+  const currentDate = new Date();
 
-  const shopClosingTime = "1830"
-
-  const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt")
-
+  const shopClosingTime = "1830";
 
   const handleChangeTime = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const time = e.target.value
-    setChosenCollectionTime(time)
-  }
+    const time = e.target.value;
+    props.setChosenCollectionTime(time);
+  };
 
   useEffect(() => {
-    if (currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString() && `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime) {
-      setShopIsClosed(true)
+    if (
+      currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() &&
+      `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
+    ) {
+      setShopIsClosed(true);
     } else {
-      setShopIsClosed(false)
+      setShopIsClosed(false);
     }
-  }, [props, currentDate])
-
+  }, [props, currentDate]);
 
   useEffect(() => {
     // Function to calculate the opening hours based on the current day
@@ -44,21 +43,20 @@ const OpeningHoursSelect = (props) => {
 
       for (let hour = startHour; hour <= endHour; hour++) {
         for (let minute = 0; minute < 60; minute += 10) {
-
           // Stopper listen efter 18.40
-          if ((hour === endHour && minute > 45)) {
-            break
+          if (hour === endHour && minute > 45) {
+            break;
           }
 
-          // Tjekker om man har valgt den akutelle dag 
-          if (currentDate.toLocaleDateString() === props.chosenCollectionDay.toLocaleDateString()) {
+          // Tjekker om man har valgt den akutelle dag
+          if (currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString()) {
             // sørger for at man ikke kan vælge en tid om mindre end 10 min.
             if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {
-              continue
+              continue;
             }
           }
 
-          const formattedHour = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+          const formattedHour = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
           openingHoursArray.push(formattedHour);
         }
       }
@@ -67,31 +65,37 @@ const OpeningHoursSelect = (props) => {
     };
 
     calculateOpeningHours();
-  }, [props.chosenCollectionDay]);
+  }, [props.chosenCollectionDate]);
 
   return (
-    <div className='flex flex-col gap-2'>
-
-      {shopIsClosed ?
-
+    <div className="flex flex-col gap-2">
+      {shopIsClosed ? (
         <>
-          <p className='text-sm italic'>Det er desværre for sent at bestille til i dag.</p>
+          <p className="text-sm italic">Det er desværre for sent at bestille til i dag.</p>
         </>
-        :
+      ) : (
         <>
-          <label className='font-semibold'>Vælg afhentningstid*</label>
-          <select className='px-4 py-2 border-2 border-dark rounded-lg' onChange={(e) => { handleChangeTime(e) }}>
+          <label className="font-semibold">Vælg afhentningstid*</label>
+          <select
+            className="px-4 py-2 border-2 border-dark rounded-lg"
+            onChange={(e) => {
+              handleChangeTime(e);
+            }}
+          >
             {openingHours.map((hour, index) => (
               <option key={index} value={hour}>
                 {hour}
               </option>
             ))}
           </select>
-          {chosenCollectionTime == "Hurtigst muligt" && (
-            <p className='text-sm italic'>Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min. afhængig af størrelsen.</p>
+          {props.chosenCollectionTime == "Hurtigst muligt" && (
+            <p className="text-sm italic">
+              Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min.
+              afhængig af størrelsen.
+            </p>
           )}
         </>
-      }
+      )}
     </div>
   );
 };
