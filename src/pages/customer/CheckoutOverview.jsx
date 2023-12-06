@@ -18,13 +18,19 @@ function CheckoutOverview() {
   const [allBasketProducts, setAllBasketProducts] = useState();
 
   const [chosenCollectionDate, setChosenCollectionDate] = useState(new Date());
-  const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt");
+  const [chosenCollectionTime, setChosenCollectionTime] = useState();
   const [comment, setComment] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
 
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    setChosenCollectionTime("Hurtigst muligt")
+  }, [chosenCollectionDate])
+
 
   useEffect(() => {
     updateFromLocalStorage();
