@@ -146,8 +146,6 @@ function CreateMenuProduct() {
         break;
     }
 
-    
-
     let chosenBreadNames = [];
     let chosenIngredientNames = [];
 
