@@ -18,13 +18,34 @@ function CheckoutOverview() {
   const [allBasketProducts, setAllBasketProducts] = useState();
 
   const [chosenCollectionDate, setChosenCollectionDate] = useState(new Date());
-  const [chosenCollectionTime, setChosenCollectionTime] = useState("Hurtigst muligt");
+  const [chosenCollectionTime, setChosenCollectionTime] = useState();
   const [comment, setComment] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
 
   const navigate = useNavigate();
+
+  const currentDate = new Date()
+  const [shopIsClosed, setShopIsClosed] = useState(false);
+
+  useEffect(() => {
+    const shopClosingTime = "1830";
+
+    if (
+      currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() &&
+      `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
+    ) {
+      setShopIsClosed(true);
+    } else {
+      setShopIsClosed(false);
+    }
+  }, [chosenCollectionDate, currentDate]);
+
+  useEffect(() => {
+    setChosenCollectionTime("Hurtigst muligt")
+  }, [chosenCollectionDate])
+
 
   useEffect(() => {
     updateFromLocalStorage();
@@ -122,6 +143,7 @@ function CheckoutOverview() {
     localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
     localStorage.removeItem("customerCheckout");
     navigate(`/følg-bestilling/${docRef.id}`);
+    toast.success("Ordre placeret", DefaultToastifySettings);
   };
 
   // Genereate a order number which is the next in the sequence starting from 1
@@ -265,10 +287,15 @@ function CheckoutOverview() {
                     <label htmlFor="customerNotification">Modtag SMS med statusopdateringer</label>
                   </div>
 
+                  {shopIsClosed && (
+                    <p className="text-sm italic text-center text-red">Det er desværre for sent at bestille til i dag.</p>
+                  )}
                   <CustomButton
+                    iconRight={true}
                     customWidth="w-full"
                     title="Send bestilling til butik"
                     icon={"fa-solid fa-paper-plane"}
+                    disabled={shopIsClosed}
                   />
                 </form>
               </div>

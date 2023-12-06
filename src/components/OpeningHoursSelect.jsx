@@ -14,12 +14,12 @@ const OpeningHoursSelect = (props) => {
 
   const handleChangeTime = (e) => {
     e.preventDefault();
-
     const time = e.target.value;
     props.setChosenCollectionTime(time);
   };
-
+  
   useEffect(() => {
+
     if (
       currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() &&
       `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
@@ -30,11 +30,13 @@ const OpeningHoursSelect = (props) => {
     }
   }, [props, currentDate]);
 
+
   useEffect(() => {
     // Function to calculate the opening hours based on the current day
     const calculateOpeningHours = () => {
+
       const currentDay = daysOfWeek[today];
-      const isWeekend = today === 0 || today === 6; // Sunday or Saturday
+      let isWeekend = today === 0 || today === 6 || props.chosenCollectionDate.getDay() === 0 || props.chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 
       // Define opening hours based on the current day
       const startHour = !isWeekend ? 7 : 10;
@@ -65,7 +67,7 @@ const OpeningHoursSelect = (props) => {
     };
 
     calculateOpeningHours();
-  }, [props.chosenCollectionDate]);
+  }, [props]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -81,6 +83,7 @@ const OpeningHoursSelect = (props) => {
             onChange={(e) => {
               handleChangeTime(e);
             }}
+            value={props.chosenCollectionTime}
           >
             {openingHours.map((hour, index) => (
               <option key={index} value={hour}>
