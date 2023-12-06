@@ -11,6 +11,7 @@ function CustomInputWithLabel(props) {
               {props.label}
             </label>
             <input
+              required
               maxLength={50}
               type={props.type}
               name={props.name}
@@ -61,6 +62,7 @@ function CustomInputWithLabel(props) {
               {props.label}
             </label>
             <input
+              required
               type={props.type}
               name={props.name}
               placeholder={props.placeholder}
@@ -85,6 +87,7 @@ function CustomInputWithLabel(props) {
               {props.label}
             </label>
             <input
+              required
               maxLength={50}
               type={props.type}
               name={props.name}
@@ -109,6 +112,7 @@ function CustomInputWithLabel(props) {
               {props.label}
             </label>
             <input
+              required
               maxLength={50}
               type={props.type}
               name={props.name}
