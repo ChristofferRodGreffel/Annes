@@ -26,6 +26,21 @@ function CheckoutOverview() {
 
   const navigate = useNavigate();
 
+  const currentDate = new Date()
+  const [shopIsClosed, setShopIsClosed] = useState(false);
+
+  useEffect(() => {
+    const shopClosingTime = "1830";
+
+    if (
+      currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() &&
+      `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
+    ) {
+      setShopIsClosed(true);
+    } else {
+      setShopIsClosed(false);
+    }
+  }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
     setChosenCollectionTime("Hurtigst muligt")
@@ -271,10 +286,15 @@ function CheckoutOverview() {
                     <label htmlFor="customerNotification">Modtag SMS med statusopdateringer</label>
                   </div>
 
+                  {shopIsClosed && (
+                    <p className="text-sm italic text-center text-red">Det er desværre for sent at bestille til i dag.</p>
+                  )}
                   <CustomButton
+                    iconRight={true}
                     customWidth="w-full"
                     title="Send bestilling til butik"
                     icon={"fa-solid fa-paper-plane"}
+                    disabled={shopIsClosed}
                   />
                 </form>
               </div>
