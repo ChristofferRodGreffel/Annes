@@ -46,7 +46,7 @@ const OrderStatus = () => {
               <i className="fa-solid fa-share-from-square text-xl"></i>
             </div>
           </div>
-          <div className="mt-5">
+          <div className="mt-10">
             <StatusBar status="recieved" />
           </div>
         </div>
