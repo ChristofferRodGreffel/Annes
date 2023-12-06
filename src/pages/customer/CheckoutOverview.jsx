@@ -143,6 +143,7 @@ function CheckoutOverview() {
     localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
     localStorage.removeItem("customerCheckout");
     navigate(`/følg-bestilling/${docRef.id}`);
+    toast.success("Ordre placeret", DefaultToastifySettings);
   };
 
   // Genereate a order number which is the next in the sequence starting from 1
