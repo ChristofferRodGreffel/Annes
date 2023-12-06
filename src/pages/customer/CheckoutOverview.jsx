@@ -92,7 +92,10 @@ function CheckoutOverview() {
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
+    const time = new Date();
+
     const completeOrder = {
+      orderPlacedAt: time,
       pickup: {
         date: chosenCollectionDate.toLocaleDateString("en-GB"),
         time: chosenCollectionTime,
