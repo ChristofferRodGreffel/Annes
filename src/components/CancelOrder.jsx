@@ -18,10 +18,6 @@ const CancelOrder = (props) => {
 
   const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-  // Get the stored order timestamp or set a new one if it doesn't exist
-  const orderTimestamp = localStorage.getItem("OrderTimeStamp") || new Date().getTime();
-  localStorage.setItem("OrderTimeStamp", orderTimestamp);
-
   // Determine remaining time for the countdown
   const initialRemainingTime = Math.max(fiveMinutes - elapsedTime, 0);
 

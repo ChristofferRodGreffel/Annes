@@ -26,7 +26,7 @@ function CheckoutOverview() {
 
   const navigate = useNavigate();
 
-  const currentDate = new Date()
+  const currentDate = new Date();
   const [shopIsClosed, setShopIsClosed] = useState(false);
 
   useEffect(() => {
@@ -43,9 +43,8 @@ function CheckoutOverview() {
   }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
-    setChosenCollectionTime("Hurtigst muligt")
-  }, [chosenCollectionDate])
-
+    setChosenCollectionTime("Hurtigst muligt");
+  }, [chosenCollectionDate]);
 
   useEffect(() => {
     updateFromLocalStorage();
@@ -288,7 +287,9 @@ function CheckoutOverview() {
                   </div>
 
                   {shopIsClosed && (
-                    <p className="text-sm italic text-center text-red">Det er desværre for sent at bestille til i dag.</p>
+                    <p className="text-sm italic text-center text-red">
+                      Det er desværre for sent at bestille til i dag.
+                    </p>
                   )}
                   <CustomButton
                     iconRight={true}
