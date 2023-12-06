@@ -92,7 +92,7 @@ function CheckoutOverview() {
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
-    const time = new Date();
+    const time = new Date().getTime();
 
     const completeOrder = {
       orderPlacedAt: time,
@@ -135,7 +135,7 @@ function CheckoutOverview() {
     // If 'counter' exists, set currentOrderNumber to that value + 1
     // If not, then set the currentOrderNumber to 1 (the first order)
     if (docSnap.exists()) {
-      currentOrderNumber = docSnap.data().count + 1;
+      currentOrderNumber = docSnap.data().count += 1;
     } else {
       currentOrderNumber = 1;
       await setDoc(doc(FIREBASE_DB, "orders", "counter"), {

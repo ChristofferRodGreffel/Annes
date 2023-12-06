@@ -5,6 +5,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import StatusBar from "../../components/StatusBar";
+import CancelOrder from "../../components/CancelOrder";
 
 const OrderStatus = () => {
   const { orderId } = useParams();
@@ -63,6 +64,9 @@ const OrderStatus = () => {
                 <h3 className="font-bold">Afhentningsdato</h3>
                 <p>{currentOrder?.pickup.date}</p>
               </div>
+            </div>
+            <div className="mt-8">
+              <CancelOrder placedAt={currentOrder.orderPlacedAt} />
             </div>
           </div>
         )}
