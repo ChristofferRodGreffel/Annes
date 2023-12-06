@@ -6,40 +6,42 @@ const StatusBar = (props) => {
       <div className="flex items-center">
         <div className="relative">
           <div
-            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Modtaget'] after:text-dark after:absolute after:top-7 after:font-medium ${
-              props.status !== "pending" && "bg-green"
+            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Modtaget'] after:text-dark after:absolute after:text-sm after:top-8 after:font-medium ${
+              props.status !== "pending" && "!bg-green"
             }`}
           >
             {props.status !== "pending" && <i className="fa-solid fa-check text-lg"></i>}
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-16 ${
-            props.status !== "pending" && props.status !== "recieved" && "border-green"
+          className={`border-2 border-grey w-14 ${
+            props.status !== "pending" && props.status !== "recieved" && "!border-green"
           }`}
         />
       </div>
+
       <div className="flex items-center">
         <div className="relative">
           <div
-            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Godkendt'] after:text-dark after:absolute after:bottom-7 after:font-medium ${
-              props.status !== "recieved" && props.status !== "pending" && "bg-green"
+            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Godkendt'] after:text-dark after:absolute after:text-sm after:bottom-8 after:font-medium ${
+              props.status !== "recieved" && props.status !== "pending" && "!bg-green"
             } `}
           >
             {props.status !== "recieved" && props.status !== "pending" && <i className="fa-solid fa-check text-lg"></i>}
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-16 ${
-            props.status !== "pending" && props.status !== "recieved" && props.status !== "accepted" && "border-green"
+          className={`border-2 border-grey w-14 ${
+            props.status !== "pending" && props.status !== "recieved" && props.status !== "accepted" && "!border-green"
           }`}
         />
       </div>
+
       <div className="flex items-center">
         <div className="relative">
           <div
-            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Klar_i_butik'] after:text-dark after:absolute after:top-7 after:font-medium after:w-max ${
-              props.status !== "recieved" && props.status !== "pending" && props.status !== "accepted" && "bg-green"
+            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Klar_i_butik'] after:text-dark after:absolute after:text-sm after:top-8 after:font-medium after:w-max ${
+              props.status !== "recieved" && props.status !== "pending" && props.status !== "accepted" && "!bg-green"
             } `}
           >
             {props.status !== "recieved" && props.status !== "pending" && props.status !== "accepted" && (
@@ -48,24 +50,25 @@ const StatusBar = (props) => {
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-16 ${
+          className={`border-2 border-grey w-14 ${
             props.status !== "pending" &&
             props.status !== "recieved" &&
             props.status !== "accepted" &&
             props.status !== "ready" &&
-            "border-green"
+            "!border-green"
           }`}
         />
       </div>
+
       <div className="flex items-center">
         <div className="relative">
           <div
-            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Afhentet'] after:text-dark after:absolute after:bottom-7 after:font-medium ${
+            className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Afhentet'] after:text-dark after:absolute after:text-sm after:bottom-8 after:font-medium ${
               props.status !== "recieved" &&
               props.status !== "pending" &&
               props.status !== "accepted" &&
               props.status !== "ready" &&
-              "bg-green"
+              "!bg-green"
             } `}
           >
             {props.status !== "recieved" &&
