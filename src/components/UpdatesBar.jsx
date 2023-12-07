@@ -9,7 +9,6 @@ const UpdatesBar = (props) => {
   useEffect(() => {
     const unsub = onSnapshot(doc(FIREBASE_DB, "orders", props.orderId), (doc) => {
       setUpdates(doc.data().updates);
-      console.log(doc.data());
     });
   }, []);
 

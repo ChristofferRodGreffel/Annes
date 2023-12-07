@@ -345,7 +345,7 @@ function CheckoutOverview() {
                         customWidth="w-full"
                         title="Send bestilling til butik"
                         icon={"fa-solid fa-paper-plane"}
-                        disabled={!shopIsClosed}
+                        disabled={shopIsClosed}
                       />
                     </>
                   )}
