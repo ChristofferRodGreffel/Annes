@@ -146,6 +146,7 @@ function CheckoutOverview() {
       notifications: smsCheckbox,
       status: "pending",
       orderNo: await generateOrderNumber(),
+      canCancel: true,
     };
 
     pushOrderToFirestore(completeOrder);
@@ -156,12 +157,10 @@ function CheckoutOverview() {
     const docRef = await addDoc(collection(FIREBASE_DB, "orders"), order);
     if (docRef.id) {
       const orderRef = doc(FIREBASE_DB, "orders", docRef.id);
-      console.log("Jeg er oprettet");
 
       await updateDoc(orderRef, {
         status: "recieved",
       }).then(() => {
-        console.log("Jeg er opdateret");
         localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
         navigate(`/følg-bestilling/${docRef.id}`);
         localStorage.removeItem("customerCheckout");

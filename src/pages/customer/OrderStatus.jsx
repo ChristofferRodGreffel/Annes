@@ -45,7 +45,6 @@ const OrderStatus = () => {
               </div>
             </div>
             <div className="mt-12">
-              {console.log(currentOrder.status)}
               {currentOrder.status !== "userCancelled" &&
                 currentOrder.status !== "shopCancelled" &&
                 currentOrder.status !== "pending" && <StatusBar status={currentOrder?.status} />}
@@ -74,7 +73,7 @@ const OrderStatus = () => {
               <CancelOrder
                 placedAt={currentOrder.orderPlacedAt}
                 orderId={orderId || currentOrderId}
-                orderStatus={currentOrder.status}
+                canCancel={currentOrder.canCancel}
               />
             </div>
             <div className="mt-5">

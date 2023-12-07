@@ -4,25 +4,30 @@ import { doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
 const CancelOrder = (props) => {
-  const [canCancel, setCanCancel] = useState(true);
   const [elapsedTime, setElapsedTime] = useState();
+  const [remainingTime, setRemainingTime] = useState(5 * 60 * 1000); // 5 minutes in milliseconds
 
   useEffect(() => {
     const timeNow = new Date().getTime();
     const timeAtOrder = props.placedAt;
     const elapsedTime = timeNow - timeAtOrder;
     setElapsedTime(elapsedTime);
+
+    // Calculate remaining time
+    const newRemainingTime = Math.max(5 * 60 * 1000 - elapsedTime, 0);
+    setRemainingTime(newRemainingTime);
   }, []);
 
   const handleCancelOrder = async () => {
     // Tjek om brugeren har lov til at annullere
-    if (canCancel) {
+    if (props.canCancel) {
       // Change status in firestore to cancelled
       const orderRef = doc(FIREBASE_DB, "orders", props.orderId);
 
       // To update age and favorite color:
       await updateDoc(orderRef, {
         status: "userCancelled",
+        canCancel: false,
       });
 
       // Delete the orderId from localStorage preventing access to the page
@@ -32,45 +37,40 @@ const CancelOrder = (props) => {
     }
   };
 
-  const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
-
-  // Determine remaining time for the countdown
-  const initialRemainingTime = Math.max(fiveMinutes - elapsedTime, 0);
-
-  useEffect(() => {
-    // Update state after rendering is complete
-    if (canCancel === false) {
-      // Additional logic or side effects can be added here
-      console.log("Can cancel is now false");
-    }
-  }, [canCancel]);
-
   return (
-    <div className="w-full rounded-xl overflow-clip">
-      <div
-        onClick={handleCancelOrder}
-        className={`flex items-center gap-2 justify-center p-4 bg-red text-white text-lg font-semibold cursor-pointer select-none ${
-          !canCancel && "!bg-cancelGrey"
-        }`}
-      >
-        {canCancel ? (
+    <>
+      <div className="w-full rounded-xl overflow-clip">
+        <div
+          onClick={handleCancelOrder}
+          className={`${
+            !props.canCancel && "!bg-grey"
+          } flex items-center gap-2 justify-center p-4 bg-red text-white text-lg font-semibold cursor-pointer select-none`}
+        >
+          {props.canCancel ? (
+            <>
+              <p>Annuller bestilling</p>
+              <i className="fa-solid fa-circle-xmark text-2xl"></i>
+            </>
+          ) : (
+            <>
+              <p>Kan ikke længere annulleres</p>
+            </>
+          )}
+        </div>
+        <div className={`${!props.canCancel && "!bg-dark text-white"} flex justify-center gap-1 p-1 bg-mainGrey`}>
           <>
-            <p>Annuller bestilling</p>
-            <i className="fa-solid fa-circle-xmark text-2xl"></i>
+            <p>Annuller inden:</p>
+            {elapsedTime && (
+              <CountdownTimer
+                initialRemainingTime={remainingTime}
+                orderId={props.orderId}
+                canCancel={props.canCancel}
+              />
+            )}
           </>
-        ) : (
-          <>
-            <p>Kan ikke længere annulleres</p>
-          </>
-        )}
+        </div>
       </div>
-      <div className={`flex justify-center gap-1 p-1 bg-mainGrey ${!canCancel && "!bg-dark text-white"}`}>
-        <>
-          <p>Annuller inden:</p>
-          {elapsedTime && <CountdownTimer initialRemainingTime={initialRemainingTime} setCanCancel={setCanCancel} />}
-        </>
-      </div>
-    </div>
+    </>
   );
 };
 
