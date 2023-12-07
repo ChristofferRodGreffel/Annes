@@ -25,8 +25,6 @@ const OrderStatus = () => {
     });
   }, []);
 
-  console.log(currentOrder);
-
   return (
     <>
       <CustomerHeader
@@ -48,9 +46,9 @@ const OrderStatus = () => {
             </div>
             <div className="mt-12">
               {console.log(currentOrder.status)}
-              {currentOrder.status !== "userCancelled" && currentOrder.status !== "shopCancelled" && (
-                <StatusBar status={currentOrder?.status} />
-              )}
+              {currentOrder.status !== "userCancelled" &&
+                currentOrder.status !== "shopCancelled" &&
+                currentOrder.status !== "pending" && <StatusBar status={currentOrder?.status} />}
             </div>
             <div className="mt-16 mb-16 flex text-center w-full max-w-max m-auto text-xl relative">
               {currentOrder?.status === "pending" && <p>"Din bestiling er sendt til butikken"</p>}
@@ -73,15 +71,17 @@ const OrderStatus = () => {
               </div>
             </div>
             <div className="mt-8">
-              <CancelOrder placedAt={currentOrder.orderPlacedAt} orderId={orderId || currentOrderId} />
+              <CancelOrder
+                placedAt={currentOrder.orderPlacedAt}
+                orderId={orderId || currentOrderId}
+                orderStatus={currentOrder.status}
+              />
             </div>
             <div className="mt-5">
-              <CustomButton
-                iconRight={true}
-                customWidth="w-full"
-                title="Send bestilling til butik"
-                icon={"fa-solid fa-heart"}
-              />
+              <CustomButton iconRight={true} customWidth="w-full" title="Gem bestilling" icon={"fa-solid fa-heart"} />
+            </div>
+            <div className="mt-10">
+              <p className="text-xl font-bold">Opdateringsoversigt</p>
             </div>
           </div>
         )}
