@@ -4,29 +4,18 @@ import AdminSidebar from "../../components/AdminSidebar";
 
 import { collection, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
+import { getFilteredOrdersFromFirestore } from "../../helperfunctions/GetFilteredOrdersFromFirestore";
 
 
 const OrderOverview = () => {
 
   useEffect(() => {
+    
+    // Getting new orders and marks them as recived when the shop-workers have the page open 
+    // getFilteredOrdersFromFirestore is in helperfunctions
+    getFilteredOrdersFromFirestore("status", "pending", "recieved")
 
-    const MarkAsRecived = async (orderRef) => {
-      // To update age and favorite color:
-      await updateDoc(orderRef, {
-        status: "recieved",
-      });
-    }
-    const reciveAndMarkNewOrders = () => {
-      // Recive new orders and mark them as "modtaget" 
-      const q = query(collection(FIREBASE_DB, "orders"), where("status", "==", "pending"));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((orderDoc) => {
-          const orderRef = doc(FIREBASE_DB, "orders", orderDoc.id);
-          MarkAsRecived(orderRef)
-        })
-      })
-    }
-    reciveAndMarkNewOrders()
+
   }, [])
 
   return (
