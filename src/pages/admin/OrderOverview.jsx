@@ -4,19 +4,13 @@ import AdminSidebar from "../../components/AdminSidebar";
 
 import { collection, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
-import { getFilteredOrdersFromFirestore } from "../../helperfunctions/GetFilteredOrdersFromFirestore";
-
+import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOfStatus";
+import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 
 const OrderOverview = () => {
-
+  
   useEffect(() => {
-    
-    // Getting new orders and marks them as recived when the shop-workers have the order page open
-    // New orders should in theory only be pending for 1 second or less 
-    // getFilteredOrdersFromFirestore is in helperfunctions
-    getFilteredOrdersFromFirestore("status", "pending", "recieved")
-
-
+    listenToNewOrders()
   }, [])
 
   return (
