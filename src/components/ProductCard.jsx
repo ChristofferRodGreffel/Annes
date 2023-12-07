@@ -9,7 +9,7 @@ const ProductCard = (props) => {
 
       <img
         loading="lazy"
-        className={`h-28 w-full object-cover ${loadedImage ? null : 'blur-lg'}`}
+        className={`h-28 w-full object-cover object-center transition-all duration-1000 ${loadedImage ? 'opacity-100' : 'opacity-50 blur-lg'}`}
         src={props.imageSource}
         alt={`Billede af ${props.imageName}`}
         onLoad={() => {setLoadedImage(true)}}
