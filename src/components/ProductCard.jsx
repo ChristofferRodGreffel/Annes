@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ProductCard = (props) => {
+
+  const [loadedImage, setLoadedImage] = useState(false)
+  
   return (
     <div className="rounded-xl overflow-clip text-white md:w-[350px]">
+
       <img
         loading="lazy"
-        className="max-h-28 w-full object-cover"
+        className={`h-28 w-full object-cover ${loadedImage ? null : 'blur-lg'}`}
         src={props.imageSource}
         alt={`Billede af ${props.imageName}`}
+        onLoad={() => {setLoadedImage(true)}}
       />
       <div className="bg-primary productOverviewMinHeight">
         <div className="flex flex-col justify-evenly h-auto min-h-[125px] w-full px-5 py-3 lg:w-[350px]">

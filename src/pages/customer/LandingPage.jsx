@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
 import { collection, doc, getDoc, onSnapshot, query } from "firebase/firestore";
@@ -31,7 +31,7 @@ function LandingPage() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getAllProducts = async () => {
       const q = query(collection(FIREBASE_DB, "menu"));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
