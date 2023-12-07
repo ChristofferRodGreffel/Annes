@@ -20,7 +20,7 @@ const OrderStatus = () => {
 
     // Prøver først ID fra params, ellers falder den tilbage på ID fra localStorage
     const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderId), (doc) => {
-      setCurrentOrder(doc.data().order);
+      setCurrentOrder(doc.data());
     });
   }, []);
 
@@ -33,6 +33,7 @@ const OrderStatus = () => {
         iconLeft="fa-solid fa-circle-arrow-left"
         iconRight="fa-solid fa-basket-shopping"
         hideRightIcon={true}
+        customLink="/bestil-online"
       />
       <PageWrapperContainer>
         {currentOrder && (

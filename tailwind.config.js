@@ -31,6 +31,7 @@ export default {
         grey: "var(--color-grey)",
         red: "var(--color-red)",
         green: "var(--color-green)",
+        cancelGrey: "var(--color-cancelGrey)",
       },
     },
   },

@@ -13,7 +13,11 @@ const CustomerHeader = (props) => {
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    if (props.customLink) {
+      navigate(props.customLink);
+    } else {
+      navigate(-1);
+    }
   };
 
   useEffect(() => {

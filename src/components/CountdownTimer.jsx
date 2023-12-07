@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 
-const CountdownTimer = ({ initialRemainingTime }) => {
-  const [remainingTime, setRemainingTime] = useState(initialRemainingTime);
+const CountdownTimer = (props) => {
+  const [remainingTime, setRemainingTime] = useState(10000);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 1000);
-
-      if (remainingTime <= 0) {
-        clearInterval(intervalId);
-      }
+      setRemainingTime((prevTime) => {
+        if (prevTime <= 1000) {
+          clearInterval(intervalId);
+          props.setCanCancel(false);
+          return 0;
+        }
+        return prevTime - 1000;
+      });
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [remainingTime]);
+  }, []);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / (60 * 1000));

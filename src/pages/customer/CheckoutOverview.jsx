@@ -138,7 +138,7 @@ function CheckoutOverview() {
 
   const pushOrderToFirestore = async (order) => {
     // Add a new document with a generated id.
-    const docRef = await addDoc(collection(FIREBASE_DB, "orders"), { order });
+    const docRef = await addDoc(collection(FIREBASE_DB, "orders"), order);
     localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
     localStorage.removeItem("customerCheckout");
     navigate(`/følg-bestilling/${docRef.id}`);
