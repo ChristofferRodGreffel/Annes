@@ -7,6 +7,7 @@ import PageWrapperContainer from "../../components/PageWrapperContainer";
 import StatusBar from "../../components/StatusBar";
 import CancelOrder from "../../components/CancelOrder";
 import CustomButton from "../../components/CustomButton";
+import UpdatesBar from "../../components/UpdatesBar";
 
 const OrderStatus = () => {
   const { orderId } = useParams();
@@ -36,7 +37,7 @@ const OrderStatus = () => {
       />
       <PageWrapperContainer>
         {currentOrder && (
-          <div className="mt-8">
+          <div className="mt-8 mb-10">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-2xl">Ordre #{currentOrder?.orderNo}</h1>
               <div className="flex items-center gap-2 text-lg">
@@ -81,6 +82,9 @@ const OrderStatus = () => {
             </div>
             <div className="mt-10">
               <p className="text-xl font-bold">Opdateringsoversigt</p>
+              <div className="mt-5">
+                <UpdatesBar orderId={orderId || currentOrderId} />
+              </div>
             </div>
           </div>
         )}

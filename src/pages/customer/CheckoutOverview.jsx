@@ -147,6 +147,12 @@ function CheckoutOverview() {
       status: "pending",
       orderNo: await generateOrderNumber(),
       canCancel: true,
+      updates: [
+        {
+          context: "Sendt til butikken",
+          time: new Date(),
+        },
+      ],
     };
 
     pushOrderToFirestore(completeOrder);

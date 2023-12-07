@@ -27,7 +27,6 @@ const SignIn = () => {
       .then((userCredential) => {
         // Signed in
         checkAdminStatus(userCredential.user.uid);
-        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
@@ -41,11 +40,11 @@ const SignIn = () => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
     querySnapshot.forEach((doc) => {
       if (doc.id === user) {
-        setLoading(false);
         navigate("/ordre-oversigt");
-      } else {
         setLoading(false);
+      } else {
         navigate("/bestil-online");
+        setLoading(false);
       }
     });
   };
