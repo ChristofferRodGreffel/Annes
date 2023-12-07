@@ -13,7 +13,7 @@ const setNewOrderStatus = async (orderRef, newStatus) => {
   }
 
 export function automaticChangeOfStatus(filterByOption, filterByValue, newStatus ) {
-    // E.g recive new orders and mark them as "modtaget" 
+    // E.g receive new orders and mark them as "modtaget" 
 
     const q = query(collection(FIREBASE_DB, "orders"), where(filterByOption, "==", filterByValue));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {

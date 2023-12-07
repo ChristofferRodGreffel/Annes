@@ -5,7 +5,7 @@ import newOrderSound from '../assets/newOrderSound.mp3';
 
 
 export function listenToNewOrders() {
-    // E.g recive new orders and mark them as "modtaget" 
+    // E.g recieve new orders and mark them as "modtaget" 
 
     const playAudio = () => {
         new Audio(newOrderSound).play();
@@ -16,7 +16,6 @@ export function listenToNewOrders() {
 
         if (!querySnapshot.empty) {
             playAudio()
-            console.log("new order recieved !!")
         }
     })
 }
