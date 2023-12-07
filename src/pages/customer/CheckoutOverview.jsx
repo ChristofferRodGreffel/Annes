@@ -173,6 +173,7 @@ function CheckoutOverview() {
 
       await updateDoc(orderRef, {
         status: "recieved",
+        orderDocId: docRef.id,
         updates: arrayUnion(newUpdate),
       }).then(() => {
         localStorage.setItem("currentOrder", JSON.stringify(docRef.id));

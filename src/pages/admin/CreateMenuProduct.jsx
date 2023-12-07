@@ -36,6 +36,7 @@ function CreateMenuProduct() {
     { name: "Bagel" },
     { name: "Bolle" },
     { name: "Fiber bolle" },
+    { name: "Glutenfri" },
     { name: "Lyst" },
     { name: "Mørkt" },
     { name: "Trekantsandwich" },
