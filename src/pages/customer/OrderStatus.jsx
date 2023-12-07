@@ -46,7 +46,10 @@ const OrderStatus = () => {
               </div>
             </div>
             <div className="mt-12">
-              <StatusBar status={currentOrder?.status} />
+              {console.log(currentOrder.status)}
+              {currentOrder.status !== "userCancelled" && currentOrder.status !== "shopCancelled" && (
+                <StatusBar status={currentOrder?.status} />
+              )}
             </div>
             <div className="mt-16 mb-16 flex text-center w-full max-w-max m-auto text-xl relative">
               {currentOrder?.status === "pending" && <p>"Din bestiling er sendt til butikken"</p>}
@@ -54,6 +57,8 @@ const OrderStatus = () => {
               {currentOrder?.status === "accepted" && <p>"Vi har accepteret din bestilling"</p>}
               {currentOrder?.status === "ready" && <p>"Din bestiling er klar i butikken"</p>}
               {currentOrder?.status === "picked" && <p>"Du har afhentet din mad, velbekomme"</p>}
+              {currentOrder?.status === "userCancelled" && <p>"Du har annulleret din ordre"</p>}
+              {currentOrder?.status === "shopCancelled" && <p>"Butikken har annulleret din ordre"</p>}
               <i className="fa-solid fa-comment absolute -right-2 -top-5 text-8xl opacity-10 text-grey"></i>
             </div>
             <div className="mt-10 full-width">

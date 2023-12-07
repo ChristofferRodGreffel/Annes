@@ -22,7 +22,7 @@ const CancelOrder = (props) => {
 
       // To update age and favorite color:
       await updateDoc(orderRef, {
-        status: "cancelled",
+        status: "userCancelled",
       });
 
       // Delete the orderId from localStorage preventing access to the page
@@ -36,6 +36,14 @@ const CancelOrder = (props) => {
 
   // Determine remaining time for the countdown
   const initialRemainingTime = Math.max(fiveMinutes - elapsedTime, 0);
+
+  useEffect(() => {
+    // Update state after rendering is complete
+    if (canCancel === false) {
+      // Additional logic or side effects can be added here
+      console.log("Can cancel is now false");
+    }
+  }, [canCancel]);
 
   return (
     <div className="w-full rounded-xl overflow-clip">
@@ -59,13 +67,7 @@ const CancelOrder = (props) => {
       <div className={`flex justify-center gap-1 p-1 bg-mainGrey ${!canCancel && "!bg-dark text-white"}`}>
         <>
           <p>Annuller inden:</p>
-          {elapsedTime && (
-            <CountdownTimer
-              initialRemainingTime={initialRemainingTime}
-              canCancel={canCancel}
-              setCanCancel={setCanCancel}
-            />
-          )}
+          {elapsedTime && <CountdownTimer initialRemainingTime={initialRemainingTime} setCanCancel={setCanCancel} />}
         </>
       </div>
     </div>
