@@ -21,7 +21,7 @@ const OpeningHoursSelect = (props) => {
   useEffect(() => {
     if (
       currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() &&
-      `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
+      `${Number(currentDate.getHours())}${Number(currentDate.getMinutes())}` >= shopClosingTime
     ) {
       setShopIsClosed(true);
     } else {
@@ -42,7 +42,10 @@ const OpeningHoursSelect = (props) => {
       // Define opening hours based on the current day
       const startHour = !isWeekend ? 7 : 10;
       const endHour = 18;
-      const openingHoursArray = ["Hurtigst muligt"];
+
+      const openingHoursArray = currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() ? ["Hurtigst muligt"] : [];
+
+      // const openingHoursArray = ["Hurtigst muligt"];
 
       for (let hour = startHour; hour <= endHour; hour++) {
         for (let minute = 0; minute < 60; minute += 10) {

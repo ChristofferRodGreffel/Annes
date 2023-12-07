@@ -43,7 +43,21 @@ function CheckoutOverview() {
   }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
-    setChosenCollectionTime("Hurtigst muligt");
+    if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString()) {
+      setChosenCollectionTime("Hurtigst muligt");
+    } else {
+      let isWeekend =
+        chosenCollectionDate.getDay() === 0 ||
+        chosenCollectionDate.getDay() === 6; // Sunday or Saturday
+
+      let formattedHour
+      if (isWeekend) {
+        formattedHour = `${"10".padStart(2, "0")}:${"0".padStart(2, "0")}`;
+      } else {
+        formattedHour = `${"7".padStart(2, "0")}:${"0".padStart(2, "0")}`;
+      }
+      setChosenCollectionTime(formattedHour);
+    }
   }, [chosenCollectionDate]);
 
   useEffect(() => {
