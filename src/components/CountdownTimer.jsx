@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const CountdownTimer = (props) => {
-  const [remainingTime, setRemainingTime] = useState(10000);
+  const [remainingTime, setRemainingTime] = useState(props.initialRemainingTime);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
