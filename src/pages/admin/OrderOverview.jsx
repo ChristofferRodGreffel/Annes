@@ -11,6 +11,9 @@ import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrde
 const OrderOverview = () => {
 
   const [recievedOrders, setRecievedOrders] = useState()
+  const [acceptedOrders, setAcceptedOrders] = useState()
+  const [readyOrders, setReadyOrders] = useState()
+  const [pickedOrders, setPickedOrders] = useState()
   const [userCancelledOrders, setUserCancelledOrders] = useState()
   const [shopCancelledOrders, setShopCancelledOrders] = useState()
 
@@ -22,6 +25,9 @@ const OrderOverview = () => {
   useEffect(() => {
     // Get different orders based on filters and sets them in correct useState
     receiveFilteredOrders(setRecievedOrders, "status", "recieved")
+    receiveFilteredOrders(setAcceptedOrders, "status", "accepted")
+    receiveFilteredOrders(setReadyOrders, "status", "ready")
+    receiveFilteredOrders(setPickedOrders, "status", "picked")
     receiveFilteredOrders(setUserCancelledOrders, "status", "userCancelled")
     receiveFilteredOrders(setShopCancelledOrders, "status", "shopCancelled")
   }, [])
@@ -37,6 +43,25 @@ const OrderOverview = () => {
             <p key={key}>Hej, {order.status} order nr. {order.orderNo}</p>
           )
         })}
+        <h2>Bestillinger, som er godkendt</h2>
+        {acceptedOrders?.map((order, key) => {
+          return (
+            <p key={key}>Hej, {order.status} order nr. {order.orderNo}</p>
+          )
+        })}
+        <h2>Bestillinger, som er klar til afhentning</h2>
+        {readyOrders?.map((order, key) => {
+          return (
+            <p key={key}>Hej, {order.status} order nr. {order.orderNo}</p>
+          )
+        })}
+        <h2>Bestillinger, som er afhentet</h2>
+        {pickedOrders?.map((order, key) => {
+          return (
+            <p key={key}>Hej, {order.status} order nr. {order.orderNo}</p>
+          )
+        })}
+       
         <h2>Bestillinger som kunden har annuleret</h2>
         {userCancelledOrders?.map((order, key) => {
           return (
