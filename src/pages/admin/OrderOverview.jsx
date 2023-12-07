@@ -11,7 +11,8 @@ const OrderOverview = () => {
 
   useEffect(() => {
     
-    // Getting new orders and marks them as recived when the shop-workers have the page open 
+    // Getting new orders and marks them as recived when the shop-workers have the order page open
+    // New orders should in theory only be pending for 1 second or less 
     // getFilteredOrdersFromFirestore is in helperfunctions
     getFilteredOrdersFromFirestore("status", "pending", "recieved")
 

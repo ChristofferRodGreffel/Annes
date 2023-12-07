@@ -4,11 +4,11 @@ import { FIREBASE_DB } from "../../firebase-config";
 const setNewOrderStatus = async (orderRef, newStatus) => {
     // To update age and favorite color:
     await updateDoc(orderRef, {
-      status: newStatus,
+        status: newStatus,
     });
-  }
+}
 
-export function getFilteredOrdersFromFirestore(filterByOption, filterByValue, newStatus ) {
+export function getFilteredOrdersFromFirestore(filterByOption, filterByValue, newStatus) {
     // E.g recive new orders and mark them as "modtaget" 
 
     const q = query(collection(FIREBASE_DB, "orders"), where(filterByOption, "==", filterByValue));
