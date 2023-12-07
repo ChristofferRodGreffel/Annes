@@ -11,11 +11,13 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
+import { PulseLoader } from "react-spinners";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
   const [allBasketProducts, setAllBasketProducts] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [chosenCollectionDate, setChosenCollectionDate] = useState(new Date());
   const [chosenCollectionTime, setChosenCollectionTime] = useState();
@@ -46,11 +48,9 @@ function CheckoutOverview() {
     if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString()) {
       setChosenCollectionTime("Hurtigst muligt");
     } else {
-      let isWeekend =
-        chosenCollectionDate.getDay() === 0 ||
-        chosenCollectionDate.getDay() === 6; // Sunday or Saturday
+      let isWeekend = chosenCollectionDate.getDay() === 0 || chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 
-      let formattedHour
+      let formattedHour;
       if (isWeekend) {
         formattedHour = `${"10".padStart(2, "0")}:${"0".padStart(2, "0")}`;
       } else {
@@ -123,6 +123,7 @@ function CheckoutOverview() {
   // Vi bygger et samlet objekt som indeholder alt information omkring ordren.
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
@@ -153,10 +154,21 @@ function CheckoutOverview() {
   const pushOrderToFirestore = async (order) => {
     // Add a new document with a generated id.
     const docRef = await addDoc(collection(FIREBASE_DB, "orders"), order);
-    localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
-    localStorage.removeItem("customerCheckout");
-    navigate(`/følg-bestilling/${docRef.id}`);
-    toast.success("Ordre placeret", DefaultToastifySettings);
+    if (docRef.id) {
+      const orderRef = doc(FIREBASE_DB, "orders", docRef.id);
+      console.log("Jeg er oprettet");
+
+      await updateDoc(orderRef, {
+        status: "recieved",
+      }).then(() => {
+        console.log("Jeg er opdateret");
+        localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
+        navigate(`/følg-bestilling/${docRef.id}`);
+        localStorage.removeItem("customerCheckout");
+        toast.success("Ordre placeret", DefaultToastifySettings);
+        setLoading(false);
+      });
+    }
   };
 
   // Genereate a order number which is the next in the sequence starting from 1
@@ -305,13 +317,25 @@ function CheckoutOverview() {
                       Det er desværre for sent at bestille til i dag.
                     </p>
                   )}
-                  <CustomButton
-                    iconRight={true}
-                    customWidth="w-full"
-                    title="Send bestilling til butik"
-                    icon={"fa-solid fa-paper-plane"}
-                    disabled={shopIsClosed}
-                  />
+                  {loading ? (
+                    <>
+                      <CustomButton
+                        title={<PulseLoader color="#FFFFFF" size={11} className="p-1" />}
+                        disabled={true}
+                        customWidth="w-full"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <CustomButton
+                        iconRight={true}
+                        customWidth="w-full"
+                        title="Send bestilling til butik"
+                        icon={"fa-solid fa-paper-plane"}
+                        disabled={shopIsClosed}
+                      />
+                    </>
+                  )}
                 </form>
               </div>
             </div>
