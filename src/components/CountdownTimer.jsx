@@ -8,7 +8,9 @@ const CountdownTimer = (props) => {
       setRemainingTime((prevTime) => {
         if (prevTime <= 1000) {
           clearInterval(intervalId);
-          props.setCanCancel(false);
+          setTimeout(() => {
+            props.setCanCancel(false);
+          }, 0);
           return 0;
         }
         return prevTime - 1000;
@@ -16,7 +18,7 @@ const CountdownTimer = (props) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [remainingTime, props.setCanCancel]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / (60 * 1000));
