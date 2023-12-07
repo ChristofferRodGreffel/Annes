@@ -2,8 +2,8 @@ import React from "react";
 
 const StatusBar = (props) => {
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex items-center">
+    <div className="flex items-center w-auto max-w-[1500px] m-auto">
+      <div className="flex items-center w-full">
         <div className="relative">
           <div
             className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Modtaget'] after:text-dark after:absolute after:text-sm after:top-8 after:font-medium ${
@@ -14,13 +14,13 @@ const StatusBar = (props) => {
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-14 ${
+          className={`border-2 border-grey w-full ${
             props.status !== "pending" && props.status !== "recieved" && "!border-green"
           }`}
         />
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center w-full">
         <div className="relative">
           <div
             className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Godkendt'] after:text-dark after:absolute after:text-sm after:bottom-8 after:font-medium ${
@@ -31,13 +31,13 @@ const StatusBar = (props) => {
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-14 ${
+          className={`border-2 border-grey w-full ${
             props.status !== "pending" && props.status !== "recieved" && props.status !== "accepted" && "!border-green"
           }`}
         />
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center w-full">
         <div className="relative">
           <div
             className={`h-7 w-7 rounded-full bg-grey flex justify-center items-center text-white after:content-['Klar_i_butik'] after:text-dark after:absolute after:text-sm after:top-8 after:font-medium after:w-max ${
@@ -50,7 +50,7 @@ const StatusBar = (props) => {
           </div>
         </div>
         <hr
-          className={`border-2 border-grey w-14 ${
+          className={`border-2 border-grey w-full ${
             props.status !== "pending" &&
             props.status !== "recieved" &&
             props.status !== "accepted" &&

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CountdownTimer from "./CountdownTimer";
-import { doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
 const CancelOrder = (props) => {
@@ -24,10 +24,17 @@ const CancelOrder = (props) => {
       // Change status in firestore to cancelled
       const orderRef = doc(FIREBASE_DB, "orders", props.orderId);
 
+      const updateObject = {
+        context: "Ordre annulleret af kunde",
+        time: new Date(),
+        type: "cancel",
+      };
+
       // To update age and favorite color:
       await updateDoc(orderRef, {
         status: "userCancelled",
         canCancel: false,
+        updates: arrayUnion(updateObject),
       });
 
       // Delete the orderId from localStorage preventing access to the page

@@ -9,7 +9,7 @@ import CustomButton from "../../components/CustomButton";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import { PulseLoader } from "react-spinners";
 
@@ -149,8 +149,9 @@ function CheckoutOverview() {
       canCancel: true,
       updates: [
         {
-          context: "Sendt til butikken",
+          context: "Ordre afgivet",
           time: new Date(),
+          type: "update",
         },
       ],
     };
@@ -164,8 +165,15 @@ function CheckoutOverview() {
     if (docRef.id) {
       const orderRef = doc(FIREBASE_DB, "orders", docRef.id);
 
+      const newUpdate = {
+        context: "Bestilling modtaget",
+        time: new Date(),
+        type: "update",
+      };
+
       await updateDoc(orderRef, {
         status: "recieved",
+        updates: arrayUnion(newUpdate),
       }).then(() => {
         localStorage.setItem("currentOrder", JSON.stringify(docRef.id));
         navigate(`/følg-bestilling/${docRef.id}`);
@@ -337,7 +345,7 @@ function CheckoutOverview() {
                         customWidth="w-full"
                         title="Send bestilling til butik"
                         icon={"fa-solid fa-paper-plane"}
-                        disabled={shopIsClosed}
+                        disabled={!shopIsClosed}
                       />
                     </>
                   )}
