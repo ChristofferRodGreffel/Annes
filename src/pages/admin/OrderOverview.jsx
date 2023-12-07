@@ -7,6 +7,7 @@ import { FIREBASE_DB } from "../../../firebase-config";
 import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOfStatus";
 import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrders";
+import OrderCard from "../../components/OrderCard";
 
 const OrderOverview = () => {
   const [recievedOrders, setRecievedOrders] = useState();
@@ -37,9 +38,9 @@ const OrderOverview = () => {
         <h2>Nye bestillinger, som ikke er godkendt</h2>
         {recievedOrders?.map((order, key) => {
           return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
+            <div key={key}>
+              <OrderCard order={order} />
+            </div>
           );
         })}
         <h2>Bestillinger, som er godkendt</h2>
