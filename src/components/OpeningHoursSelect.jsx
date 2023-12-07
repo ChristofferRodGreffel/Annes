@@ -10,16 +10,15 @@ const OpeningHoursSelect = (props) => {
   const [shopIsClosed, setShopIsClosed] = useState(false);
   const currentDate = new Date();
 
-  const shopClosingTime = "1830";
+  const shopClosingTime = 1830;
 
   const handleChangeTime = (e) => {
     e.preventDefault();
     const time = e.target.value;
     props.setChosenCollectionTime(time);
   };
-  
-  useEffect(() => {
 
+  useEffect(() => {
     if (
       currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() &&
       `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
@@ -30,13 +29,15 @@ const OpeningHoursSelect = (props) => {
     }
   }, [props, currentDate]);
 
-
   useEffect(() => {
     // Function to calculate the opening hours based on the current day
     const calculateOpeningHours = () => {
-
       const currentDay = daysOfWeek[today];
-      let isWeekend = today === 0 || today === 6 || props.chosenCollectionDate.getDay() === 0 || props.chosenCollectionDate.getDay() === 6; // Sunday or Saturday
+      let isWeekend =
+        today === 0 ||
+        today === 6 ||
+        props.chosenCollectionDate.getDay() === 0 ||
+        props.chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 
       // Define opening hours based on the current day
       const startHour = !isWeekend ? 7 : 10;

@@ -66,7 +66,7 @@ const OrderStatus = () => {
               </div>
             </div>
             <div className="mt-8">
-              <CancelOrder placedAt={currentOrder.orderPlacedAt} />
+              <CancelOrder placedAt={currentOrder.orderPlacedAt} orderId={orderId || currentOrderId} />
             </div>
           </div>
         )}

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CountdownTimer from "./CountdownTimer";
+import { doc } from "firebase/firestore";
+import { FIREBASE_DB } from "../../firebase-config";
 
 const CancelOrder = (props) => {
   const [canCancel, setCanCancel] = useState(true);
@@ -16,6 +18,18 @@ const CancelOrder = (props) => {
     }
   }, []);
 
+  const handleCancelOrder = async () => {
+    // Change status in firestore to cancelled
+    const orderRef = doc(FIREBASE_DB, "orders", props.orderId);
+
+    await updateDoc(orderRef, {
+      status: "cancelled",
+    });
+
+    // Delete the orderId from localStorage preventing access to the page
+    localStorage.removeItem("currentOrder");
+  };
+
   const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   // Determine remaining time for the countdown
@@ -23,7 +37,10 @@ const CancelOrder = (props) => {
 
   return (
     <div className="w-full rounded-xl overflow-clip">
-      <div className="flex items-center gap-2 justify-center p-4 bg-red text-white text-lg font-semibold">
+      <div
+        onClick={canCancel && handleCancelOrder}
+        className="flex items-center gap-2 justify-center p-4 bg-red text-white text-lg font-semibold cursor-pointer select-none"
+      >
         {canCancel ? (
           <>
             <p>Annuller bestilling</p>

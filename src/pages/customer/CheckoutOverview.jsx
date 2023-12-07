@@ -30,11 +30,11 @@ function CheckoutOverview() {
   const [shopIsClosed, setShopIsClosed] = useState(false);
 
   useEffect(() => {
-    const shopClosingTime = "1830";
+    const shopClosingTime = 1830;
 
     if (
       currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() &&
-      `${currentDate.getHours()}${currentDate.getMinutes()}` >= shopClosingTime
+      `${Number(currentDate.getHours())}${Number(currentDate.getMinutes())}` >= shopClosingTime
     ) {
       setShopIsClosed(true);
     } else {
@@ -287,7 +287,7 @@ function CheckoutOverview() {
                   </div>
 
                   {shopIsClosed && (
-                    <p className="text-sm italic text-center text-red">
+                    <p className="text-md font-semibold text-center italic text-red">
                       Det er desværre for sent at bestille til i dag.
                     </p>
                   )}
