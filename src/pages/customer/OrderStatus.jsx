@@ -6,6 +6,7 @@ import CustomerHeader from "../../components/CustomerHeader";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import StatusBar from "../../components/StatusBar";
 import CancelOrder from "../../components/CancelOrder";
+import CustomButton from "../../components/CustomButton";
 
 const OrderStatus = () => {
   const { orderId } = useParams();
@@ -73,6 +74,14 @@ const OrderStatus = () => {
             </div>
             <div className="mt-8">
               <CancelOrder placedAt={currentOrder.orderPlacedAt} orderId={orderId || currentOrderId} />
+            </div>
+            <div className="mt-5">
+              <CustomButton
+                iconRight={true}
+                customWidth="w-full"
+                title="Send bestilling til butik"
+                icon={"fa-solid fa-heart"}
+              />
             </div>
           </div>
         )}
