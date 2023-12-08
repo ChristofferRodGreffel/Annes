@@ -8,6 +8,7 @@ import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOf
 import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrders";
 import OrderCard from "../../components/OrderCard";
+import TopRowOrderOverview from "../../components/TopRowOrderOverview";
 
 const OrderOverview = () => {
   const [recievedOrders, setRecievedOrders] = useState();
@@ -37,7 +38,9 @@ const OrderOverview = () => {
       <AdminContentWrapper>
         <div className="flex flex-col gap-8">
           <div>
+        <TopRowOrderOverview />
             <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
+
             <hr className="border-b-2 border-dark mb-5" />
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               {recievedOrders?.map((order, key) => {
