@@ -19,6 +19,8 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import Ingredients from "./pages/admin/Ingredients";
 import ScrollToTop from "./helperfunctions/ScrollToTop";
 import OrderStatus from "./pages/customer/OrderStatus";
+import OrderHistory from "./pages/admin/OrderHistory";
+import Statistics from "./pages/admin/Statistics";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -52,6 +54,8 @@ function App() {
             <Route path="/menu-oversigt/ingredienser" element={<Ingredients />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
+            <Route path="/ordre-historik" element={<OrderHistory />} />
+            <Route path="/statistik" element={<Statistics />} />
             <Route path="/admin-indstillinger" element={<AdminSettings />} />
           </>
         )}
