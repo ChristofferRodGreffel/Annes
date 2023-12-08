@@ -160,7 +160,6 @@ const CustomizeProduct = () => {
       <PageWrapperContainer>
         {productInfo ?
           <>
-            <div className="flex fl">
               <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
                 <div className="mt-8">
                   <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
@@ -238,11 +237,7 @@ const CustomizeProduct = () => {
                       </div>
                     </div>
                   </div>
-                </div>
 
-
-
-                <div>
                   <div className="mt-5">
                     <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
                     <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
@@ -281,7 +276,6 @@ const CustomizeProduct = () => {
                 price={productPrice * amount}
                 amount={amount}
               />
-            </div>
           </>
           :
           <>
