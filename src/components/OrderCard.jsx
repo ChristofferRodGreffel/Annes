@@ -45,8 +45,8 @@ const OrderCard = (props) => {
   return (
     <>
       {props.order && (
-        <div className="w-64">
-          <div className="flex flex-col justify-between bg-mainGrey  h-64 rounded-lg px-4 py-3 relative">
+        <div className="w-56">
+          <div className="flex flex-col justify-between bg-mainGrey h-56 rounded-lg px-4 py-3 relative">
             <div className="flex justify-between">
               <div>
                 <h1 className="font-bold text-lg rounded-xl">Ordre #{props.order.orderNo}</h1>

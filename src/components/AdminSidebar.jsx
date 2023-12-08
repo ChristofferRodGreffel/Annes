@@ -20,7 +20,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="flex flex-col bg-mainGrey min-w-sidebarMinWidth sticky top-0 h-screen drop-shadow-lg">
+    <div className="flex flex-col bg-mainGrey min-w-sidebarMinWidth sticky top-0 h-[100dvh] drop-shadow-lg">
       <NavLink to={"/ordre-oversigt"} className="m-auto mt-10 mb-16">
         <img className="w-48" src={logo} alt="logo" />
       </NavLink>
