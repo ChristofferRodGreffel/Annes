@@ -79,29 +79,31 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 breakout mt-10 pb-32">
-          {!loading ? (
-            allProducts?.map((product, key) => {
-              return (
-                <div key={key}>
-                  <ProductCard
-                    function={() => handleOnProductClick(product?.name)}
-                    text="Tilpas"
-                    key={key}
-                    imageSource={product?.imageURL}
-                    productName={product?.name}
-                    icon="fa-solid fa-utensils"
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <div className="flex flex-col items-center gap-1">
-              <p className="font-medium text-xl">Indlæser menu</p>
-              <PulseLoader color="#373737" size={13} />
+        {!loading ? (
+          <>
+            <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 breakout mt-10 pb-32">
+              {allProducts?.map((product, key) => {
+                return (
+                  <div key={key}>
+                    <ProductCard
+                      function={() => handleOnProductClick(product?.name)}
+                      text="Tilpas"
+                      key={key}
+                      imageSource={product?.imageURL}
+                      productName={product?.name}
+                      icon="fa-solid fa-utensils"
+                    />
+                  </div>
+                );
+              })}
             </div>
-          )}
-        </div>
+          </>
+        ) : (
+          <div className="flex mt-10 flex-col justify-center w-full mx-auto items-center gap-1">
+            <p className="font-medium text-xl">Indlæser menu</p>
+            <PulseLoader color="#373737" size={13} />
+          </div>
+        )}
       </PageWrapperContainer>
     </>
   );
