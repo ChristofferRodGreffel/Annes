@@ -33,7 +33,7 @@ const CustomerHeader = (props) => {
   return (
     <>
       <CustomerNavigation />
-      <header className="flex justify-around md:justify-between md:px-14 items-center w-full pt-5">
+      <header className="sticky top-0 bg-white flex justify-around md:justify-between md:px-14 items-center w-full pt-5">
         {props.iconLeft && (
           <i
             onClick={props.nav == true ? handleOpenNavigation : handleGoBack}
