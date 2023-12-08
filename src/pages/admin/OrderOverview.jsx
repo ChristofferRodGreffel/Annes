@@ -7,6 +7,7 @@ import { FIREBASE_DB } from "../../../firebase-config";
 import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOfStatus";
 import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrders";
+import OrderCard from "../../components/OrderCard";
 
 const OrderOverview = () => {
   const [recievedOrders, setRecievedOrders] = useState();
