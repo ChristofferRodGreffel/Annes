@@ -1,36 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { timestampConvert } from "../helperfunctions/TimestampConvert";
 
 const OrderCard = (props) => {
+  const [remainingTime, setRemainingTime] = useState();
+
+  useEffect(() => {
+    const currentTime = new Date().getTime();
+    const pickupTimestamp = props.order.pickup.time;
+    let pickupTime = new Date(pickupTimestamp * 1000);
+
+    const timeRemaining = pickupTime - currentTime;
+    console.log(timeRemaining);
+  }, []);
+
   const getTotalAmount = () => {
     let totalAmountFromBasket = 0;
     props.order.order.forEach((subData) => (totalAmountFromBasket += subData.amount));
     return totalAmountFromBasket;
   };
 
-  const convertTimestamp = (stamp) => {
-    let unixTimestamp = stamp;
-
-    // Convert to milliseconds and
-    // then create a new Date object
-    let dateObj = new Date(unixTimestamp * 1000);
-
-    let date = dateObj.toLocaleDateString("en-GB");
-
-    // Get hours from the timestamp
-    let hours = dateObj.getHours();
-
-    // Get minutes part from the timestamp
-    let minutes = dateObj.getMinutes();
-
-    let formattedTime = date + ", " + hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
-
-    return formattedTime;
-  };
-
   const checkPickupTime = (time) => {
     const today = new Date().toLocaleDateString("en-GB");
 
-    if (props.order.pickup.date) {
+    const dateStamp = props.order.pickup.date.seconds;
+    const date = new Date(dateStamp * 1000).toLocaleDateString("en-GB");
+
+    let pickup;
+
+    if (date !== today) {
+      pickup = date;
+      return pickup;
+    } else {
+      pickup = props.order.pickup.time;
+      return pickup;
     }
   };
 
@@ -43,7 +45,7 @@ const OrderCard = (props) => {
               <div>
                 <h1 className="font-bold text-lg rounded-xl">Ordre #{props.order.orderNo}</h1>
                 <div className="text-sm font-medium leading-tight font pt-0.5">
-                  <p>{convertTimestamp(props.order.orderPlacedAt.seconds)}</p>
+                  <p>{timestampConvert(props.order.orderPlacedAt.seconds, "stampToDateAndHourMinute")}</p>
                   <p>{props.order.customerInfo.name}</p>
                 </div>
               </div>
@@ -53,9 +55,9 @@ const OrderCard = (props) => {
               <p className="font-bold text-4xl border-b-2 border-primary">{getTotalAmount()} stk.</p>
               <p className="font-medium text-xl">{checkPickupTime()}</p>
             </div>
-            <div>
+            {/* <div>
               <p className="font-bold text-red text-center text-lg">OBS: 2 stk. GF</p>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
             <p>

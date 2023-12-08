@@ -8,6 +8,7 @@ import StatusBar from "../../components/StatusBar";
 import CancelOrder from "../../components/CancelOrder";
 import CustomButton from "../../components/CustomButton";
 import UpdatesBar from "../../components/UpdatesBar";
+import { timestampConvert } from "../../helperfunctions/TimestampConvert";
 
 const OrderStatus = () => {
   const { orderId } = useParams();
@@ -25,6 +26,11 @@ const OrderStatus = () => {
       setCurrentOrder(doc.data());
     });
   }, []);
+
+  const convertDate = (date) => {
+    const converted = new Date(date * 1000).toLocaleDateString("en-GB");
+    return converted;
+  };
 
   return (
     <>
@@ -63,11 +69,15 @@ const OrderStatus = () => {
             <div className="mt-10 full-width">
               <div className="flex justify-between items-center">
                 <h3 className="font-bold">Afhentningstid</h3>
-                <p>{currentOrder?.pickup.time}</p>
+                <p>
+                  {currentOrder.pickup.time !== "Hurtigst muligt"
+                    ? timestampConvert(currentOrder.pickup.time.seconds, "stampToHourMinute")
+                    : "Hurtigst muligt"}
+                </p>
               </div>
               <div className="flex justify-between items-center">
                 <h3 className="font-bold">Afhentningsdato</h3>
-                <p>{currentOrder?.pickup.date}</p>
+                <p>{timestampConvert(currentOrder.pickup.date.seconds, "stampToDate")}</p>
               </div>
             </div>
             <div className="mt-8">

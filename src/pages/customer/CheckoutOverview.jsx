@@ -127,11 +127,21 @@ function CheckoutOverview() {
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
+    const pickupDate = chosenCollectionDate.toLocaleDateString().replace(/\//g, "-");
+    let pickupDateTime;
+
+    if (chosenCollectionTime !== "Hurtigst muligt") {
+      const tempDateString = `${pickupDate} ${chosenCollectionTime}:00`;
+      pickupDateTime = new Date(tempDateString);
+    } else {
+      pickupDateTime = "Hurtigst muligt";
+    }
+
     const completeOrder = {
       orderPlacedAt: new Date(),
       pickup: {
-        date: chosenCollectionDate.toLocaleDateString("en-GB"),
-        time: chosenCollectionTime,
+        date: chosenCollectionDate,
+        time: pickupDateTime,
       },
       order: allBasketProducts,
       customerInfo: {
