@@ -65,7 +65,7 @@ function LandingPage() {
           <h2 className="text-center mb-3">Vælg mellem 5-6 brødtypper</h2>
           <div className="flex flex-col gap-2">
             <div className="flex justify-between border-b-2 border-grey border-dashed">
-              <p>Sandwich</p>
+              <p>Sandwich & glutenfri</p>
               <p>Fra 59 kr.</p>
             </div>
             <div className="flex justify-between border-b-2 border-grey border-dashed">

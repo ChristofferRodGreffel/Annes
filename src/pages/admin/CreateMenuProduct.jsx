@@ -36,6 +36,7 @@ function CreateMenuProduct() {
     { name: "Bagel" },
     { name: "Bolle" },
     { name: "Fiber bolle" },
+    { name: "Glutenfri" },
     { name: "Lyst" },
     { name: "Mørkt" },
     { name: "Trekantsandwich" },
@@ -225,7 +226,7 @@ function CreateMenuProduct() {
         <AdminContentWrapper>
           <BackButtonWithArrow linkTo="/menu-oversigt" linkText="Tilbage til valgmuligheder" />
           <PageH1Title>Tilføj nyt produkt</PageH1Title>
-          <div className="flex flex-row w-2/3 min-w-productOverviewMinWidth">
+          <div className="flex flex-col gap-5 xl:flex-row w-2/3 min-w-productOverviewMinWidth">
             <div className="w-full">
               <div className="flex flex-col gap-7">
                 <CustomInputWithLabel
@@ -272,10 +273,107 @@ function CreateMenuProduct() {
                 <ImageUpload onImageChange={onImageChange} imageState={images} />
               </div>
             </div>
+
+            <div className="xl:hidden flex flex-col justify-center items-center">
+              <div className="bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
+                <div className="flex flex-col gap-8 p-8">
+                  <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">Produktoversigt</h3>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">Navn</p>
+                    {productName ? (
+                      <>
+                        <p>{productName}</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">Ikke sat...</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">Pris</p>
+                    {productPrice ? (
+                      <>
+                        <p>{productPrice} kr.</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">Ikke sat...</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">Brød</p>
+                    {chosenBreadTypes.length != 0 ? (
+                      <>
+                        {chosenBreadTypes.map((bread, key) => {
+                          return (
+                            <ul className="list-disc list-inside flex items-center justify-between w-56" key={key}>
+                              <li>{bread.name}</li>
+                              <i
+                                onClick={() => handleRemoveBreadType(bread)}
+                                className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"
+                              ></i>
+                            </ul>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">Ikke sat...</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">Ingredienser</p>
+                    {chosenIngredients.length != 0 ? (
+                      <>
+                        {chosenIngredients.map((ingredient, key) => {
+                          return (
+                            <ul className="list-disc list-inside flex items-center justify-between w-56" key={key}>
+                              <li>{ingredient.name}</li>
+                              <i
+                                onClick={() => handleRemoveIngredient(ingredient)}
+                                className="fa-solid fa-circle-minus text-red text-lg cursor-pointer"
+                              ></i>
+                            </ul>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <p className="italic">Ikke sat...</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleAddProduct}
+                className="w-full bg-primary text-white text-lg rounded-bl-lg font-semibold p-3"
+              >
+                {addingProductLoader ? (
+                  <>
+                    <div className="flex items-center justify-center">
+                      <PulseLoader color="#FFFFFF" />
+                    </div>
+                  </>
+                ) : (
+                  <>Tilføj til menu</>
+                )}
+              </button>
+            </div>
+
           </div>
+
+
+
+
+
         </AdminContentWrapper>
 
-        <div className="sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">
+        <div className="max-xl:hidden sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">
           <div className="relative bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
             <div className="flex flex-col gap-8 p-8">
               <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">Produktoversigt</h3>
