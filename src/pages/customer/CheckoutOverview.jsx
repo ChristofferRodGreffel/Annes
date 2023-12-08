@@ -10,7 +10,7 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { FIREBASE_DB } from "../../../firebase-config";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import { PulseLoader } from "react-spinners";
 
 function CheckoutOverview() {
@@ -31,6 +31,9 @@ function CheckoutOverview() {
   const currentDate = new Date();
   const [shopIsClosed, setShopIsClosed] = useState(false);
 
+  const uid = FIREBASE_AUTH.currentUser?.uid
+
+
   useEffect(() => {
     const shopClosingTime = 1830;
 
@@ -43,6 +46,24 @@ function CheckoutOverview() {
       setShopIsClosed(false);
     }
   }, [chosenCollectionDate, currentDate]);
+
+  useEffect(() => {
+
+    const handleGetPersonalUserInformation = async () => {
+      if (uid) {
+        const docRef = doc(FIREBASE_DB, "users", uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const email = FIREBASE_AUTH.currentUser.email
+          setCustomerName(docSnap.data().name)
+          setCustomerPhone(docSnap.data().phone)
+          setCustomerEmail(email)
+        }
+      }
+    }
+    handleGetPersonalUserInformation()
+
+  }, [uid])
 
   useEffect(() => {
     if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString()) {
@@ -311,13 +332,15 @@ function CheckoutOverview() {
                       label="Dit navn"
                       name="customerInputName"
                       placeholder="Skriv navn her..."
+                      value={customerName}
                       customSetvalue={setCustomerName}
-                    />
+                      />
                     <CustomInputWithLabel
                       type="tel"
                       label="Dit telefonnummer"
                       name="customerInputPhone"
                       placeholder="Skriv telefonnr. her..."
+                      value={customerPhone}
                       customSetvalue={setCustomerPhone}
                     />
                     <CustomInputWithLabel
@@ -325,6 +348,7 @@ function CheckoutOverview() {
                       label="Din email"
                       name="customerInputEmail"
                       placeholder="Skriv email her..."
+                      value={customerEmail}
                       customSetvalue={setCustomerEmail}
                     />
                   </div>
