@@ -56,7 +56,7 @@ const AdminSidebar = () => {
               Ordre oversigt
             </NavLink>
             <NavLink
-              to={"/ordre-historik"}
+              to={"#"}
               className={({ isActive }) =>
                 isActive
                   ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
@@ -67,7 +67,7 @@ const AdminSidebar = () => {
               Ordre historik
             </NavLink>
             <NavLink
-              to={"/statistik"}
+              to={"#"}
               className={({ isActive }) =>
                 isActive
                   ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
