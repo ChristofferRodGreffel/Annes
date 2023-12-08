@@ -38,7 +38,17 @@ const OrderOverview = () => {
       <AdminContentWrapper>
         <div className="flex flex-col gap-8">
           <div>
-        <TopRowOrderOverview />
+            {recievedOrders && (
+              <TopRowOrderOverview
+                recivedOrders={recievedOrders}
+                acceptedOrders={acceptedOrders}
+                readyOrders={readyOrders}
+                pickedOrders={pickedOrders}
+                userCancelledOrders={userCancelledOrders}
+                shopCancelledOrders={shopCancelledOrders}
+
+              />
+            )}
             <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
 
             <hr className="border-b-2 border-dark mb-5" />
