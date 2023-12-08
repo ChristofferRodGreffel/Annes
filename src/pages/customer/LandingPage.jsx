@@ -1,3 +1,4 @@
+
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
@@ -78,7 +79,7 @@ function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="breakout flex flex-col gap-5 mt-10 pb-32 md:flex-row md:flex-wrap md:justify-evenly">
+        <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 breakout mt-10 pb-32">
           {!loading ? (
             allProducts?.map((product, key) => {
               return (

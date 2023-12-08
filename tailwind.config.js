@@ -9,7 +9,9 @@ export default {
           "100%": { transform: "rotate(1)" },
         },
       },
-
+      screens: {
+        'xs': '400px',
+      },
       animation: {
         slowZoom: "slowZoom 1.5s ease-in-out infinite",
       },
