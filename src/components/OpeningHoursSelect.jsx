@@ -54,7 +54,6 @@ const OpeningHoursSelect = (props) => {
           openingHoursArray.push(formattedHour);
         }
       }
-
       setOpeningHours(openingHoursArray);
     };
 

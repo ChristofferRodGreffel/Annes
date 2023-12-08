@@ -26,12 +26,16 @@ function TopRowOrderOverview(props) {
             let AmountOfUserCancelledOrders = props.userCancelledOrders?.length || 0
             let AmountOfShopCancelledOrders = props.shopCancelledOrders?.length || 0
 
-            const totalAmountOpenCalculated = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders
-            const totalAmountTotalCalculated = AmountOfPickedOrders + AmountOfUserCancelledOrders + AmountOfShopCancelledOrders
 
-            const percentageOfOpenOrders = (totalAmountTotalCalculated / totalAmountOpenCalculated) * 100
+            const totalNumberOfOpenOrders = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders
+            const totalNumberOfTotalOrders = totalNumberOfOpenOrders + AmountOfPickedOrders + AmountOfUserCancelledOrders + AmountOfShopCancelledOrders
 
-            setAmountOfOpenOrders(totalAmountOpenCalculated)
+            console.log("totalNumberOfOpenOrders", totalNumberOfOpenOrders)
+            console.log("totalNumberOfTotalOrders", totalNumberOfTotalOrders)
+
+            const percentageOfOpenOrders = (totalNumberOfOpenOrders / totalNumberOfTotalOrders) * 100
+
+            setAmountOfOpenOrders(totalNumberOfOpenOrders)
             setPercentageOfOpenOrders(percentageOfOpenOrders)
         }
 
