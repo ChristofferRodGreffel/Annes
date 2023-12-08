@@ -10,7 +10,7 @@ export default {
         },
       },
       screens: {
-        xs: "400px",
+        xs: "450px",
       },
       animation: {
         slowZoom: "slowZoom 1.5s ease-in-out infinite",
