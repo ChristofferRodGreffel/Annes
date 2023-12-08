@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSideBarOpen] = useState(false);
+  const [sidebarOpen, setSideBarOpen] = useState(true);
 
   const handleUserLogout = () => {
     signOut(FIREBASE_AUTH)
