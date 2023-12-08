@@ -29,7 +29,7 @@ const AdminSidebar = () => {
       <div
         id="adminMenu"
         className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
-          sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
+          !sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
         }`}
       >
         <NavLink to={"/ordre-oversigt"} className="m-auto mt-10 mb-16">
@@ -116,7 +116,7 @@ const AdminSidebar = () => {
           onClick={handleOpenCloseMenu}
           className="absolute bg-mainGrey -right-14 top-1/2 transform -translate-x-1/2 -translate-y-1/2 py-8 px-4 block rounded-lg cursor-pointer"
         >
-          <i className={`fa-solid ${sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-xl`}></i>
+          <i className={`fa-solid ${!sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-xl`}></i>
         </div>
       </div>
     </>
