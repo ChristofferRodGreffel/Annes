@@ -295,6 +295,7 @@ function CheckoutOverview() {
                 />
 
                 <OpeningHoursSelect
+                  shopIsClosed={shopIsClosed}
                   chosenCollectionDate={chosenCollectionDate}
                   setChosenCollectionTime={setChosenCollectionTime}
                   chosenCollectionTime={chosenCollectionTime}

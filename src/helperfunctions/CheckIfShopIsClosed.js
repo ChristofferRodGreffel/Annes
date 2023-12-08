@@ -6,8 +6,8 @@ export function CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed) {
     const chosenCollectionDateFormatted = chosenCollectionDate.toLocaleDateString()
 
     const currentDateFormatted = currentDate.toLocaleDateString()
-    const currentTimeHourFormatted = Number(currentDate.getHours().toString().padStart(2, "0"))
-    const currentTimeMinuteFormatted = Number(currentDate.getMinutes().toString().padStart(2, "0"))
+    const currentTimeHourFormatted = currentDate.getHours().toString().padStart(2, "0")
+    const currentTimeMinuteFormatted = currentDate.getMinutes().toString().padStart(2, "0")
 
     const currentTimeHourAndMinuteFormatted = Number(`${currentTimeHourFormatted}${currentTimeMinuteFormatted}`)
 

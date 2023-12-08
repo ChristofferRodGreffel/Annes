@@ -7,7 +7,6 @@ const OpeningHoursSelect = (props) => {
   const todayHour = new Date().getHours();
   const todayMinute = new Date().getMinutes();
 
-  const [shopIsClosed, setShopIsClosed] = useState(false);
   const currentDate = new Date();
 
   const shopClosingTime = 1830;
@@ -17,17 +16,6 @@ const OpeningHoursSelect = (props) => {
     const time = e.target.value;
     props.setChosenCollectionTime(time);
   };
-
-  useEffect(() => {
-    if (
-      currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() &&
-      `${Number(currentDate.getHours())}${Number(currentDate.getMinutes())}` >= shopClosingTime
-    ) {
-      setShopIsClosed(true);
-    } else {
-      setShopIsClosed(false);
-    }
-  }, [props, currentDate]);
 
   useEffect(() => {
     // Function to calculate the opening hours based on the current day
@@ -75,7 +63,7 @@ const OpeningHoursSelect = (props) => {
 
   return (
     <div className="flex flex-col gap-2">
-      {shopIsClosed ? (
+      {props.shopIsClosed ? (
         <>
           <p className="text-sm italic">Det er desværre for sent at bestille til i dag.</p>
         </>
