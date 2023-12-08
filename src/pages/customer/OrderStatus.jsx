@@ -9,6 +9,8 @@ import CancelOrder from "../../components/CancelOrder";
 import CustomButton from "../../components/CustomButton";
 import UpdatesBar from "../../components/UpdatesBar";
 import { timestampConvert } from "../../helperfunctions/TimestampConvert";
+import { toast } from "react-toastify";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 
 const OrderStatus = () => {
   const { orderId } = useParams();
@@ -31,6 +33,10 @@ const OrderStatus = () => {
     const converted = new Date(date * 1000).toLocaleDateString("en-GB");
     return converted;
   };
+
+  const handleSaveOrderButtonClicked = () => {
+    toast.error("Funktionen er ikke lavet", DefaultToastifySettings);
+  }
 
   return (
     <>
@@ -88,7 +94,7 @@ const OrderStatus = () => {
               />
             </div>
             <div className="mt-5">
-              <CustomButton iconRight={true} customWidth="w-full" title="Gem bestilling" icon={"fa-solid fa-heart"} />
+              <CustomButton iconRight={true} function={handleSaveOrderButtonClicked} customWidth="w-full" title="Gem bestilling" icon={"fa-solid fa-heart"} />
             </div>
             <div className="mt-10">
               <p className="text-xl font-bold">Opdateringsoversigt</p>
