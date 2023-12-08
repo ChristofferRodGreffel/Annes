@@ -36,13 +36,15 @@ const OrderOverview = () => {
       <AdminSidebar />
       <AdminContentWrapper>
         <h2>Nye bestillinger, som ikke er godkendt</h2>
-        {recievedOrders?.map((order, key) => {
-          return (
-            <div key={key}>
-              <OrderCard order={order} />
-            </div>
-          );
-        })}
+        <div className="flex gap-5">
+          {recievedOrders?.map((order, key) => {
+            return (
+              <div key={key}>
+                <OrderCard order={order} />
+              </div>
+            );
+          })}
+        </div>
         <h2>Bestillinger, som er godkendt</h2>
         {acceptedOrders?.map((order, key) => {
           return (

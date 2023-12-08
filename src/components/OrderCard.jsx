@@ -75,7 +75,7 @@ const OrderCard = (props) => {
                 Afhentes om: <PickupTimer remainingTime={remainingTime} />
               </p>
             ) : (
-              <p></p>
+              <p>Afhentes snarest</p>
             )}
           </div>
         </div>
