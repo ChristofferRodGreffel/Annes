@@ -27,12 +27,8 @@ const AdminSidebar = () => {
   return (
     <>
       <div
-        onMouseOver={() => {
-          setSideBarOpen(true);
-        }}
-        onMouseLeave={() => {
-          setSideBarOpen(false);
-        }}
+      onMouseOver={() => {setSideBarOpen(true)}}
+      onMouseLeave={() => {setSideBarOpen(true)}}
         id="adminMenu"
         className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
           sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
@@ -56,7 +52,7 @@ const AdminSidebar = () => {
               Ordre oversigt
             </NavLink>
             <NavLink
-              to={"#"}
+              to={"/ordre-historik"}
               className={({ isActive }) =>
                 isActive
                   ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
@@ -67,7 +63,7 @@ const AdminSidebar = () => {
               Ordre historik
             </NavLink>
             <NavLink
-              to={"#"}
+              to={"/statistik"}
               className={({ isActive }) =>
                 isActive
                   ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
