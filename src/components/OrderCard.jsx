@@ -58,11 +58,11 @@ const OrderCard = (props) => {
               <i className="fa-solid fa-print text-3xl text-grey cursor-pointer"></i>
             </div>
             <div className="flex flex-col items-center m-auto w-full">
-              <p className="font-bold text-4xl border-b-2 border-primary">{getTotalAmount()} stk.</p>
+              <p className="font-bold text-3xl border-b-2 border-primary">{getTotalAmount()} stk.</p>
               {props.order.pickup.time !== "Hurtigst muligt" ? (
-                <p className="font-medium text-xl">{checkPickupTime()}</p>
+                <p className="font-medium text-lg">{checkPickupTime()}</p>
               ) : (
-                <p className="font-medium text-xl">Hurtigst muligt</p>
+                <p className="font-medium text-lg">Hurtigst muligt</p>
               )}
             </div>
             {/* <div>
