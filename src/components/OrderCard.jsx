@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { timestampConvert } from "../helperfunctions/TimestampConvert";
+import PickupTimer from "./PickupTimer";
 
 const OrderCard = (props) => {
   const [remainingTime, setRemainingTime] = useState();
 
   useEffect(() => {
     const currentTime = new Date().getTime();
-    const pickupTimestamp = props.order.pickup.time;
-    let pickupTime = new Date(pickupTimestamp * 1000);
+    const pickupTimestamp = props.order.pickup.time.seconds;
+    const pickupTime = new Date(pickupTimestamp * 1000).getTime();
+
+    // console.log("Timestamp", pickupTimestamp, "currentTime", currentTime, "pickupTime", pickupTime);
 
     const timeRemaining = pickupTime - currentTime;
-    console.log(timeRemaining);
+
+    // console.log("Time remaining", timeRemaining);
+
+    setRemainingTime(timeRemaining);
   }, []);
 
   const getTotalAmount = () => {
@@ -19,19 +25,19 @@ const OrderCard = (props) => {
     return totalAmountFromBasket;
   };
 
-  const checkPickupTime = (time) => {
+  const checkPickupTime = () => {
     const today = new Date().toLocaleDateString("en-GB");
 
     const dateStamp = props.order.pickup.date.seconds;
-    const date = new Date(dateStamp * 1000).toLocaleDateString("en-GB");
+    const orderDate = new Date(dateStamp * 1000).toLocaleDateString("en-GB");
 
     let pickup;
 
-    if (date !== today) {
-      pickup = date;
+    if (orderDate !== today) {
+      pickup = timestampConvert(dateStamp, "stampToDate");
       return pickup;
     } else {
-      pickup = props.order.pickup.time;
+      pickup = timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute");
       return pickup;
     }
   };
@@ -53,16 +59,24 @@ const OrderCard = (props) => {
             </div>
             <div className="flex flex-col items-center m-auto w-full">
               <p className="font-bold text-4xl border-b-2 border-primary">{getTotalAmount()} stk.</p>
-              <p className="font-medium text-xl">{checkPickupTime()}</p>
+              {props.order.pickup.time !== "Hurtigst muligt" ? (
+                <p className="font-medium text-xl">{checkPickupTime()}</p>
+              ) : (
+                <p className="font-medium text-xl">Hurtigst muligt</p>
+              )}
             </div>
             {/* <div>
               <p className="font-bold text-red text-center text-lg">OBS: 2 stk. GF</p>
             </div> */}
           </div>
           <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
-            <p>
-              Afhentes om: <b>1t 30m</b>
-            </p>
+            {props.order.pickup.time !== "Hurtigst muligt" ? (
+              <p>
+                Afhentes om: <PickupTimer remainingTime={remainingTime} />
+              </p>
+            ) : (
+              <p></p>
+            )}
           </div>
         </div>
       )}
