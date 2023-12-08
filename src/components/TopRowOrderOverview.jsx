@@ -30,9 +30,6 @@ function TopRowOrderOverview(props) {
             const totalNumberOfOpenOrders = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders
             const totalNumberOfTotalOrders = totalNumberOfOpenOrders + AmountOfPickedOrders + AmountOfUserCancelledOrders + AmountOfShopCancelledOrders
 
-            console.log("totalNumberOfOpenOrders", totalNumberOfOpenOrders)
-            console.log("totalNumberOfTotalOrders", totalNumberOfTotalOrders)
-
             const percentageOfOpenOrders = (totalNumberOfOpenOrders / totalNumberOfTotalOrders) * 100
 
             setAmountOfOpenOrders(totalNumberOfOpenOrders)
@@ -44,7 +41,7 @@ function TopRowOrderOverview(props) {
 
     return (
         <>
-            <div className='flex flex-col gap-2 w-64 md:w-full md:flex-row md:justify-between  mb-8'>
+            <div className='flex flex-col-reverse gap-2 w-64 md:w-full md:flex-row md:justify-between  mb-8'>
                 <div>
                     <input type="text" name="searchForOrder" id="searchForOrderId" placeholder='Søg efter ordre...'></input>
                 </div>
