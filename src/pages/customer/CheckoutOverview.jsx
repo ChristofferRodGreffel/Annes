@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import { PulseLoader } from "react-spinners";
+import { CheckIfShopIsClosed } from "../../helperfunctions/CheckIfShopIsClosed";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
@@ -35,16 +36,9 @@ function CheckoutOverview() {
 
 
   useEffect(() => {
-    const shopClosingTime = 1830;
+   
+      CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed)
 
-    if (
-      currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() &&
-      `${Number(currentDate.getHours())}${Number(currentDate.getMinutes())}` >= shopClosingTime
-    ) {
-      setShopIsClosed(true);
-    } else {
-      setShopIsClosed(false);
-    }
   }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
@@ -334,7 +328,7 @@ function CheckoutOverview() {
                       placeholder="Skriv navn her..."
                       value={customerName}
                       customSetvalue={setCustomerName}
-                      />
+                    />
                     <CustomInputWithLabel
                       type="tel"
                       label="Dit telefonnummer"
