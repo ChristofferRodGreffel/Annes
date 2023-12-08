@@ -2,21 +2,48 @@ import React, { useEffect, useState } from "react";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import AdminSidebar from "../../components/AdminSidebar";
 
-import { collection, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOfStatus";
 import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrders";
 import OrderCard from "../../components/OrderCard";
 import TopRowOrderOverview from "../../components/TopRowOrderOverview";
+import { useNavigate } from "react-router-dom";
 
 const OrderOverview = () => {
+  const navigate = useNavigate();
+
   const [recievedOrders, setRecievedOrders] = useState();
   const [acceptedOrders, setAcceptedOrders] = useState();
   const [readyOrders, setReadyOrders] = useState();
   const [pickedOrders, setPickedOrders] = useState();
   const [userCancelledOrders, setUserCancelledOrders] = useState();
   const [shopCancelledOrders, setShopCancelledOrders] = useState();
+
+  const [allOrderNumbersWithName, setAllOrderNumbersWithName] = useState()
+  const [filteredOrdersInput, setFilteredOrdersInput] = useState()
+  const [filteredOrdersArray, setFilteredOrdersArray] = useState()
+
+  useEffect(() => {
+    const getAllOrderNumbersWithName = async () => {
+      const querySnapshot = await getDocs(collection(FIREBASE_DB, "orders"));
+      let resultArray = []
+      querySnapshot.forEach((doc) => {
+        if (doc.data()?.orderNo && doc.data()?.customerInfo?.name) {
+          let obj = {
+            orderNo: doc.data()?.orderNo,
+            name: doc.data()?.customerInfo?.name,
+            docId: doc.id,
+          }
+          resultArray.push(obj)
+        }
+      })
+      setAllOrderNumbersWithName(resultArray)
+    }
+    getAllOrderNumbersWithName()
+  }, [])
+
 
   useEffect(() => {
     listenToNewOrders();
@@ -32,6 +59,16 @@ const OrderOverview = () => {
     receiveFilteredOrders(setShopCancelledOrders, "status", "shopCancelled");
   }, []);
 
+  const handleShowFilteredOrders = async (e) => {
+    const inputValue = e.target.value.toLowerCase()
+    if (inputValue) {
+      const filtered = allOrderNumbersWithName.filter(order => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue));
+      setFilteredOrdersArray(filtered)
+    } else {
+      setFilteredOrdersArray()
+    }
+  }
+
   return (
     <div className="flex justify-center flex-row">
       <AdminSidebar />
@@ -43,11 +80,33 @@ const OrderOverview = () => {
                 recivedOrders={recievedOrders}
                 acceptedOrders={acceptedOrders}
                 readyOrders={readyOrders}
-                pickedOrders={pickedOrders}
-                userCancelledOrders={userCancelledOrders}
-                shopCancelledOrders={shopCancelledOrders}
-
+                totalOrders={allOrderNumbersWithName}
+                handleShowFilteredOrders={handleShowFilteredOrders}
+                filteredOrdersInput={filteredOrdersInput}
               />
+            )}
+            {filteredOrdersArray && (
+              <>
+                {filteredOrdersArray.length !== 0 ?
+                  <>
+                    <p>Resultat:</p>
+                  </>
+                  :
+                  <>
+                    <p>Der er ingen ordre med denne søgning</p>
+                  </>
+                }
+                <div className="flex gap-2 flex-wrap mb-10">
+                  {filteredOrdersArray?.map((order) => {
+                    return (
+                      <div key={order.orderNo} className="border-2 p-2 border-primary" onClick={() => navigate(`/ordredetaljer/${order.docId}`)}>
+                        <p>Navn: {order.name}</p>
+                        <p>Ordre id: {order.orderNo}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
             )}
             <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
 
