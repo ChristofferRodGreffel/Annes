@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-const CountdownTimer = (props) => {
-  const [remainingTime, setRemainingTime] = useState(props.initialRemainingTime);
+const PickupTimer = (props) => {
+  const [timeLeft, setTimeLeft] = useState(props.remainingTime);
 
   useEffect(() => {
+    setTimeLeft(props.remainingTime); // Set initial time
+
     const intervalId = setInterval(() => {
-      setRemainingTime((prevTime) => {
+      setTimeLeft((prevTime) => {
         if (prevTime <= 1000) {
           clearInterval(intervalId);
           return 0;
@@ -15,20 +17,15 @@ const CountdownTimer = (props) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [remainingTime]);
+  }, [props.remainingTime]);
 
   const formatTime = (time) => {
-    // const hours = Math.floor(time )
-    const minutes = Math.floor(time / (60 * 1000));
-    const seconds = Math.floor((time % (60 * 1000)) / 1000);
-    return `${minutes}m ${seconds}s`;
+    const hours = Math.floor(time / (60 * 60 * 1000));
+    const minutes = Math.floor((time % (60 * 60 * 1000)) / (60 * 1000));
+    return `${hours}t ${minutes}m`;
   };
 
-  return (
-    <div>
-      <b>{formatTime(remainingTime)}</b>
-    </div>
-  );
+  return <b>{formatTime(timeLeft)}</b>;
 };
 
-export default CountdownTimer;
+export default PickupTimer;
