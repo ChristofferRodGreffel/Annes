@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { timestampConvert } from "../helperfunctions/TimestampConvert";
 import PickupTimer from "./PickupTimer";
+import { useNavigate } from "react-router-dom";
 
 const OrderCard = (props) => {
   const [remainingTime, setRemainingTime] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentTime = new Date().getTime();
@@ -45,7 +47,7 @@ const OrderCard = (props) => {
   return (
     <>
       {props.order && (
-        <div className="w-56">
+        <div className="w-56 cursor-pointer" onClick={() => navigate(`/ordredetaljer/${props.order.orderDocId}`)}>
           <div className="flex flex-col justify-between bg-mainGrey h-56 rounded-lg px-4 py-3 relative">
             <div className="flex justify-between">
               <div>
