@@ -71,7 +71,7 @@ const Ingredients = () => {
 
   return (
     <>
-      <div className="flex justify-center flex-row">
+      <div className="flex justify-center">
         <AdminSidebar />
         <AdminContentWrapper>
           <BackButtonWithArrow linkText="Tilbage til valgmuligheder" linkTo="/menu-oversigt" />
@@ -121,7 +121,7 @@ const Ingredients = () => {
               <hr className="border-b-2 border-dark rounded-full" />
               <div className="mt-5">
                 {allIngredients?.length != 0 ? (
-                  <ul className="grid grid-cols-2 gap-y-1 gap-x-16 auto-cols-min">
+                  <ul className="grid grid-cols-1  sm:grid-cols-2 gap-y-1 gap-x-16 auto-cols-min">
                     {allIngredients?.map((ingredient, key) => {
                       return (
                         <li className="flex items-center justify-between w-56" key={key}>
