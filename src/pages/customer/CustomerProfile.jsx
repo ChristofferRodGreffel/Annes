@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
 import CustomButton from "../../components/CustomButton";
@@ -9,7 +9,7 @@ import PageH1Title from '../../components/PageH1Title'
 import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
-import { collection, doc, getDoc, onSnapshot, query } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore";
 import { PulseLoader } from "react-spinners";
 
 
@@ -20,6 +20,8 @@ const CustomerProfile = () => {
   const [customerName, setCustomerName] = useState("")
   const [customerPhone, setCustomerPhone] = useState("")
   const [customerProfileMessage, setCustomerProfileMessage] = useState("")
+
+  const newCustomerPhoneRef = useRef(null)
 
 
   useEffect(() => {
@@ -67,7 +69,19 @@ const CustomerProfile = () => {
 
   const handleChangePhoneNumber = (e) => {
     e.preventDefault()
-    toast.error("Funktionen er ikke tilgængelig", DefaultToastifySettings);
+
+    const newPhoneNo = newCustomerPhoneRef.current?.customerPhoneNumber.value
+    const uid = FIREBASE_AUTH.currentUser.uid
+
+    const userRef = doc(FIREBASE_DB, "users", uid);
+    updateDoc(userRef, {
+      phone: newPhoneNo,
+    })
+    setCustomerPhone(newPhoneNo)
+
+    newCustomerPhoneRef.current?.reset()
+
+    toast.success("Telefon nr. opdateret", DefaultToastifySettings);
   }
 
 
@@ -120,27 +134,28 @@ const CustomerProfile = () => {
                     </span>
                   </div>
                 </PageH1Title>
-                  <div className="flex flex-col gap-6 max-w-lg lg:max-w-none lg:flex-row lg:flex-wrap">
-                    <CustomButton title="Vip-fordele" />
-                    <CustomButton title="Indstillinger" />
-                    <CustomButton title="Gå til favoritter" />
-                    <CustomButton title="Gå til bestillinger" />
-                  </div>
+                <div className="flex flex-col gap-6 max-w-lg lg:max-w-none lg:flex-row lg:flex-wrap">
+                  <CustomButton title="Vip-fordele" />
+                  <CustomButton title="Indstillinger" />
+                  <CustomButton title="Gå til favoritter" />
+                  <CustomButton title="Gå til bestillinger" />
+                </div>
               </div>
               <div className="max-w-lg">
 
-                <div className="mb-10">
-                  <CustomInputWithLabel
-                    button={true}
-                    buttonText="Opdater"
-                    customOnClick={handleChangePhoneNumber}
-                    label="Opdater telefon nr."
-                    type="text"
-                    name="customerPhoneNumber"
-                    placeholder="Skriv dit nr. her..."
-                  />
-                  <p>Nuværende tlf. nr.: {customerPhone}</p>
-                </div>
+                <form ref={newCustomerPhoneRef} onSubmit={handleChangePhoneNumber}>
+                  <div className="mb-10">
+                    <CustomInputWithLabel
+                      button={true}
+                      buttonText="Opdater"
+                      label="Opdater telefon nr."
+                      type="text"
+                      name="customerPhoneNumber"
+                      placeholder="Skriv dit nr. her..."
+                    />
+                    <p>Nuværende telefon nr.: {customerPhone}</p>
+                  </div>
+                </form>
 
                 <div className="flex flex-col mb-10">
                   <CustomButton title="Nulstil adgangskode" function={handleResetPassword} />
