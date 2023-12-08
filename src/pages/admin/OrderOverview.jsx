@@ -36,7 +36,7 @@ const OrderOverview = () => {
       <AdminSidebar />
       <AdminContentWrapper>
         <h2>Nye bestillinger, som ikke er godkendt</h2>
-        <div className="flex gap-5">
+        <div className="flex flex-wrap gap-5">
           {recievedOrders?.map((order, key) => {
             return (
               <div key={key}>

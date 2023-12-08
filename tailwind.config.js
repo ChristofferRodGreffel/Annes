@@ -10,14 +10,14 @@ export default {
         },
       },
       screens: {
-        'xs': '400px',
+        xs: "400px",
       },
       animation: {
         slowZoom: "slowZoom 1.5s ease-in-out infinite",
       },
 
       minWidth: {
-        sidebarMinWidth: "20rem",
+        sidebarMinWidth: "270px",
         productOverviewMinWidth: "400px",
       },
       minHeight: {
