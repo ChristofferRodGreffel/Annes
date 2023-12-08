@@ -151,131 +151,137 @@ const CustomizeProduct = () => {
   return (
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
-        <img
-          className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 lg:h-96 md:mx-auto ${loadedImage ? null : 'blur-lg'}`}
-          src={productInfo?.imageURL}
-          alt={`Billede af ${productInfo?.name}`}
-          onLoad={() => { setLoadedImage(true) }}
-        />
+      <img
+        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 lg:h-96 md:mx-auto ${loadedImage ? null : 'blur-lg'}`}
+        src={productInfo?.imageURL}
+        alt={`Billede af ${productInfo?.name}`}
+        onLoad={() => { setLoadedImage(true) }}
+      />
       <PageWrapperContainer>
         {productInfo ?
           <>
-
-            <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
-              <div className="mt-8">
-                <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
-                <div className="flex flex-col w-fit mt-5">
-                  <label className="text-lg font-semibold mb-1" htmlFor="breadSelect">
-                    Vælg brød
-                  </label>
-                  <select
-                    className="border-2 border-dark rounded-full w-full py-1 px-3 font-medium"
-                    name="breadSelect"
-                    id="breadSelect"
-                    value={chosenBread}
-                    onChange={(e) => setChosenBread(e.target.value)}
-                  >
-                    {productInfo?.chosenBreadTypes?.map((bread, key) => {
-                      return (
-                        <option key={key} value={bread}>
-                          {bread}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <div className="mt-5">
-                  <label className="text-lg font-semibold" htmlFor="ingredientsForm">
-                    Standard ingredienser
-                  </label>
-                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full mt-1">
-                    {defaultIngredients?.map((ingredient, key) => {
-                      return (
-                        <div key={key} className="flex items-center gap-1 py-2 md:py-1">
-                          <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
-                          <label className="font-medium" htmlFor={ingredient}>
-                            {ingredient}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </form>
-                </div>
-                <div className="mt-5">
-                  <h2 className="mb-2 text-lg font-semibold">Vælg dressing</h2>
-                  <div className="flex flex-col gap-3 w-2/3">
-                    <div className="flex flex-row w-full items-center justify-between gap-3">
-                      <label htmlFor="dressingSelectTop">Top</label>
-                      <select
-                        className="border-2 border-dark rounded-full py-1 px-3 font-medium w-fit"
-                        name="dressingTop"
-                        id="dressingSelectTop"
-                        defaultValue={"Mayo"}
-                        onChange={(e) => changeDressing(e.target.value, e.target.name)}
-                      >
-                        <option value="Fravalgt">Ingen dressing</option>
-                        <option value="Mayo">Mayo</option>
-                        <option value="Karry">Karry</option>
-                        <option value="Pesto">Grøn pesto</option>
-                        <option value="Chilimayo">Chilimayo +5 kr.</option>
-                      </select>
-                    </div>
-                    <div className="flex flex-row w-full items-center justify-between gap-3">
-                      <label htmlFor="dressingSelectBottom">Bund</label>
-                      <select
-                        className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium"
-                        name="dressingBottom"
-                        id="dressingSelectBottom"
-                        defaultValue="Mayo"
-                        onChange={(e) => changeDressing(e.target.value, e.target.name)}
-                      >
-                        <option value="Fravalgt">Ingen dressing</option>
-                        <option value="Mayo">Mayo</option>
-                        <option value="Karry">Karry</option>
-                        <option value="Pesto">Grøn pesto</option>
-                        <option value="Chilimayo">Chilimayo +5 kr.</option>
-                      </select>
+            <div className="flex fl">
+              <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
+                <div className="mt-8">
+                  <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
+                  <div className="flex flex-col w-fit mt-5">
+                    <label className="text-lg font-semibold mb-1" htmlFor="breadSelect">
+                      Vælg brød
+                    </label>
+                    <select
+                      className="border-2 border-dark rounded-full w-full py-1 px-3 font-medium"
+                      name="breadSelect"
+                      id="breadSelect"
+                      value={chosenBread}
+                      onChange={(e) => setChosenBread(e.target.value)}
+                    >
+                      {productInfo?.chosenBreadTypes?.map((bread, key) => {
+                        return (
+                          <option key={key} value={bread}>
+                            {bread}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="mt-5">
+                    <label className="text-lg font-semibold" htmlFor="ingredientsForm">
+                      Standard ingredienser
+                    </label>
+                    <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full mt-1">
+                      {defaultIngredients?.map((ingredient, key) => {
+                        return (
+                          <div key={key} className="flex items-center gap-1 py-2 md:py-1">
+                            <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
+                            <label className="font-medium" htmlFor={ingredient}>
+                              {ingredient}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </form>
+                  </div>
+                  <div className="mt-5">
+                    <h2 className="mb-2 text-lg font-semibold">Vælg dressing</h2>
+                    <div className="flex flex-col gap-3 w-2/3">
+                      <div className="flex flex-row w-full items-center justify-between gap-3">
+                        <label htmlFor="dressingSelectTop">Top</label>
+                        <select
+                          className="border-2 border-dark rounded-full py-1 px-3 font-medium w-fit"
+                          name="dressingTop"
+                          id="dressingSelectTop"
+                          defaultValue={"Mayo"}
+                          onChange={(e) => changeDressing(e.target.value, e.target.name)}
+                        >
+                          <option value="Fravalgt">Ingen dressing</option>
+                          <option value="Mayo">Mayo</option>
+                          <option value="Karry">Karry</option>
+                          <option value="Pesto">Grøn pesto</option>
+                          <option value="Chilimayo">Chilimayo +5 kr.</option>
+                        </select>
+                      </div>
+                      <div className="flex flex-row w-full items-center justify-between gap-3">
+                        <label htmlFor="dressingSelectBottom">Bund</label>
+                        <select
+                          className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium"
+                          name="dressingBottom"
+                          id="dressingSelectBottom"
+                          defaultValue="Mayo"
+                          onChange={(e) => changeDressing(e.target.value, e.target.name)}
+                        >
+                          <option value="Fravalgt">Ingen dressing</option>
+                          <option value="Mayo">Mayo</option>
+                          <option value="Karry">Karry</option>
+                          <option value="Pesto">Grøn pesto</option>
+                          <option value="Chilimayo">Chilimayo +5 kr.</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+
+
+                <div>
+                  <div className="mt-5">
+                    <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
+                    <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
+                      {allIngredients?.map((ingredient, key) => {
+                        return (
+                          <div key={key}>
+                            <IngredientCheckbox
+                              ingredient={ingredient}
+                              value={ingredient}
+                              onChange={handleExtraIngredientChange}
+                            />
+                          </div>
+                        );
+                      })}
+                    </form>
+                    <p className="mt-3">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
+                  </div>
+                </div>
                 <div className="mt-5">
-                  <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
-                  <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
-                    {allIngredients?.map((ingredient, key) => {
-                      return (
-                        <div key={key}>
-                          <IngredientCheckbox
-                            ingredient={ingredient}
-                            value={ingredient}
-                            onChange={handleExtraIngredientChange}
-                          />
-                        </div>
-                      );
-                    })}
-                  </form>
-                  <p className="mt-3">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
+                  <h2 className="text-lg font-semibold">Vælg antal</h2>
+                  <div className="flex items-center justify-between min-w-[95px] w-fit select-none mt-1">
+                    <i
+                      onClick={handleAmountDecrease}
+                      className={`fa-solid fa-circle-minus text-xl ${amount === 1 && `text-grey`}`}
+                    ></i>
+                    <p className="font-bold text-2xl">{amount}</p>
+                    <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl"></i>
+                  </div>
                 </div>
               </div>
-              <div className="mt-5">
-                <h2 className="text-lg font-semibold">Vælg antal</h2>
-                <div className="flex items-center justify-between min-w-[95px] w-fit select-none mt-1">
-                  <i
-                    onClick={handleAmountDecrease}
-                    className={`fa-solid fa-circle-minus text-xl ${amount === 1 && `text-grey`}`}
-                  ></i>
-                  <p className="font-bold text-2xl">{amount}</p>
-                  <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl"></i>
-                </div>
-              </div>
+              <CustomerBottomInfoContainer
+                function={handleAddProduct}
+                customNavigate={navigate}
+                showAmount={false}
+                text="Tilføj til kurv"
+                price={productPrice * amount}
+                amount={amount}
+              />
             </div>
-            <CustomerBottomInfoContainer
-              function={handleAddProduct}
-              customNavigate={navigate}
-              showAmount={false}
-              text="Tilføj til kurv"
-              price={productPrice * amount}
-              amount={amount}
-            />
           </>
           :
           <>
@@ -285,6 +291,7 @@ const CustomizeProduct = () => {
             </div>
           </>
         }
+
       </PageWrapperContainer>
     </>
   );
