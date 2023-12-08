@@ -35,58 +35,47 @@ const OrderOverview = () => {
     <div className="flex justify-center flex-row">
       <AdminSidebar />
       <AdminContentWrapper>
-        <h2>Nye bestillinger, som ikke er godkendt</h2>
-        <div className="flex flex-wrap gap-x-5 gap-y-2">
-          {recievedOrders?.map((order, key) => {
-            return (
-              <div key={key}>
-                <OrderCard order={order} />
-              </div>
-            );
-          })}
+        <div className="flex flex-col gap-8">
+          <div>
+            <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
+            <hr className="border-b-2 border-dark mb-5" />
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {recievedOrders?.map((order, key) => {
+                return (
+                  <div key={key}>
+                    <OrderCard order={order} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h2 className="font-bold text-xl mb-1">Godkendte bestillinger</h2>
+            <hr className="border-b-2 border-dark mb-5" />
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {acceptedOrders?.map((order, key) => {
+                return (
+                  <div key={key}>
+                    <OrderCard order={order} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h2 className="font-bold text-xl mb-1">Klar til afhentning</h2>
+            <hr className="border-b-2 border-dark mb-5" />
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {readyOrders?.map((order, key) => {
+                return (
+                  <div key={key}>
+                    <OrderCard order={order} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-        <h2>Bestillinger, som er godkendt</h2>
-        {acceptedOrders?.map((order, key) => {
-          return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
-          );
-        })}
-        <h2>Bestillinger, som er klar til afhentning</h2>
-        {readyOrders?.map((order, key) => {
-          return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
-          );
-        })}
-        <h2>Bestillinger, som er afhentet</h2>
-        {pickedOrders?.map((order, key) => {
-          return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
-          );
-        })}
-
-        <h2>Bestillinger som kunden har annulleret</h2>
-        {userCancelledOrders?.map((order, key) => {
-          return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
-          );
-        })}
-
-        <h2>Bestillinger som butikken har annulleret</h2>
-        {shopCancelledOrders?.map((order, key) => {
-          return (
-            <p key={key}>
-              Hej, {order.status} order nr. {order.orderNo}
-            </p>
-          );
-        })}
       </AdminContentWrapper>
     </div>
   );
