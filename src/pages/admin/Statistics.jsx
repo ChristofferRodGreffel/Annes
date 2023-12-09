@@ -11,7 +11,7 @@ function Statistics() {
                 <AdminSidebar />
                 <AdminContentWrapper>
                     <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
-                    <PageH1Title>Her kan du se alle tidligere ordre</PageH1Title>
+                    <PageH1Title>Her kan du se statistik om kundernes brug af hjemmesiden, hvilke produkter der klarer sig bedst mm. </PageH1Title>
                     <p>
                         Siden er ikke lavet
                     </p>
