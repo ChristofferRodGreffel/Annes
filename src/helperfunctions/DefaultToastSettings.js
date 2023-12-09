@@ -4,7 +4,7 @@ export const DefaultToastifySettings = {
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
-  draggable: true,
+  draggable: false,
   progress: undefined,
   theme: "light",
 };

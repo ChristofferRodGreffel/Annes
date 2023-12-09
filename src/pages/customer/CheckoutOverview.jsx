@@ -238,6 +238,11 @@ function CheckoutOverview() {
     return currentOrderNumber;
   };
 
+  const handleEditProduct = (clickedProduct) => {
+    // navigate(`/bestil-online/${clickedProduct.product.name}`, { product: clickedProduct.product}, {productIndex: clickedProduct.index } );
+    navigate(`/bestil-online/${clickedProduct.product.name}`, {state: { product: clickedProduct.product, productIndex: clickedProduct.index}});
+  }
+
   return (
     <>
       <CustomerHeader
@@ -266,6 +271,7 @@ function CheckoutOverview() {
                       handleDeleteProduct={handleDeleteProduct}
                       increase={handleIncrease}
                       decrease={handleDecrease}
+                      handleEditProduct={handleEditProduct}
                     />
                   </div>
                 );

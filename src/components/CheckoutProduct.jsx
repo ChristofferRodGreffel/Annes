@@ -54,7 +54,7 @@ const CheckoutProduct = (props) => {
         </div>
         <div className="flex justify-between mt-3 items-center">
           <div className="flex gap-2 text-white">
-            <button className="font-semibold px-10 py-2 bg-primary rounded-3xl">Ret</button>
+            <button className="font-semibold px-10 py-2 bg-primary rounded-3xl" onClick={() => {props.handleEditProduct(props)}}>Ret</button>
             <button
               onClick={() => props.handleDeleteProduct(props.index)}
               className="font-semibold px-6 py-2 bg-red rounded-3xl"
