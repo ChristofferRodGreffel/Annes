@@ -69,15 +69,6 @@ const OpeningHoursSelect = (props) => {
       ) : (
         <>
           <label className="font-semibold">Vælg afhentningstid*</label>
-          {today !== 0 && today !== 6 ?
-            <>
-              <p className="italic">Åben i dag: 07.00 - 18.30</p>
-            </>
-            :
-            <>
-              <p className="italic">Åben i dag: 10.00 - 18.30</p>
-            </>
-          }
           <select
             className="px-4 py-2 border-2 border-dark rounded-lg"
             onChange={(e) => {
