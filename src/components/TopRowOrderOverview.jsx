@@ -52,8 +52,8 @@ function TopRowOrderOverview(props) {
           </div>
           <Line percent={percentageOfOpenOrders} className="h-4 w-64 rounded-full" strokeColor="#D7C310" />
         </div>
-        <div>
-          <p className="text-4xl font-bold text-primary">{date.toLocaleTimeString("en-GB")}</p>
+        <div className="text-center w-44">
+          <p className="text-4xl font-bold text-primary font-mono">{date.toLocaleTimeString("en-GB")}</p>
         </div>
       </div>
     </>
