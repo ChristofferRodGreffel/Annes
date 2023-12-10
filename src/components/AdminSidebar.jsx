@@ -38,9 +38,6 @@ const AdminSidebar = () => {
   return (
     <>
       <div
-        onMouseOver={() => {
-          setSideBarOpen(true);
-        }}
         id="adminMenu"
         className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
           sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"

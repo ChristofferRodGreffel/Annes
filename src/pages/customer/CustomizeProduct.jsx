@@ -201,7 +201,7 @@ const CustomizeProduct = () => {
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <img
-        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 lg:h-96 md:mx-auto ${loadedImage ? null : 'blur-lg'}`}
+        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 object-cover lg:h-96 md:mx-auto ${loadedImage ? null : 'blur-lg'}`}
         src={productInfo?.imageURL}
         alt={`Billede af ${productInfo?.name}`}
         onLoad={() => { setLoadedImage(true) }}

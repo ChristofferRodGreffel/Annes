@@ -45,7 +45,7 @@ const OrderDetails = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
-                  <h1 className="text-4xl font-bold">Ordre #{orderDetails.orderNo}</h1>;
+                  <h1 className="text-4xl font-bold">Ordre #{orderDetails.orderNo}</h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
                     <p className="font-light text-2xl">Brød her...</p>
