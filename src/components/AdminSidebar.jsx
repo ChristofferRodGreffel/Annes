@@ -14,10 +14,10 @@ const AdminSidebar = () => {
   const { height, width } = useWindowDimensions();
 
   useEffect(() => {
-    if(width >= 1034) {
-      setSideBarOpen(true)
+    if (width >= 1034) {
+      setSideBarOpen(true);
     }
-  }, [height, width])
+  }, [height, width]);
 
   const handleUserLogout = () => {
     signOut(FIREBASE_AUTH)
@@ -38,10 +38,13 @@ const AdminSidebar = () => {
   return (
     <>
       <div
-        onMouseOver={() => { setSideBarOpen(true) }}
+        onMouseOver={() => {
+          setSideBarOpen(true);
+        }}
         id="adminMenu"
-        className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
-          }`}
+        className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
+          sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
+        }`}
       >
         <NavLink to={"/ordre-oversigt"} className="m-auto mt-10 mb-16">
           <img className="w-48" src={logo} alt="logo" />
@@ -125,7 +128,7 @@ const AdminSidebar = () => {
         </nav>
         <div
           onClick={handleOpenCloseMenu}
-          className="absolute bg-mainGrey -right-14 top-1/2 transform -translate-x-1/2 -translate-y-1/2 py-8 px-4 block rounded-lg cursor-pointer"
+          className="absolute bg-mainGrey -right-14 top-1/2 transform -translate-x-1/2 -translate-y-1/2 py-8 px-4 block rounded-lg cursor-pointer -z-[999]"
         >
           <i className={`fa-solid ${sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-xl`}></i>
         </div>
