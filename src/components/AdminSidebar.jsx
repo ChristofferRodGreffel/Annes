@@ -3,10 +3,21 @@ import logo from "../assets/logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { signOut } from "firebase/auth";
+import useWindowDimensions from "../helperfunctions/WindowWidth";
+import { useEffect } from "react";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSideBarOpen] = useState(true);
+  const [sidebarOpen, setSideBarOpen] = useState(false);
+
+  // useWindowDimensions is in helperfunctions
+  const { height, width } = useWindowDimensions();
+
+  useEffect(() => {
+    if(width >= 1034) {
+      setSideBarOpen(true)
+    }
+  }, [height, width])
 
   const handleUserLogout = () => {
     signOut(FIREBASE_AUTH)
@@ -27,11 +38,10 @@ const AdminSidebar = () => {
   return (
     <>
       <div
-      onMouseOver={() => {setSideBarOpen(true)}}
+        onMouseOver={() => { setSideBarOpen(true) }}
         id="adminMenu"
-        className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
-          sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
-        }`}
+        className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
+          }`}
       >
         <NavLink to={"/ordre-oversigt"} className="m-auto mt-10 mb-16">
           <img className="w-48" src={logo} alt="logo" />
