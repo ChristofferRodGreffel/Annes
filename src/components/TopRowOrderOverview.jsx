@@ -39,8 +39,8 @@ function TopRowOrderOverview(props) {
                 </div>
                 <div className='flex flex-col'>
                     <div className='flex justify-between font-bold'>
-                        <p>{amountOfOpenOrders} åbne ordre</p>
-                        <p>Travlt</p>
+                        <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åben ordre`}</p>
+                        <p>{amountOfOpenOrders > 4 ? "Travlt" : "Roligt"}</p>
                     </div>
                     <Line percent={percentageOfOpenOrders} className='h-4 w-64 rounded-full' strokeColor="#D7C310" />
                 </div>
