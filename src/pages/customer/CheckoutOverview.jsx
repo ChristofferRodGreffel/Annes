@@ -167,6 +167,7 @@ function CheckoutOverview() {
       comment: comment,
       bagged: bagCheckbox,
       notifications: smsCheckbox,
+      amount: amountFromBasket,
       status: "pending",
       orderNo: await generateOrderNumber(),
       canCancel: true,

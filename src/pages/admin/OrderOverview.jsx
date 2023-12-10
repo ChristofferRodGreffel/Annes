@@ -99,7 +99,7 @@ const OrderOverview = () => {
                 <div className="flex gap-2 flex-wrap mb-10">
                   {filteredOrdersArray?.map((order) => {
                     return (
-                      <div key={order.orderNo} className="border-2 p-2 border-primary" onClick={() => navigate(`/ordredetaljer/${order.docId}`)}>
+                      <div key={order.orderNo} className="cursor-pointer border-2 p-2 border-primary" onClick={() => navigate(`/ordredetaljer/${order.docId}`)}>
                         <p>Navn: {order.name}</p>
                         <p>Ordre id: {order.orderNo}</p>
                       </div>
