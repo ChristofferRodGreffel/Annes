@@ -92,9 +92,9 @@ const OpeningHoursSelect = (props) => {
             ))}
           </select>
           {props.chosenCollectionTime == "Hurtigst muligt" && (
-            <p className="text-sm italic">
+            <p className="text-sm italic max-w-readable">
               Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min.
-              afhængig af størrelsen & antallet af bestillinger.
+              afhængig af størrelsen & antallet af bestillinger i butikken.
             </p>
           )}
         </>

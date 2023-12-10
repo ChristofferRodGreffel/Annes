@@ -20,6 +20,9 @@ export default {
         sidebarMinWidth: "270px",
         productOverviewMinWidth: "400px",
       },
+      maxWidth: {
+        'readable': '65ch',
+      },
       minHeight: {
         productOverviewMinHeight: "70%",
       },
