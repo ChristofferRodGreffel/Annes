@@ -69,6 +69,15 @@ const OpeningHoursSelect = (props) => {
       ) : (
         <>
           <label className="font-semibold">Vælg afhentningstid*</label>
+          {today !== 0 && today !== 6 ?
+            <>
+              <p className="italic">Åben i dag: 07.00 - 18.30</p>
+            </>
+            :
+            <>
+              <p className="italic">Åben i dag: 10.00 - 18.30</p>
+            </>
+          }
           <select
             className="px-4 py-2 border-2 border-dark rounded-lg"
             onChange={(e) => {
@@ -85,7 +94,7 @@ const OpeningHoursSelect = (props) => {
           {props.chosenCollectionTime == "Hurtigst muligt" && (
             <p className="text-sm italic">
               Vi begynder på ordren så snart vi har tid, og du får besked når den er klar. Oftest tager det 5-20 min.
-              afhængig af størrelsen.
+              afhængig af størrelsen & antallet af bestillinger.
             </p>
           )}
         </>
