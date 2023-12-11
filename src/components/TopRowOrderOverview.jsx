@@ -23,7 +23,7 @@ function TopRowOrderOverview(props) {
 
       const totalNumberOfOpenOrders = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders;
 
-      const percentageOfOpenOrders = (totalNumberOfOpenOrders / props.totalOrders?.length) * 100;
+      const percentageOfOpenOrders = (totalNumberOfOpenOrders / 15) * 100;
 
       setAmountOfOpenOrders(totalNumberOfOpenOrders);
       setPercentageOfOpenOrders(percentageOfOpenOrders);
@@ -32,7 +32,7 @@ function TopRowOrderOverview(props) {
 
   return (
     <>
-      <div className="flex flex-col-reverse gap-2 w-64 md:w-full md:flex-row md:justify-between mb-8">
+      <div className="flex flex-col-reverse flex-wrap gap-8 w-64 md:w-full md:flex-row md:justify-between md:gap-2 mb-8">
         <div>
           <input
             type="text"
@@ -47,10 +47,22 @@ function TopRowOrderOverview(props) {
         </div>
         <div className="flex flex-col">
           <div className="flex justify-between font-bold">
-            <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åben ordre`}</p>
-            <p>{amountOfOpenOrders > 4 ? "Travlt" : "Roligt"}</p>
+            <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åbne ordre`}</p>
+            <p>
+              {(amountOfOpenOrders < 5 && "Roligt") ||
+                (amountOfOpenOrders >= 5 && amountOfOpenOrders <= 10 && "Lidt travlt") ||
+                (amountOfOpenOrders > 10 && "Travlt")}
+            </p>
           </div>
-          <Line percent={percentageOfOpenOrders} className="h-4 w-64 rounded-full" strokeColor="#D7C310" />
+          <Line
+            percent={percentageOfOpenOrders}
+            className="h-4 w-64 rounded-full"
+            strokeColor={`${
+              (amountOfOpenOrders < 5 && "#38773b") ||
+              (amountOfOpenOrders >= 5 && amountOfOpenOrders <= 10 && "#D7C310") ||
+              (amountOfOpenOrders > 10 && "#b72626")
+            }`}
+          />
         </div>
         <div className="text-center w-44">
           <p className="text-4xl font-bold text-primary font-mono">{date.toLocaleTimeString("en-GB")}</p>
