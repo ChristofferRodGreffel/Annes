@@ -11,17 +11,15 @@ import { FIREBASE_DB } from "../../../firebase-config";
 const OrderDetails = () => {
   const { orderDocId } = useParams();
 
-  const [orderDetails, setOrderDetails] = useState()
+  const [orderDetails, setOrderDetails] = useState();
 
   useEffect(() => {
-
     if (orderDocId) {
       const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderDocId), (doc) => {
-        setOrderDetails(doc.data())
+        setOrderDetails(doc.data());
       });
     }
-
-  }, [orderDocId])
+  }, [orderDocId]);
 
   return (
     <>
@@ -29,17 +27,19 @@ const OrderDetails = () => {
         <div className="flex flex-row">
           <AdminSidebar />
           <AdminContentWrapper>
-            {orderDetails ?
+            {orderDetails ? (
               <>
                 <div className="flex justify-between items-center mb-10">
                   <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
                   <div className="flex gap-6 text-white items-center">
                     <div className="bg-primary py-2 px-6 rounded-lg">
-                      <button>Print <i className="fa-solid fa-print"></i>
+                      <button>
+                        Print <i className="fa-solid fa-print"></i>
                       </button>
                     </div>
                     <div className="bg-red py-2 px-6 rounded-lg">
-                      <button>Slet ordre <i className="fa-solid fa-trash-can"></i>
+                      <button>
+                        Slet ordre <i className="fa-solid fa-trash-can"></i>
                       </button>
                     </div>
                   </div>
@@ -48,18 +48,18 @@ const OrderDetails = () => {
                   <h1 className="text-4xl font-bold">Ordre #{orderDetails.orderNo}</h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
-                    <p className="font-light text-2xl">Brød her...</p>
+                    <p className="font-light text-2xl">{convertAllBreadTypes(orderDetails.order)}</p>
                   </div>
                 </div>
               </>
-              :
-              <>
-              </>
-            }
+            ) : (
+              <></>
+            )}
           </AdminContentWrapper>
         </div>
       </>
-    </>)
+    </>
+  );
 };
 
 export default OrderDetails;

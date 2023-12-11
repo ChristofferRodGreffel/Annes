@@ -49,7 +49,7 @@ const OrderCard = (props) => {
       {props.order && (
         <div
           className="w-56 cursor-pointer transition-all duration-300 ease-in-out hover:drop-shadow-lg"
-          onClick={() => navigate(`/ordredetaljer/${props.order.orderDocId}`)}
+          onClick={() => navigate(`/ordre-oversigt/ordredetaljer/${props.order.orderDocId}`)}
         >
           <div className="flex flex-col justify-between bg-mainGrey h-56 rounded-lg px-4 py-3 relative">
             <div className="flex justify-between">

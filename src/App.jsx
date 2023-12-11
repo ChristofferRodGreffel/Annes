@@ -55,7 +55,7 @@ function App() {
             <Route path="/menu-oversigt/ingredienser" element={<Ingredients />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
-            <Route path="/ordredetaljer/:orderDocId" element={<OrderDetails />} />
+            <Route path="/ordre-oversigt/ordredetaljer/:orderDocId" element={<OrderDetails />} />
             <Route path="/ordre-historik" element={<OrderHistory />} />
             <Route path="/statistik" element={<Statistics />} />
             <Route path="/admin-indstillinger" element={<AdminSettings />} />
