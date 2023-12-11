@@ -76,6 +76,10 @@ const CustomizeProduct = () => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
         setProductInfo(doc.data());
+
+        if(!doc.data().chosenBreadTypes.includes("Mørkt")) {
+          setChosenBread(doc.data().chosenBreadTypes[0])
+        }
         setDefaultIngredients(doc.data().chosenIngredients);
         setTotalPrice(doc.data().price);
         setProductPrice(doc.data().price);

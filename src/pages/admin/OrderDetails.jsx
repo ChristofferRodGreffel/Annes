@@ -12,12 +12,14 @@ const OrderDetails = () => {
   const { orderDocId } = useParams();
 
   const [orderDetails, setOrderDetails] = useState()
+  const [amountOfBreadTypes, setAmountOfBreadTypes] = useState()
 
   useEffect(() => {
 
     if (orderDocId) {
       const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderDocId), (doc) => {
         setOrderDetails(doc.data())
+        setAmountOfBreadTypes(doc.data().amountOfBreadTypes)
       });
     }
 
@@ -48,7 +50,15 @@ const OrderDetails = () => {
                   <h1 className="text-4xl font-bold">Ordre #{orderDetails.orderNo}</h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
-                    <p className="font-light text-2xl">Brød her...</p>
+                    <div className="flex gap-2">
+                      {amountOfBreadTypes?.map((bread, key) => {
+                        if (bread.amount != 0) {
+                          return (
+                            <p key={key} className="font-light text-2xl">{bread.amount}{bread.shortName}</p>
+                          )
+                        }
+                      })}
+                    </div>
                   </div>
                 </div>
               </>

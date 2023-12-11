@@ -13,6 +13,7 @@ import { addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc } from "
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../firebase-config";
 import { PulseLoader } from "react-spinners";
 import { CheckIfShopIsClosed } from "../../helperfunctions/CheckIfShopIsClosed";
+import { CalculateAmountOfEachBread } from "../../helperfunctions/CalculateAmountOfEachBread";
 
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
@@ -36,8 +37,8 @@ function CheckoutOverview() {
 
 
   useEffect(() => {
-   
-      CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed)
+
+    CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed)
 
   }, [chosenCollectionDate, currentDate]);
 
@@ -139,6 +140,7 @@ function CheckoutOverview() {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const resultAmountOfBreadTypes = CalculateAmountOfEachBread(allBasketProducts)
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
@@ -152,8 +154,10 @@ function CheckoutOverview() {
       pickupDateTime = "Hurtigst muligt";
     }
 
+
     const completeOrder = {
       orderPlacedAt: new Date(),
+      amountOfBreadTypes: resultAmountOfBreadTypes,
       pickup: {
         date: chosenCollectionDate,
         time: pickupDateTime,
@@ -241,7 +245,7 @@ function CheckoutOverview() {
 
   const handleEditProduct = (clickedProduct) => {
     // navigate(`/bestil-online/${clickedProduct.product.name}`, { product: clickedProduct.product}, {productIndex: clickedProduct.index } );
-    navigate(`/bestil-online/${clickedProduct.product.name}`, {state: { product: clickedProduct.product, productIndex: clickedProduct.index}});
+    navigate(`/bestil-online/${clickedProduct.product.name}`, { state: { product: clickedProduct.product, productIndex: clickedProduct.index } });
   }
 
   return (
