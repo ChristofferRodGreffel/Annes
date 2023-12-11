@@ -10,6 +10,9 @@ import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrde
 import OrderCard from "../../components/OrderCard";
 import TopRowOrderOverview from "../../components/TopRowOrderOverview";
 import { useNavigate } from "react-router-dom";
+import CategoryShowHideButton from "../../components/CategoryShowHideButton";
+import OrderFiltering from "../../components/OrderFiltering";
+import { sortOrderArrays } from "../../helperfunctions/SortOrderArrays";
 
 const OrderOverview = () => {
   const navigate = useNavigate();
@@ -24,6 +27,11 @@ const OrderOverview = () => {
   const [allOrderNumbersWithName, setAllOrderNumbersWithName] = useState();
   const [filteredOrdersInput, setFilteredOrdersInput] = useState();
   const [filteredOrdersArray, setFilteredOrdersArray] = useState();
+
+  const [newVisibility, setNewVisibility] = useState(true);
+  const [readyVisibility, setReadyVisibility] = useState(true);
+  const [acceptedVisibility, setAcceptedVisibility] = useState(true);
+  const [cancelledVisibility, setCancelledVisiblity] = useState(true);
 
   useEffect(() => {
     const getAllOrderNumbersWithName = async () => {
@@ -68,6 +76,18 @@ const OrderOverview = () => {
     } else {
       setFilteredOrdersArray();
     }
+  };
+
+  const handleSortOrders = (e) => {
+    const allArrays = [
+      { state: recievedOrders, setState: setRecievedOrders },
+      { state: acceptedOrders, setState: setAcceptedOrders },
+      { state: readyOrders, setState: setReadyOrders },
+      { state: pickedOrders, setState: setPickedOrders },
+      { state: userCancelledOrders, setState: setUserCancelledOrders },
+      { state: shopCancelledOrders, setState: setShopCancelledOrders },
+    ];
+    sortOrderArrays(allArrays, e.target.value);
   };
 
   return (
@@ -117,45 +137,98 @@ const OrderOverview = () => {
                 </div>
               </>
             )}
-            <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
 
-            <hr className="border-b-2 border-dark mb-5" />
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {recievedOrders?.map((order, key) => {
-                return (
-                  <div key={key}>
-                    <OrderCard order={order} />
-                  </div>
-                );
-              })}
+            <div className="flex flex-wrap gap-3 mb-5">
+              <OrderFiltering onChange={handleSortOrders} />
+              <CategoryShowHideButton text="Nye ordre" state={newVisibility} setState={setNewVisibility} />
+              <CategoryShowHideButton
+                text="Godkendte ordre"
+                state={acceptedVisibility}
+                setState={setAcceptedVisibility}
+              />
+              <CategoryShowHideButton
+                text="Klar til afhentning"
+                state={readyVisibility}
+                setState={setReadyVisibility}
+              />
+              <CategoryShowHideButton
+                text="Annullerede ordre"
+                state={cancelledVisibility}
+                setState={setCancelledVisiblity}
+              />
             </div>
           </div>
-          <div>
-            <h2 className="font-bold text-xl mb-1">Godkendte bestillinger</h2>
-            <hr className="border-b-2 border-dark mb-5" />
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {acceptedOrders?.map((order, key) => {
-                return (
-                  <div key={key}>
-                    <OrderCard order={order} />
-                  </div>
-                );
-              })}
+
+          {newVisibility && (
+            <div>
+              <h2 className="font-bold text-xl mb-1">Nye bestillinger</h2>
+              <hr className="border-b-2 border-dark mb-5" />
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                {recievedOrders?.map((order, key) => {
+                  return (
+                    <div key={key}>
+                      <OrderCard order={order} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          <div>
-            <h2 className="font-bold text-xl mb-1">Klar til afhentning</h2>
-            <hr className="border-b-2 border-dark mb-5" />
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {readyOrders?.map((order, key) => {
-                return (
-                  <div key={key}>
-                    <OrderCard order={order} />
-                  </div>
-                );
-              })}
+          )}
+
+          {acceptedVisibility && (
+            <div>
+              <h2 className="font-bold text-xl mb-1">Godkendte bestillinger</h2>
+              <hr className="border-b-2 border-dark mb-5" />
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                {acceptedOrders?.map((order, key) => {
+                  return (
+                    <div key={key}>
+                      <OrderCard order={order} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
+
+          {readyVisibility && (
+            <div>
+              <h2 className="font-bold text-xl mb-1">Klar til afhentning</h2>
+              <hr className="border-b-2 border-dark mb-5" />
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                {readyOrders?.map((order, key) => {
+                  return (
+                    <div key={key}>
+                      <OrderCard order={order} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {cancelledVisibility && (
+            <div>
+              <h2 className="font-bold text-xl mb-1">Annullerede bestillinger</h2>
+              <hr className="border-b-2 border-dark mb-5" />
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                {userCancelledOrders?.map((order, key) => {
+                  return (
+                    <div key={key}>
+                      <OrderCard order={order} />
+                    </div>
+                  );
+                })}
+                {shopCancelledOrders?.map((order, key) => {
+                  return (
+                    <div key={key}>
+                      <OrderCard order={order} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </AdminContentWrapper>
     </div>
