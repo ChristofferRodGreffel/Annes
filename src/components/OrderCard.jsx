@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const OrderCard = (props) => {
   const [remainingTime, setRemainingTime] = useState();
+  const [remainingHours, setRemainingHours] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,11 +13,10 @@ const OrderCard = (props) => {
     const pickupTimestamp = props.order.pickup.time.seconds;
     const pickupTime = new Date(pickupTimestamp * 1000).getTime();
 
-    // console.log("Timestamp", pickupTimestamp, "currentTime", currentTime, "pickupTime", pickupTime);
-
     const timeRemaining = pickupTime - currentTime;
 
-    // console.log("Time remaining", timeRemaining);
+    const timeRemainingInHours = Math.floor(timeRemaining / (60 * 60 * 1000));
+    setRemainingHours(timeRemainingInHours);
 
     setRemainingTime(timeRemaining);
   }, []);
@@ -47,7 +47,10 @@ const OrderCard = (props) => {
   return (
     <>
       {props.order && (
-        <div className="w-56 cursor-pointer" onClick={() => navigate(`/ordredetaljer/${props.order.orderDocId}`)}>
+        <div
+          className="w-56 cursor-pointer transition-all duration-300 ease-in-out hover:drop-shadow-lg"
+          onClick={() => navigate(`/ordredetaljer/${props.order.orderDocId}`)}
+        >
           <div className="flex flex-col justify-between bg-mainGrey h-56 rounded-lg px-4 py-3 relative">
             <div className="flex justify-between">
               <div>
@@ -73,9 +76,13 @@ const OrderCard = (props) => {
           </div>
           <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
             {props.order.pickup.time !== "Hurtigst muligt" ? (
-              <p>
-                Afhentes om: <PickupTimer remainingTime={remainingTime} />
-              </p>
+              remainingHours >= 24 ? (
+                <p>Afhentes kl. {timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute")}</p>
+              ) : (
+                <p>
+                  Afhentes om: <PickupTimer remainingTime={remainingTime} />
+                </p>
+              )
             ) : (
               <p>Afhentes snarest</p>
             )}

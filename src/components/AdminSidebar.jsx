@@ -125,9 +125,11 @@ const AdminSidebar = () => {
         </nav>
         <div
           onClick={handleOpenCloseMenu}
-          className="absolute bg-mainGrey -right-14 top-1/2 transform -translate-x-1/2 -translate-y-1/2 py-8 px-4 block rounded-lg cursor-pointer -z-[999]"
+          className={`${
+            sidebarOpen ? "bg-mainGrey" : "bg-dark text-white"
+          } fixed -right-8 top-1/2 transform py-10 px-2 -translate-y-1/2 block rounded-r-2xl cursor-pointer -z-[999]`}
         >
-          <i className={`fa-solid ${sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-xl`}></i>
+          <i className={`fa-solid ${sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-3xl`}></i>
         </div>
       </div>
     </>

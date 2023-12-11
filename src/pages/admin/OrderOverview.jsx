@@ -21,9 +21,9 @@ const OrderOverview = () => {
   const [userCancelledOrders, setUserCancelledOrders] = useState();
   const [shopCancelledOrders, setShopCancelledOrders] = useState();
 
-  const [allOrderNumbersWithName, setAllOrderNumbersWithName] = useState()
-  const [filteredOrdersInput, setFilteredOrdersInput] = useState()
-  const [filteredOrdersArray, setFilteredOrdersArray] = useState()
+  const [allOrderNumbersWithName, setAllOrderNumbersWithName] = useState();
+  const [filteredOrdersInput, setFilteredOrdersInput] = useState();
+  const [filteredOrdersArray, setFilteredOrdersArray] = useState();
 
   useEffect(() => {
     const getAllOrderNumbersWithName = async () => {
@@ -65,14 +65,16 @@ const OrderOverview = () => {
   }, []);
 
   const handleShowFilteredOrders = async (e) => {
-    const inputValue = e.target.value.toLowerCase()
+    const inputValue = e.target.value.toLowerCase();
     if (inputValue) {
-      const filtered = allOrderNumbersWithName.filter(order => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue));
-      setFilteredOrdersArray(filtered)
+      const filtered = allOrderNumbersWithName.filter(
+        (order) => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue)
+      );
+      setFilteredOrdersArray(filtered);
     } else {
-      setFilteredOrdersArray()
+      setFilteredOrdersArray();
     }
-  }
+  };
 
   return (
     <div className="flex justify-center flex-row">
@@ -92,23 +94,31 @@ const OrderOverview = () => {
             )}
             {filteredOrdersArray && (
               <>
-                {filteredOrdersArray.length !== 0 ?
+                {filteredOrdersArray.length !== 0 ? (
                   <>
-                    <p>Resultat:</p>
+                    <p className="font-semibold text-lg mb-2">Resultat:</p>
                   </>
-                  :
+                ) : (
                   <>
-                    <p>Der er ingen ordre med denne søgning</p>
+                    <p className="font-semibold text-lg">Ingen ordrer matcher denne søgning</p>
                   </>
-                }
+                )}
                 <div className="flex gap-2 flex-wrap mb-10">
                   {filteredOrdersArray?.map((order) => {
                     return (
-                      <div key={order.orderNo} className="cursor-pointer border-2 p-2 border-primary" onClick={() => navigate(`/ordredetaljer/${order.docId}`)}>
-                        <p>Navn: {order.name}</p>
-                        <p>Ordre id: {order.orderNo}</p>
+                      <div
+                        key={order.orderNo}
+                        className="cursor-pointer border-2 p-2 border-primary rounded-lg transition-all duration-100 ease-in-out hover:bg-primary hover:text-white"
+                        onClick={() => navigate(`/ordredetaljer/${order.docId}`)}
+                      >
+                        <p>
+                          <b>Navn:</b> {order.name}
+                        </p>
+                        <p>
+                          <b>Ordre nr.</b> {order.orderNo}
+                        </p>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </>
