@@ -7,6 +7,17 @@ export function sortOrderArrays(allArrays, sortType) {
         return {
           ...arr,
           state: arr.state.slice().sort((a, b) => {
+            return b.orderPlacedAt - a.orderPlacedAt;
+          }),
+        };
+      });
+      break;
+
+    case "ældsteFørst":
+      return allArraysNotUndefined.map((arr) => {
+        return {
+          ...arr,
+          state: arr.state.slice().sort((a, b) => {
             return a.orderPlacedAt - b.orderPlacedAt;
           }),
         };

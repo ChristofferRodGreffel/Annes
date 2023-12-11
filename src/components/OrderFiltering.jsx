@@ -8,8 +8,9 @@ const OrderFiltering = (props) => {
       }}
       type="select"
       className="border-dark border-2 rounded-lg px-2"
-      defaultValue={"nyesteFørst"}
+      defaultValue={"ældsteFørst"}
     >
+      <option value="ældsteFørst">Ældste først</option>
       <option value="nyesteFørst">Nyeste først</option>
       <option value="afhentesFørst">Afhentes først</option>
     </select>
