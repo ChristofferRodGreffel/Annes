@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "rc-progress";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { FIREBASE_DB } from "../../firebase-config";
 
 function TopRowOrderOverview(props) {
   const [date, setDate] = useState(new Date());
 
-  const [amountOfOpenOrders, setAmountOfOpenOrders] = useState(0);
+  const [amountUntilBusy, setAmountUntilBusy] = useState(0)
 
+  const [amountOfOpenOrders, setAmountOfOpenOrders] = useState(0);
   const [percentageOfOpenOrders, setPercentageOfOpenOrders] = useState(0);
 
   useEffect(() => {
@@ -16,6 +19,21 @@ function TopRowOrderOverview(props) {
   }, []);
 
   useEffect(() => {
+    const getAmountUntilBusy = async () => {
+      const q = query(collection(FIREBASE_DB, "admin-settings"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+        querySnapshot.forEach((doc) => {
+          if (doc.data().amount) {
+            setAmountUntilBusy(doc.data().amount)
+          }
+        })
+      });
+    };
+    getAmountUntilBusy();
+  }, []);
+
+  useEffect(() => {
     if (props) {
       let AmountOfRecivedOrders = props.recivedOrders?.length || 0;
       let AmountOfAccepteddOrders = props.acceptedOrders?.length || 0;
@@ -23,12 +41,12 @@ function TopRowOrderOverview(props) {
 
       const totalNumberOfOpenOrders = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders;
 
-      const percentageOfOpenOrders = (totalNumberOfOpenOrders / 15) * 100;
+      const percentageOfOpenOrders = (totalNumberOfOpenOrders / amountUntilBusy) * 100;
 
       setAmountOfOpenOrders(totalNumberOfOpenOrders);
       setPercentageOfOpenOrders(percentageOfOpenOrders);
     }
-  }, [props]);
+  }, [props, amountUntilBusy]);
 
   return (
     <>
@@ -57,11 +75,10 @@ function TopRowOrderOverview(props) {
           <Line
             percent={percentageOfOpenOrders}
             className="h-4 w-64 rounded-full"
-            strokeColor={`${
-              (amountOfOpenOrders < 5 && "#38773b") ||
+            strokeColor={`${(amountOfOpenOrders < 5 && "#38773b") ||
               (amountOfOpenOrders >= 5 && amountOfOpenOrders <= 10 && "#D7C310") ||
               (amountOfOpenOrders > 10 && "#b72626")
-            }`}
+              }`}
           />
         </div>
         <div className="text-center w-44">

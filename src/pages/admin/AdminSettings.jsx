@@ -13,6 +13,11 @@ import CustomButton from "../../components/CustomButton";
 const AdminSettings = () => {
 
     const formRef = useRef(null)
+    const amountUntilBusyRef = useRef(null)
+
+    const [amountUntilBusy, setAmountUntilBusy] = useState(0)
+    const [prevAmountUntilBusy, setPrevAmountUntilBusy] = useState(0)
+
 
     const [customerProfileMessage, setCustomerProfileMessage] = useState("")
     const [prevCustomerProfileMessage, setPrevCustomerProfileMessage] = useState("")
@@ -32,6 +37,52 @@ const AdminSettings = () => {
         getCustomerProfileMessage();
     }, []);
 
+    useEffect(() => {
+        const getAmountUntilBusy = async () => {
+            const q = query(collection(FIREBASE_DB, "admin-settings"));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().amount) {
+                        setAmountUntilBusy(doc.data().amount)
+                        setPrevAmountUntilBusy(doc.data().amount)
+                    }
+                })
+            });
+        };
+        getAmountUntilBusy();
+    }, []);
+
+    const handleUpdateBusyAmount = (e) => {
+        e.preventDefault()
+        if (amountUntilBusyRef.current.amountUntilBusy.value == 0) {
+            toast.error("Antallet kan ikke være nul...", DefaultToastifySettings);
+            return
+        }
+
+        const updateAmountPromise = new Promise(function (resolve, reject) {
+            setDoc(doc(FIREBASE_DB, "admin-settings", "amountUntilBusy"), {
+                amount: Number(amountUntilBusyRef.current.amountUntilBusy.value)
+            }).then(() => {
+                resolve()
+            })
+                .catch((error) => {
+                    reject()
+                });
+        })
+        toast.promise(
+            updateAmountPromise,
+            {
+                pending: `Opdater antal`,
+                success: `Antal opdateret!`,
+                error: 'Der opstod en fejl, prøv igen...'
+            }, DefaultToastifySettings
+        )
+
+    }
+
+
+
     const handleUpdateCustomerProfileText = (e) => {
         e.preventDefault()
         const message = formRef.current.customerProfileMessage.value
@@ -45,7 +96,6 @@ const AdminSettings = () => {
             setDoc(doc(FIREBASE_DB, "admin-settings", "profile-message"), {
                 Message: message
             }).then(() => {
-                // Password reset email sent!
                 resolve()
                 formRef.current.customerProfileMessage.value = ""
                 setCustomerProfileMessage("")
@@ -104,6 +154,22 @@ const AdminSettings = () => {
                                     {prevCustomerProfileMessage}
                                 </span>
                             </div>
+                        </div>
+                        <div className="w-3/5">
+                            <form ref={amountUntilBusyRef} onSubmit={handleUpdateBusyAmount} className="flex flex-col gap-2">
+                                <CustomInputWithLabel
+                                    label="Antal online bestillinger indtil der er travlt"
+                                    type="number"
+                                    value={amountUntilBusy}
+                                    customSetvalue={setAmountUntilBusy}
+                                    name="amountUntilBusy"
+                                    placeholder="Skriv antal her"
+                                />
+                                <CustomButton title={"Opdater antal"} type="submit" />
+                                <span className="text-sm font-semibold italic">
+                                    Nuværende antal {prevAmountUntilBusy}
+                                </span>
+                            </form>
                         </div>
                     </div>
                 </AdminContentWrapper>
