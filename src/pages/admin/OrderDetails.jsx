@@ -15,15 +15,13 @@ const OrderDetails = () => {
   const [amountOfBreadTypes, setAmountOfBreadTypes] = useState()
 
   useEffect(() => {
-
     if (orderDocId) {
       const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderDocId), (doc) => {
         setOrderDetails(doc.data())
         setAmountOfBreadTypes(doc.data().amountOfBreadTypes)
       });
     }
-
-  }, [orderDocId])
+  }, [orderDocId]);
 
   return (
     <>
@@ -31,17 +29,19 @@ const OrderDetails = () => {
         <div className="flex flex-row">
           <AdminSidebar />
           <AdminContentWrapper>
-            {orderDetails ?
+            {orderDetails ? (
               <>
                 <div className="flex justify-between items-center mb-10">
                   <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
                   <div className="flex gap-6 text-white items-center">
                     <div className="bg-primary py-2 px-6 rounded-lg">
-                      <button>Print <i className="fa-solid fa-print"></i>
+                      <button>
+                        Print <i className="fa-solid fa-print"></i>
                       </button>
                     </div>
                     <div className="bg-red py-2 px-6 rounded-lg">
-                      <button>Slet ordre <i className="fa-solid fa-trash-can"></i>
+                      <button>
+                        Slet ordre <i className="fa-solid fa-trash-can"></i>
                       </button>
                     </div>
                   </div>
@@ -62,14 +62,14 @@ const OrderDetails = () => {
                   </div>
                 </div>
               </>
-              :
-              <>
-              </>
-            }
+            ) : (
+              <></>
+            )}
           </AdminContentWrapper>
         </div>
       </>
-    </>)
+    </>
+  );
 };
 
 export default OrderDetails;

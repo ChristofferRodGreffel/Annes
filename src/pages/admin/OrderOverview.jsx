@@ -35,28 +35,24 @@ const OrderOverview = () => {
 
   useEffect(() => {
     const getAllOrderNumbersWithName = async () => {
-
-
       const q = query(collection(FIREBASE_DB, "orders"), where("orderNo", ">", 0));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {   
-        let resultArray = []
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let resultArray = [];
         querySnapshot.forEach((doc) => {
           if (doc.data()?.orderNo && doc.data()?.customerInfo?.name) {
             let obj = {
               orderNo: doc.data()?.orderNo,
               name: doc.data()?.customerInfo?.name,
               docId: doc.id,
-            }
-            resultArray.push(obj)
+            };
+            resultArray.push(obj);
           }
-        })
-        setAllOrderNumbersWithName(resultArray)
+        });
+        setAllOrderNumbersWithName(resultArray);
       });
-        
-    }
-    getAllOrderNumbersWithName()
-  }, [])
-
+    };
+    getAllOrderNumbersWithName();
+  }, []);
 
   useEffect(() => {
     listenToNewOrders();
@@ -93,7 +89,12 @@ const OrderOverview = () => {
       { state: userCancelledOrders, setState: setUserCancelledOrders },
       { state: shopCancelledOrders, setState: setShopCancelledOrders },
     ];
-    sortOrderArrays(allArrays, e.target.value);
+
+    const sortedArrays = sortOrderArrays(allArrays, e.target.value);
+
+    sortedArrays.forEach(({ state, setState }, index) => {
+      setState(state); // Update the state in your component
+    });
   };
 
   return (
