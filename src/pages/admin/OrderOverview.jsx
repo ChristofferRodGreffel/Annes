@@ -27,19 +27,24 @@ const OrderOverview = () => {
 
   useEffect(() => {
     const getAllOrderNumbersWithName = async () => {
-      const querySnapshot = await getDocs(collection(FIREBASE_DB, "orders"));
-      let resultArray = []
-      querySnapshot.forEach((doc) => {
-        if (doc.data()?.orderNo && doc.data()?.customerInfo?.name) {
-          let obj = {
-            orderNo: doc.data()?.orderNo,
-            name: doc.data()?.customerInfo?.name,
-            docId: doc.id,
+
+
+      const q = query(collection(FIREBASE_DB, "orders"), where("orderNo", ">", 0));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {   
+        let resultArray = []
+        querySnapshot.forEach((doc) => {
+          if (doc.data()?.orderNo && doc.data()?.customerInfo?.name) {
+            let obj = {
+              orderNo: doc.data()?.orderNo,
+              name: doc.data()?.customerInfo?.name,
+              docId: doc.id,
+            }
+            resultArray.push(obj)
           }
-          resultArray.push(obj)
-        }
-      })
-      setAllOrderNumbersWithName(resultArray)
+        })
+        setAllOrderNumbersWithName(resultArray)
+      });
+        
     }
     getAllOrderNumbersWithName()
   }, [])
