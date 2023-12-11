@@ -19,7 +19,7 @@ const OrderCard = (props) => {
     setRemainingHours(timeRemainingInHours);
 
     setRemainingTime(timeRemaining);
-  }, []);
+  }, [props]);
 
   const getTotalAmount = () => {
     let totalAmountFromBasket = 0;

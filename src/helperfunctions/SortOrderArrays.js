@@ -1,37 +1,36 @@
-export function sortOrderArrays(
-  allArrays,
-  sortType,
-  setRecievedOrders,
-  setAcceptedOrders,
-  setReadyOrders,
-  setPickedOrders,
-  setUserCancelledOrders,
-  setShopCancelledOrders
-) {
-  const allArraysNotUndefined = [];
-
-  allArrays.forEach((arr) => {
-    if (arr.state !== undefined) {
-      allArraysNotUndefined.push(arr);
-    }
-  });
-
-  //   console.log(allArraysNotUndefined);
+export function sortOrderArrays(allArrays, sortType) {
+  const allArraysNotUndefined = allArrays.filter((arr) => arr.state !== undefined);
 
   switch (sortType) {
     case "nyesteFørst":
-      allArraysNotUndefined.forEach((arr) => {
-        return arr.state.sort((a, b) => {
-          console.log("First pickup time", a.pickup.time, "Second pickup time", b.pickup.time);
-          a.pickup.time - b.pickup.time;
-        });
+      return allArraysNotUndefined.map((arr) => {
+        return {
+          ...arr,
+          state: arr.state.slice().sort((a, b) => {
+            return a.orderPlacedAt - b.orderPlacedAt;
+          }),
+        };
       });
       break;
 
     case "afhentesFørst":
+      return allArraysNotUndefined.map((arr) => {
+        return {
+          ...arr,
+          state: arr.state.slice().sort((a, b) => {
+            if (a.pickup.time === "Hurtigst muligt") {
+              return -1;
+            } else if (b.pickup.time === "Hurtigst muligt") {
+              return 1;
+            } else {
+              return a.pickup.time - b.pickup.time;
+            }
+          }),
+        };
+      });
       break;
 
     default:
-      break;
+      return allArraysNotUndefined;
   }
 }
