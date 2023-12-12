@@ -69,7 +69,8 @@ function TopRowOrderOverview(props) {
             <p>
               {((amountOfOpenOrders / amountUntilBusy ) * 100 < 33 && "Roligt") ||
                 ( (amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "Lidt travlt") ||
-                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && "Travlt")}
+                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "Meget travlt") ||
+                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "Max kapacitet")}
             </p>
           </div>
           <Line
