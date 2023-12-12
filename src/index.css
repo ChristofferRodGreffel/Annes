@@ -97,3 +97,19 @@ img.full-width {
 .customBalance {
   text-wrap: balance;
 }
+
+.customClassShowHideButton {
+  position:relative;
+  overflow: hidden;
+}
+
+.customClassShowHideButton:after {
+  content:'';
+  position:absolute;
+  width: 100%;
+  height: 2px;
+  background-color:black;
+  left: 0%;
+  top:50%;
+  transform: rotate(6deg);
+}
