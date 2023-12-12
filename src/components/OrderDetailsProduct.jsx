@@ -58,9 +58,9 @@ const OrderDetailsProduct = (props) => {
           {props.order.added.length == 0 && props.order.removed.length == 0 && <p>Ingen ændringer</p>}
           {props.order.added.length !== 0 && (
             <ul>
-              {props.order.added.map((ingredient) => {
+              {props.order.added.map((ingredient, key) => {
                 return (
-                  <li>
+                  <li key={key}>
                     <i className="fa-solid fa-circle-plus text-green text-md pr-1"></i>
                     {ingredient}
                   </li>
@@ -70,9 +70,9 @@ const OrderDetailsProduct = (props) => {
           )}
           {props.order.removed.length !== 0 && (
             <ul>
-              {props.order.removed.map((ingredient) => {
+              {props.order.removed.map((ingredient, key) => {
                 return (
-                  <li>
+                  <li key={key}>
                     <i className="fa-solid fa-circle-minus text-red text-md pr-1"></i>
                     {ingredient}
                   </li>

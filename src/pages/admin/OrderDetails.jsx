@@ -11,6 +11,7 @@ import OrderDetailsProduct from "../../components/OrderDetailsProduct";
 import OrderButton from "../../components/OrderButton";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
+import { timestampConvert } from "../../helperfunctions/TimestampConvert";
 
 const OrderDetails = () => {
   const { orderDocId } = useParams();
@@ -98,6 +99,14 @@ const OrderDetails = () => {
                       })}
                     </div>
                   </div>
+                </div>
+                <div className="mt-2 flex gap-2">
+                  <p className="font-semibold">Afhentes:</p>
+                  <p>
+                    {orderDetails.pickup.time == "Hurtigst muligt"
+                      ? "Hurtigst muligt"
+                      : timestampConvert(orderDetails.pickup.time.seconds, "stampToPreciseDate")}
+                  </p>
                 </div>
                 <div className="flex gap-5 mt-5 mb-8">
                   <div className="flex flex-col gap-3 text-sm">

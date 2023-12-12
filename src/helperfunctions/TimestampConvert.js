@@ -39,6 +39,10 @@ export function timestampConvert(stamp, type) {
       return date + ", " + hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
       break;
 
+    case "stampToPreciseDate":
+      return date + ", " + "kl. " + hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");
+      break;
+
     default:
       break;
   }
