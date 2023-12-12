@@ -77,7 +77,7 @@ function TopRowOrderOverview(props) {
             percent={percentageOfOpenOrders}
             className="h-4 w-64 rounded-full"
             strokeColor={`${((amountOfOpenOrders / amountUntilBusy ) * 100 < 33 && "#38773b") ||
-              ((amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "#1B6788") ||
+              ((amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "#38773b") ||
               ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "#D7C310") ||
               ( (amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "#b72626")
               }`}
