@@ -1,17 +1,23 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
 const ProductCard = (props) => {
 
   const [loadedImage, setLoadedImage] = useState(false)
 
+  useEffect(() => {
+    if(props?.setLoadingImg === true) {
+      setLoadedImage(true)
+    }
+  }, [props.setLoadingImg, props.imageSource])
+
   return (
     <>
-      <div className={`h-full drop-shadow-md flex flex-col gap-2 bg-primary justify-between rounded-xl overflow-clip text-white ${loadedImage ? null : 'blur-lg'}`}>
+      <div className={`h-full drop-shadow-md flex flex-col gap-2 bg-primary justify-between rounded-xl overflow-clip text-white ${loadedImage ? null : 'blur-lg'} ${props.setLoadingImg ? 'w-[400px]' : undefined}`}>
         <img
           loading="lazy"
-          className={`h-28 aspect-video object-cover object-center`}
+          className={`h-28 aspect-video object-cover`}
           src={props.imageSource}
           alt={`Billede af ${props.imageName}`}
           onLoad={() => { setLoadedImage(true) }}
