@@ -71,7 +71,7 @@ const CustomerProfile = () => {
     e.preventDefault()
 
     const newPhoneNo = newCustomerPhoneRef.current?.customerPhoneNumber.value
-    const uid = FIREBASE_AUTH.currentUser.uid
+    const uid = FIREBASE_AUTH.currentUser?.uid
 
     const userRef = doc(FIREBASE_DB, "users", uid);
     updateDoc(userRef, {
@@ -87,7 +87,7 @@ const CustomerProfile = () => {
 
 
   const handleResetPassword = () => {
-    const userEmail = FIREBASE_AUTH.currentUser.email
+    const userEmail = FIREBASE_AUTH.currentUser?.email
     const sendPasswordResetEmailPromise = new Promise(function (resolve, reject) {
       sendPasswordResetEmail(FIREBASE_AUTH, userEmail)
         .then(() => {

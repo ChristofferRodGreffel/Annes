@@ -49,7 +49,7 @@ function CheckoutOverview() {
         const docRef = doc(FIREBASE_DB, "users", uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const email = FIREBASE_AUTH.currentUser.email
+          const email = FIREBASE_AUTH.currentUser?.email
           setCustomerName(docSnap.data().name)
           setCustomerPhone(docSnap.data().phone)
           setCustomerEmail(email)
