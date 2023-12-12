@@ -150,19 +150,36 @@ const OrderDetails = () => {
                             text="Accepter bestilling"
                             green="true"
                           />
-                          <OrderButton text="Afvis bestilling" />
+                          <OrderButton
+                            function={() => changeStatus("shopCancelled", "Butikken har afvist din bestilling")}
+                            text="Afvis bestilling"
+                          />
                         </>
                       )}
                       {orderDetails.status === "accepted" && (
                         <>
-                          <OrderButton text="Markér klar til afhentning" green="true" />
-                          <OrderButton text="Fortryd trin" />
+                          <OrderButton
+                            function={() => changeStatus("ready", "Din bestilling er klar i butikken")}
+                            text="Markér klar til afhentning"
+                            green="true"
+                          />
+                          <OrderButton
+                            function={() => changeStatus("recieved", "Din bestilling er modtaget")}
+                            text="Fortryd trin"
+                          />
                         </>
                       )}
                       {orderDetails.status === "ready" && (
                         <>
-                          <OrderButton text="Markér som afhentet & betalt" green="true" />
-                          <OrderButton text="Fortryd trin" />
+                          <OrderButton
+                            function={() => changeStatus("picked", "Bestillingen er afhentet af kunden")}
+                            text="Markér som afhentet & betalt"
+                            green="true"
+                          />
+                          <OrderButton
+                            function={() => changeStatus("accepted", "Bestillingen er ikke klar alligevel")}
+                            text="Fortryd trin"
+                          />
                         </>
                       )}
                     </div>

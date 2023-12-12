@@ -37,7 +37,7 @@ const UpdatesBar = (props) => {
             </div>
             <div className="flex justify-between place-items-start w-full">
               <p className="font-semibold text-md leading-5">{updt.context}</p>
-              <p>{timestampConvert(updt.time, "stampToHourMinuteSeconds")}</p>
+              <p>{timestampConvert(updt.time, "stampToHourMinute")}</p>
             </div>
           </div>
         );
