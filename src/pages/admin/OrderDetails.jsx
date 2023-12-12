@@ -7,21 +7,31 @@ import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import CustomButton from "../../components/CustomButton";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
+import OrderDetailsProduct from "../../components/OrderDetailsProduct";
+import OrderButton from "../../components/OrderButton";
 
 const OrderDetails = () => {
   const { orderDocId } = useParams();
 
-  const [orderDetails, setOrderDetails] = useState()
-  const [amountOfBreadTypes, setAmountOfBreadTypes] = useState()
+  const [orderDetails, setOrderDetails] = useState();
+  const [amountOfBreadTypes, setAmountOfBreadTypes] = useState();
 
   useEffect(() => {
     if (orderDocId) {
       const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderDocId), (doc) => {
-        setOrderDetails(doc.data())
-        setAmountOfBreadTypes(doc.data().amountOfBreadTypes)
+        setOrderDetails(doc.data());
+        setAmountOfBreadTypes(doc.data().amountOfBreadTypes);
       });
     }
   }, [orderDocId]);
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    orderDetails.order.forEach((order) => {
+      totalPrice += order.price;
+    });
+    return totalPrice;
+  };
 
   return (
     <>
@@ -47,17 +57,74 @@ const OrderDetails = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
-                  <h1 className="text-4xl font-bold">Ordre #{orderDetails.orderNo}</h1>
+                  <h1 className="text-3xl font-bold">Ordre #{orderDetails.orderNo}</h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
                     <div className="flex gap-2">
                       {amountOfBreadTypes?.map((bread, key) => {
                         if (bread.amount != 0) {
                           return (
-                            <p key={key} className="font-light text-2xl">{bread.amount}{bread.shortName}</p>
-                          )
+                            <p key={key} className="font-light text-2xl">
+                              {bread.amount}
+                              {bread.shortName}
+                            </p>
+                          );
                         }
                       })}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-5 mt-5">
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
+                      <div className="bg-mainGrey rounded-lg p-4">
+                        <div className="flex justify-between">
+                          <p className="font-semibold">Navn</p>
+                          <p>{orderDetails.customerInfo.name}</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="font-semibold">Tlf.:</p>
+                          <p>{orderDetails.customerInfo.tel}</p>
+                        </div>
+                        <div className="flex justify-between flex-wrap">
+                          <p className="font-semibold">Email:</p>
+                          <p>{orderDetails.customerInfo.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="font-bold text-md mb-1">Ordreinfo</h2>
+                      <div className="bg-mainGrey rounded-lg p-4">
+                        <div className="flex justify-between">
+                          <p className="font-semibold">Forventet pris</p>
+                          <p>{calculateTotalPrice()} kr.</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="font-semibold">Husk:</p>
+                          <p>BLa bla bla</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="font-bold text-md mb-1">Kommentarer</h2>
+                      <div className="bg-mainGrey rounded-lg p-4">
+                        {orderDetails.comment ? (
+                          <p>{orderDetails.comment}</p>
+                        ) : (
+                          <p>Der er ingen kommentarer fra kunden</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full mt-7">
+                    <div className="bg-mainGrey h-full p-4 rounded-lg">
+                      {orderDetails.order.map((order) => {
+                        return <OrderDetailsProduct order={order} />;
+                      })}
+                    </div>
+                    <div className="flex gap-2 w-full text-white mt-3">
+                      <OrderButton />
                     </div>
                   </div>
                 </div>

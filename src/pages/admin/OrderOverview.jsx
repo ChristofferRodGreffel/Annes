@@ -130,7 +130,7 @@ const OrderOverview = () => {
                       <div
                         key={order.orderNo}
                         className="cursor-pointer border-2 p-2 border-primary rounded-lg transition-all duration-100 ease-in-out hover:bg-primary hover:text-white"
-                        onClick={() => navigate(`/ordredetaljer/${order.docId}`)}
+                        onClick={() => navigate(`/ordre-oversigt/ordredetaljer/${order.docId}`)}
                       >
                         <p>
                           <b>Navn:</b> {order.name}
