@@ -90,7 +90,7 @@ const OrderDetails = () => {
                       {amountOfBreadTypes?.map((bread, key) => {
                         if (bread.amount != 0) {
                           return (
-                            <p key={key} className="font-light text-2xl">
+                            <p key={key} className={`font-light text-2xl ${bread.shortName === "GF" ? "text-red font-semibold" : undefined}`}>
                               {bread.amount}
                               {bread.shortName}
                             </p>
