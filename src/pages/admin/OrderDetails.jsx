@@ -108,7 +108,7 @@ const OrderDetails = () => {
                       : timestampConvert(orderDetails.pickup.time.seconds, "stampToPreciseDate")}
                   </p>
                 </div>
-                <div className="flex gap-5 mt-5 mb-8">
+                <div className="flex flex-col lg:flex-row gap-5 mt-5 mb-8 ">
                   <div className="flex flex-col gap-3 text-sm">
                     <div>
                       <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
