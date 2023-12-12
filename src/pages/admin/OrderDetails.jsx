@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import PageH1Title from "../../components/PageH1Title";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
@@ -17,6 +17,8 @@ const OrderDetails = () => {
 
   const [orderDetails, setOrderDetails] = useState();
   const [amountOfBreadTypes, setAmountOfBreadTypes] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (orderDocId) {
@@ -50,6 +52,10 @@ const OrderDetails = () => {
     }).then(() => {
       toast.success(`Status ændret`, DefaultToastifySettings);
     });
+
+    if (newStatus === "picked") {
+      navigate("/ordre-oversigt");
+    }
   };
 
   return (
@@ -76,7 +82,7 @@ const OrderDetails = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
-                  <h1 className="text-3xl font-bold">Ordre #{orderDetails.orderNo}</h1>
+                  <h1 className="text-2xl font-bold">Ordre #{orderDetails.orderNo}</h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
                     <div className="flex gap-2">
@@ -94,7 +100,7 @@ const OrderDetails = () => {
                   </div>
                 </div>
                 <div className="flex gap-5 mt-5 mb-8">
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 text-sm">
                     <div>
                       <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
                       <div className="bg-mainGrey rounded-lg p-4">
@@ -115,13 +121,13 @@ const OrderDetails = () => {
                     <div>
                       <h2 className="font-bold text-md mb-1">Ordreinfo</h2>
                       <div className="bg-mainGrey rounded-lg p-4">
-                        <div className="flex justify-between">
-                          <p className="font-semibold">Forventet pris</p>
+                        <div className="flex justify-between font-semibold">
+                          <p>Forventet pris</p>
                           <p>{calculateTotalPrice()} kr.</p>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="flex flex-col justify-between">
                           <p className="font-semibold">Husk:</p>
-                          <p>BLa bla bla</p>
+                          {orderDetails.bagged && <p>Pakkes i pose (+4 kr.)</p>}
                         </div>
                       </div>
                     </div>
@@ -138,8 +144,12 @@ const OrderDetails = () => {
                   </div>
                   <div className="w-full mt-7">
                     <div className="bg-mainGrey h-full p-4 rounded-lg">
-                      {orderDetails.order.map((order) => {
-                        return <OrderDetailsProduct order={order} />;
+                      {orderDetails.order.map((order, key) => {
+                        return (
+                          <div key={key}>
+                            <OrderDetailsProduct order={order} />
+                          </div>
+                        );
                       })}
                     </div>
                     <div className="flex gap-2 w-full text-white mt-3">

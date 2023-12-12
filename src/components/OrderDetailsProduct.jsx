@@ -35,19 +35,19 @@ const OrderDetailsProduct = (props) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <div>
-          <p className="text-lg font-semibold max-w-[250px]">
+        <div className="w-56">
+          <p className="text-md font-semibold max-w-[250px]">
             {props.order.amount} x {props.order.name}
           </p>
-          <div className="w-56">
+          <div>
             {props.order.dressing.top !== "Mayo" && (
-              <div className="flex justify-between mt-1">
+              <div className="flex justify-between mt-1 gap-2">
                 <p className="font-semibold">Dressing top:</p>
                 <p className="text-green font-semibold">{props.order.dressing.top}</p>
               </div>
             )}
             {props.order.dressing.bottom !== "Mayo" && (
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <p className="font-semibold">Dressing bund:</p>
                 <p className="text-green font-semibold">{props.order.dressing.bottom}</p>
               </div>
