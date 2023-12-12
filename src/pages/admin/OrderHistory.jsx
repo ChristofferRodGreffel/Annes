@@ -110,7 +110,7 @@ const OrderHistory = () => {
           )}
 
           <div>
-            <h2 className="font-bold text-xl mb-1 mt-5">Afsluttede ordre</h2>
+            <h2 className="font-bold text-xl mb-1 mt-5">Afhentede ordre</h2>
             <hr className="border-b-2 border-dark mb-5" />
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               {pickedOrders?.map((order, key) => {
