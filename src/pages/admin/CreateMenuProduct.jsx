@@ -13,6 +13,7 @@ import { FIREBASE_DB, FIREBASE_STORAGE } from "../../../firebase-config";
 import { ref, uploadBytes, getDownloadURL, listAll, list, uploadBytesResumable } from "firebase/storage";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { PulseLoader } from "react-spinners";
+import ProductCard from "../../components/ProductCard";
 
 // Denne komponent er udviklet i fællesskab blandt begge gruppemedlemmer
 
@@ -271,6 +272,15 @@ function CreateMenuProduct() {
                   placeholder="Pris på produkt..."
                 />
                 <ImageUpload onImageChange={onImageChange} imageState={images} />
+                {images[0] && (
+                  <ProductCard
+                    setLoadingImg={true}
+                    text="Tilpas"
+                    imageSource={images[0].data_url}
+                    productName={productName || "Navn ikke sat..."}
+                    icon="fa-solid fa-utensils"
+                  />
+                )}
               </div>
             </div>
 

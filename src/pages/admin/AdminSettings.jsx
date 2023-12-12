@@ -158,7 +158,7 @@ const AdminSettings = () => {
                         <div className="w-3/5">
                             <form ref={amountUntilBusyRef} onSubmit={handleUpdateBusyAmount} className="flex flex-col gap-2">
                                 <CustomInputWithLabel
-                                    label="Antal online bestillinger indtil der er travlt"
+                                    label="Antal online bestillinger indtil 'Max kapacitet'"
                                     type="number"
                                     value={amountUntilBusy}
                                     customSetvalue={setAmountUntilBusy}

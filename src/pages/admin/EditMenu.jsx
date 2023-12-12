@@ -7,6 +7,8 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import { PulseLoader } from "react-spinners";
 import ProductCard from "../../components/ProductCard";
+import { toast } from "react-toastify";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 
 const EditMenu = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -27,6 +29,10 @@ const EditMenu = () => {
     getAllProducts();
   }, []);
 
+  const handleEditProduct = () => {
+    toast.error("Funktionen er ikke lavet...", DefaultToastifySettings);
+  }
+
   return (
     <>
       <div className="flex justify-center flex-row">
@@ -40,6 +46,7 @@ const EditMenu = () => {
                 return (
                   <div key={key}>
                     <ProductCard
+                      function={() => handleEditProduct()}
                       icon="fa-solid fa-pen-to-square"
                       text="Rediger produkt"
                       key={key}

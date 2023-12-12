@@ -9,7 +9,7 @@ const CategoryShowHideButton = (props) => {
     <button
       onClick={handleChangeVisibility}
       className={`px-5 py-2 rounded-lg font-medium ${
-        props.state ? "bg-dark text-white" : "bg-none border-2 border-dark text-dark"
+        props.state ? "bg-dark text-white" : "bg-none border-2 border-dark text-dark customClassShowHideButton" 
       }`}
     >
       {props.text}

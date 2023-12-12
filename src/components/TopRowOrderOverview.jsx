@@ -67,9 +67,10 @@ function TopRowOrderOverview(props) {
           <div className="flex justify-between font-bold">
             <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åbne ordre`}</p>
             <p>
-              {(amountOfOpenOrders < 5 && "Roligt") ||
-                (amountOfOpenOrders >= 5 && amountOfOpenOrders <= 10 && "Lidt travlt") ||
-                (amountOfOpenOrders > 10 && "Travlt")}
+              {((amountOfOpenOrders / amountUntilBusy ) * 100 < 33 && "Roligt") ||
+                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "Lidt travlt") ||
+                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "Meget travlt") ||
+                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "Max kapacitet")}
             </p>
           </div>
           <Line

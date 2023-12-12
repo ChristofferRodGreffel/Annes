@@ -43,7 +43,6 @@ function CheckoutOverview() {
   }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
-
     const handleGetPersonalUserInformation = async () => {
       if (uid) {
         const docRef = doc(FIREBASE_DB, "users", uid);
