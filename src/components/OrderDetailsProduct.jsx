@@ -12,9 +12,6 @@ const OrderDetailsProduct = (props) => {
       case "Trekantsandwich":
         return "TS";
 
-      case "Glutenfri":
-        return "GF";
-
       case "Mørkt":
         return "M";
 
