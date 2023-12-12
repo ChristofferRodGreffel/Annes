@@ -24,11 +24,11 @@ const CustomizeProduct = () => {
   const [totalPrice, setTotalPrice] = useState();
   const [productPrice, setProductPrice] = useState();
 
-  
+
   const navigate = useNavigate();
-  
+
   const [loadedImage, setLoadedImage] = useState(false)
-  
+
   // used if customer wants to edit a product from checkout
   const [customerWantsToEditProduct, setCustomerWantsToEditProduct] = useState(false)
   const location = useLocation()
@@ -73,11 +73,24 @@ const CustomizeProduct = () => {
   }, [data, defaultIngredients, productIndex])
 
   useEffect(() => {
+    if (!data && !productIndex >= 0) {
+      if (productInfo?.name.toLowerCase().includes("pesto")) {
+        const dressingTopSelect = document.getElementById("dressingSelectTop")
+        if (dressingTopSelect) {
+          setDressingTop("Pesto")
+          dressingTopSelect.value = "Pesto"
+          prevDressingRefTop.current = "Pesto"
+        }
+      }
+    }
+  }, [productInfo])
+
+  useEffect(() => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
         setProductInfo(doc.data());
 
-        if(!doc.data().chosenBreadTypes.includes("Mørkt")) {
+        if (!doc.data().chosenBreadTypes.includes("Mørkt")) {
           setChosenBread(doc.data().chosenBreadTypes[0])
         }
         setDefaultIngredients(doc.data().chosenIngredients);
@@ -146,7 +159,7 @@ const CustomizeProduct = () => {
 
 
     localStorageBasket(completeProduct, productIndex);
-    if(!customerWantsToEditProduct) {
+    if (!customerWantsToEditProduct) {
       toast.success("Produkt tilføjet", DefaultToastifySettings);
       navigate("/");
     } else {
