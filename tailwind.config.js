@@ -21,7 +21,7 @@ export default {
         productOverviewMinWidth: "400px",
       },
       maxWidth: {
-        'readable': '65ch',
+        readable: "65ch",
       },
       minHeight: {
         productOverviewMinHeight: "70%",
@@ -37,6 +37,8 @@ export default {
         red: "var(--color-red)",
         green: "var(--color-green)",
         cancelGrey: "var(--color-cancelGrey)",
+        lightRed: "#FFE7E7",
+        lightGreen: "#E7FFE8",
       },
     },
   },

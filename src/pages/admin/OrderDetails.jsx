@@ -5,10 +5,12 @@ import PageH1Title from "../../components/PageH1Title";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import CustomButton from "../../components/CustomButton";
-import { doc, onSnapshot } from "firebase/firestore";
+import { arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import OrderDetailsProduct from "../../components/OrderDetailsProduct";
 import OrderButton from "../../components/OrderButton";
+import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
+import { toast } from "react-toastify";
 
 const OrderDetails = () => {
   const { orderDocId } = useParams();
@@ -31,6 +33,23 @@ const OrderDetails = () => {
       totalPrice += order.price;
     });
     return totalPrice;
+  };
+
+  const changeStatus = async (newStatus, message) => {
+    const orderRef = doc(FIREBASE_DB, "orders", orderDocId);
+
+    const newUpdate = {
+      context: message,
+      time: new Date(),
+      type: "update",
+    };
+
+    await updateDoc(orderRef, {
+      status: newStatus,
+      updates: arrayUnion(newUpdate),
+    }).then(() => {
+      toast.success(`Status ændret`, DefaultToastifySettings);
+    });
   };
 
   return (
@@ -74,7 +93,7 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-5 mt-5">
+                <div className="flex gap-5 mt-5 mb-8">
                   <div className="flex flex-col gap-3">
                     <div>
                       <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
@@ -124,7 +143,45 @@ const OrderDetails = () => {
                       })}
                     </div>
                     <div className="flex gap-2 w-full text-white mt-3">
-                      <OrderButton />
+                      {orderDetails.status === "recieved" && (
+                        <>
+                          <OrderButton
+                            function={() => changeStatus("accepted", "Bestilling accepteret")}
+                            text="Accepter bestilling"
+                            green="true"
+                          />
+                          <OrderButton
+                            function={() => changeStatus("shopCancelled", "Butikken har afvist din bestilling")}
+                            text="Afvis bestilling"
+                          />
+                        </>
+                      )}
+                      {orderDetails.status === "accepted" && (
+                        <>
+                          <OrderButton
+                            function={() => changeStatus("ready", "Din bestilling er klar i butikken")}
+                            text="Markér klar til afhentning"
+                            green="true"
+                          />
+                          <OrderButton
+                            function={() => changeStatus("recieved", "Din bestilling er modtaget")}
+                            text="Fortryd trin"
+                          />
+                        </>
+                      )}
+                      {orderDetails.status === "ready" && (
+                        <>
+                          <OrderButton
+                            function={() => changeStatus("picked", "Bestillingen er afhentet af kunden")}
+                            text="Markér som afhentet & betalt"
+                            green="true"
+                          />
+                          <OrderButton
+                            function={() => changeStatus("accepted", "Bestillingen er ikke klar alligevel")}
+                            text="Fortryd trin"
+                          />
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
