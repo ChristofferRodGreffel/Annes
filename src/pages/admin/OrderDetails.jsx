@@ -35,6 +35,9 @@ const OrderDetails = () => {
     orderDetails.order.forEach((order) => {
       totalPrice += order.price;
     });
+    if(orderDetails.bagged) {
+    totalPrice += 4;
+  }
     return totalPrice;
   };
 

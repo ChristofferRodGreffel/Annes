@@ -64,7 +64,7 @@ const OrderHistory = () => {
         <AdminSidebar />
         <AdminContentWrapper>
           <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
-          <PageH1Title>Alle ordre, som er afhentet</PageH1Title>
+          <PageH1Title>Her har du en oversigt over tidligere ordre</PageH1Title>
 
           <input
             type="text"
