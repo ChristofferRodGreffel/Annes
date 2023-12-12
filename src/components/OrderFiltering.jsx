@@ -11,8 +11,8 @@ const OrderFiltering = (props) => {
       defaultValue={"ældsteFørst"}
     >
       <option value="ældsteFørst">Ældste først</option>
-      <option value="nyesteFørst">Nyeste først</option>
       <option value="afhentesFørst">Afhentes først</option>
+      <option value="nyesteFørst">Nyeste først</option>
     </select>
   );
 };
