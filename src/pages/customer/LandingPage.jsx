@@ -78,9 +78,10 @@ function LandingPage() {
               <p>Fra 48 kr.</p>
             </div>
             <div className="flex justify-between">
-              <p>Trekantsandwich</p>
+              <p>Trekantsandwich*</p>
               <p>Fra 23 kr.</p>
             </div>
+            <p>*Fås kun i varianterne Tunsalat & Serranoskinke med ost</p>
           </div>
         </div>
         {!loading ? (
