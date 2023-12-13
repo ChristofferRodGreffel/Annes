@@ -37,6 +37,9 @@ const OrderDetails = () => {
     orderDetails.order.forEach((order) => {
       totalPrice += order.price;
     });
+    if(orderDetails.bagged) {
+    totalPrice += 4;
+  }
     return totalPrice;
   };
 
@@ -92,7 +95,7 @@ const OrderDetails = () => {
                       {amountOfBreadTypes?.map((bread, key) => {
                         if (bread.amount != 0) {
                           return (
-                            <p key={key} className="font-light text-2xl">
+                            <p key={key} className={`font-light text-2xl ${bread.shortName === "GF" ? "text-red font-semibold" : undefined}`}>
                               {bread.amount}
                               {bread.shortName}
                             </p>
@@ -110,7 +113,7 @@ const OrderDetails = () => {
                       : timestampConvert(orderDetails.pickup.time.seconds, "stampToPreciseDate")}
                   </p>
                 </div>
-                <div className="flex gap-5 mt-5 mb-8">
+                <div className="flex flex-col lg:flex-row gap-5 mt-5 mb-8 ">
                   <div className="flex flex-col gap-3 text-sm">
                     <div>
                       <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
