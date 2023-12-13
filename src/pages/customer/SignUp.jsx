@@ -18,6 +18,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  // Skifter typen af input feltet når man trykker på øjet
+  // og ændrer samtidig ikonet.
   const handleShowPassword = () => {
     const passwordInput = formRef.current.password;
     const eyeIcon = document.querySelector("#eyeIcon");
@@ -30,6 +32,7 @@ const SignUp = () => {
     }
   };
 
+  // Henter email og password og opretter en profil med firebase auth.
   const userSignUp = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -54,6 +57,7 @@ const SignUp = () => {
       });
   };
 
+  // Tilføjer brugerdata til firestore
   const addUserData = async (user) => {
     const username = formRef.current.name.value;
     const tel = formRef.current.phone.value;

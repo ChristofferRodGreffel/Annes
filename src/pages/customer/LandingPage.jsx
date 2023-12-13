@@ -1,4 +1,3 @@
-
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PageWrapperContainer from "../../components/PageWrapperContainer";
 import CustomerHeader from "../../components/CustomerHeader";
@@ -17,6 +16,8 @@ function LandingPage() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
 
+  // Hvis der er data fra localstorage hentes det og bruges til at sætte vores værdier
+  // i vores 'CustomerBottomInfoContainer'.
   useEffect(() => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
 
@@ -34,7 +35,8 @@ function LandingPage() {
 
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  
+  useEffect(() => {
     const getAllProducts = async () => {
       const q = query(collection(FIREBASE_DB, "menu"));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {

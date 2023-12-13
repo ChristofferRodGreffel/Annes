@@ -31,14 +31,9 @@ const OrderStatus = () => {
     });
   }, []);
 
-  const convertDate = (date) => {
-    const converted = new Date(date * 1000).toLocaleDateString("en-GB");
-    return converted;
-  };
-
   const handleSaveOrderButtonClicked = () => {
     toast.error("Funktionen er ikke lavet", DefaultToastifySettings);
-  }
+  };
 
   return (
     <>
@@ -96,7 +91,13 @@ const OrderStatus = () => {
               />
             </div>
             <div className="mt-5">
-              <CustomButton iconRight={true} function={handleSaveOrderButtonClicked} customWidth="w-full" title="Gem bestilling" icon={"fa-solid fa-heart"} />
+              <CustomButton
+                iconRight={true}
+                function={handleSaveOrderButtonClicked}
+                customWidth="w-full"
+                title="Gem bestilling"
+                icon={"fa-solid fa-heart"}
+              />
             </div>
             <div className="mt-10">
               <p className="text-xl font-bold">Opdateringsoversigt</p>

@@ -33,11 +33,14 @@ const SignIn = () => {
       .catch((error) => {
         setLoading(false);
         const errorCode = error.code;
+        // Finder den korresponderende fejlkode og viser den tilhørende
+        // tekst til brugeren med en toast.
         const errorMessage = firebaseErrorsCodes[errorCode];
         toast.error(errorMessage, DefaultToastifySettings);
       });
   };
 
+  // Tjekker om brugeren er admin eller ej, derefter navigeres som nødvendigt
   const checkAdminStatus = async (user) => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
     querySnapshot.forEach((doc) => {
@@ -51,6 +54,7 @@ const SignIn = () => {
     });
   };
 
+  // Ændrer input feltets type og ikon når man klikker på øjet.
   const handleShowPassword = () => {
     const passwordInput = formRef.current.password;
     const eyeIcon = document.querySelector("#eyeIcon");
