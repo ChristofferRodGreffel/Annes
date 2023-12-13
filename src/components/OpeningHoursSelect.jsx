@@ -32,11 +32,15 @@ const OpeningHoursSelect = (props) => {
         props.chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 
       // Define opening hours based on the current day
+      // Kl. 7 på hverdage og 10 i weekender
       const startHour = !isWeekend ? 7 : 10;
       const endHour = 18;
 
-      // Hvis man har valgt den aktuelle dag får man mulighed for at vælge "Hurtigst muligt"
-      const openingHoursArray = currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() ? ["Hurtigst muligt"] : [];
+      console.log(todayHour >=  startHour)
+
+      // Hvis man har valgt den aktuelle dag og nurværende time er større eller lig med åbningstimen
+      // får man mulighed for at vælge "Hurtigst muligt"
+      const openingHoursArray = currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() && todayHour >= startHour ? ["Hurtigst muligt"] : [];
 
       for (let hour = startHour; hour <= endHour; hour++) {
         for (let minute = 0; minute < 60; minute += 10) {
