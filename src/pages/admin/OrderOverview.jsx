@@ -105,16 +105,14 @@ const OrderOverview = () => {
       <AdminContentWrapper>
         <div className="flex flex-col gap-8">
           <div>
-            {recievedOrders && (
-              <TopRowOrderOverview
-                recivedOrders={recievedOrders}
-                acceptedOrders={acceptedOrders}
-                readyOrders={readyOrders}
-                totalOrders={allOrderNumbersWithName}
-                handleShowFilteredOrders={handleShowFilteredOrders}
-                filteredOrdersInput={filteredOrdersInput}
-              />
-            )}
+            <TopRowOrderOverview
+              recivedOrders={recievedOrders}
+              acceptedOrders={acceptedOrders}
+              readyOrders={readyOrders}
+              totalOrders={allOrderNumbersWithName}
+              handleShowFilteredOrders={handleShowFilteredOrders}
+              filteredOrdersInput={filteredOrdersInput}
+            />
             {filteredOrdersArray && (
               <>
                 {filteredOrdersArray.length !== 0 ? (

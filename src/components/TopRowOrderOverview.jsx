@@ -58,43 +58,46 @@ function TopRowOrderOverview(props) {
 
   return (
     <>
-      <div className="flex flex-col-reverse flex-wrap gap-8 w-64 md:w-full md:flex-row md:justify-between md:gap-2 mb-8">
-        <div>
-          <input
-            type="text"
-            name="searchForOrder"
-            value={props.filteredOrders}
-            onChange={(e) => {
-              props.handleShowFilteredOrders(e);
-            }}
-            id="searchForOrderId"
-            placeholder="Søg efter ordre..."
-          ></input>
-        </div>
-        <div className="flex flex-col">
-          <div className="flex justify-between font-bold">
-            <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åbne ordre`}</p>
-            <p>
-              {((amountOfOpenOrders / amountUntilBusy ) * 100 < 33 && "Roligt") ||
-                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "Lidt travlt") ||
-                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "Meget travlt") ||
-                ( (amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "Max kapacitet")}
-            </p>
+      {props && (
+
+        <div className="flex flex-col-reverse flex-wrap gap-8 w-64 md:w-full md:flex-row md:justify-between md:gap-2 mb-8">
+          <div>
+            <input
+              type="text"
+              name="searchForOrder"
+              value={props.filteredOrders}
+              onChange={(e) => {
+                props.handleShowFilteredOrders(e);
+              }}
+              id="searchForOrderId"
+              placeholder="Søg efter ordre..."
+            ></input>
           </div>
-          <Line
-            percent={percentageOfOpenOrders}
-            className="h-4 w-64 rounded-full"
-            strokeColor={`${((amountOfOpenOrders / amountUntilBusy ) * 100 < 33 && "#38773b") ||
-              ((amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "#38773b") ||
-              ( (amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "#D7C310") ||
-              ( (amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "#b72626")
-              }`}
-          />
+          <div className="flex flex-col">
+            <div className="flex justify-between font-bold">
+              <p>{amountOfOpenOrders > 1 ? `${amountOfOpenOrders} Åbne ordre` : `${amountOfOpenOrders} Åbne ordre`}</p>
+              <p>
+                {((amountOfOpenOrders / amountUntilBusy) * 100 < 33 && "Roligt") ||
+                  ((amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "Lidt travlt") ||
+                  ((amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "Meget travlt") ||
+                  ((amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "Max kapacitet")}
+              </p>
+            </div>
+            <Line
+              percent={percentageOfOpenOrders}
+              className="h-4 w-64 rounded-full"
+              strokeColor={`${((amountOfOpenOrders / amountUntilBusy) * 100 < 33 && "#38773b") ||
+                ((amountOfOpenOrders / amountUntilBusy) * 100 > 33 && (amountOfOpenOrders / amountUntilBusy) * 100 < 66 && "#38773b") ||
+                ((amountOfOpenOrders / amountUntilBusy) * 100 > 66 && (amountOfOpenOrders / amountUntilBusy) * 100 < 99 && "#D7C310") ||
+                ((amountOfOpenOrders / amountUntilBusy) * 100 > 99 && "#b72626")
+                }`}
+            />
+          </div>
+          <div className="text-center w-44">
+            <p className="text-4xl font-bold text-primary font-mono">{date.toLocaleTimeString("en-GB")}</p>
+          </div>
         </div>
-        <div className="text-center w-44">
-          <p className="text-4xl font-bold text-primary font-mono">{date.toLocaleTimeString("en-GB")}</p>
-        </div>
-      </div>
+      )}
     </>
   );
 }
