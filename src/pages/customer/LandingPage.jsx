@@ -15,6 +15,7 @@ function LandingPage() {
   const [loading, setLoading] = useState(true);
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);
+  const navigate = useNavigate();
 
   // Hvis der er data fra localstorage hentes det og bruges til at sætte vores værdier
   // i vores 'CustomerBottomInfoContainer'.
@@ -33,9 +34,7 @@ function LandingPage() {
     }
   }, []);
 
-  const navigate = useNavigate();
-
-  
+  // Henter alle produkter fra 'menu' kollektionen i firestore og fylder vores useState
   useEffect(() => {
     const getAllProducts = async () => {
       const q = query(collection(FIREBASE_DB, "menu"));
@@ -51,6 +50,7 @@ function LandingPage() {
     getAllProducts();
   }, []);
 
+  // Benytter params og navigerer til produktsiden
   const handleOnProductClick = (productName) => {
     navigate(`/bestil-online/${productName}`);
   };

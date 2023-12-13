@@ -24,34 +24,34 @@ const CustomizeProduct = () => {
   const [dressingBottom, setDressingBottom] = useState("Mayo");
   const [totalPrice, setTotalPrice] = useState();
   const [productPrice, setProductPrice] = useState();
-
-
+  const [loadedImage, setLoadedImage] = useState(false);
   const navigate = useNavigate();
 
-  const [loadedImage, setLoadedImage] = useState(false)
-
-  // used if customer wants to edit a product from checkout
-  const [customerWantsToEditProduct, setCustomerWantsToEditProduct] = useState(false)
-  const location = useLocation()
+  // Bliver brugt hvis kunden ønsker at redigere sit product
+  const [customerWantsToEditProduct, setCustomerWantsToEditProduct] = useState(false);
+  // Vi bruger useLocation til at hente det data vi giver med fra 'CheckoutOverview' (kurven)
+  const location = useLocation();
   const data = location.state?.product;
   const productIndex = location.state?.productIndex;
 
+  // Hvis kunden har valgt at rette et produkt der allerede er i kurven, bruges denne useEffect
+  // til at sætte checkboxes og andre valg til det i forvejen valgte, så kunden ikke skal starte forfra.
   useEffect(() => {
     if (location && data && productIndex >= 0) {
-      setCustomerWantsToEditProduct(true)
-      setAmount(data.amount)
-      setDressingTop(data.dressing.top)
-      setDressingBottom(data.dressing.bottom)
-      const dressingTopSelect = document.getElementById("dressingSelectTop")
-      const dressingBottomSelect = document.getElementById("dressingSelectBottom")
+      setCustomerWantsToEditProduct(true);
+      setAmount(data.amount);
+      setDressingTop(data.dressing.top);
+      setDressingBottom(data.dressing.bottom);
+      const dressingTopSelect = document.getElementById("dressingSelectTop");
+      const dressingBottomSelect = document.getElementById("dressingSelectBottom");
       if (dressingTopSelect && dressingBottomSelect) {
-        dressingTopSelect.value = data.dressing.top
-        dressingBottomSelect.value = data.dressing.bottom
-        prevDressingRefTop.current = data.dressing.top
-        prevDressingRefBottom.current = data.dressing.bottom
+        dressingTopSelect.value = data.dressing.top;
+        dressingBottomSelect.value = data.dressing.bottom;
+        prevDressingRefTop.current = data.dressing.top;
+        prevDressingRefBottom.current = data.dressing.bottom;
       }
-      setProductPrice(data.singlePrice)
-      setChosenBread(data.bread)
+      setProductPrice(data.singlePrice);
+      setChosenBread(data.bread);
 
       const defaultIngredientsCheckbox = document.querySelectorAll("#defaultIngredients input[type='checkbox']");
       const extraIngredientsForm = document.querySelectorAll("#extraIngredients input[type='checkbox']");
@@ -59,40 +59,43 @@ const CustomizeProduct = () => {
       data.removed.forEach((removed) => {
         defaultIngredientsCheckbox?.forEach((box) => {
           if (box.name === removed) {
-            box.checked = false
+            box.checked = false;
           }
         });
-      })
+      });
       data.added.forEach((added) => {
         extraIngredientsForm?.forEach((box) => {
           if (box.name.toLowerCase().includes(added.toLowerCase())) {
-            box.checked = true
+            box.checked = true;
           }
         });
-      })
+      });
     }
-  }, [data, defaultIngredients, productIndex])
+  }, [data, defaultIngredients, productIndex]);
 
+  // Hvis kunden ikke kommer fra kurven men direkte fra forsiden, tjekker denne useEffect om
+  // titlen indeholder pesto og sætter dressingTop til "pesto".
   useEffect(() => {
     if (!data && !productIndex >= 0) {
       if (productInfo?.name.toLowerCase().includes("pesto")) {
-        const dressingTopSelect = document.getElementById("dressingSelectTop")
+        const dressingTopSelect = document.getElementById("dressingSelectTop");
         if (dressingTopSelect) {
-          setDressingTop("Pesto")
-          dressingTopSelect.value = "Pesto"
-          prevDressingRefTop.current = "Pesto"
+          setDressingTop("Pesto");
+          dressingTopSelect.value = "Pesto";
+          prevDressingRefTop.current = "Pesto";
         }
       }
     }
-  }, [productInfo])
+  }, [productInfo]);
 
+  // Henter information omkring produktet fra firestore og fylder vores states
   useEffect(() => {
     const getProductInfo = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "menu", productName), (doc) => {
         setProductInfo(doc.data());
 
         if (!doc.data().chosenBreadTypes.includes("Mørkt")) {
-          setChosenBread(doc.data().chosenBreadTypes[0])
+          setChosenBread(doc.data().chosenBreadTypes[0]);
         }
         setDefaultIngredients(doc.data().chosenIngredients);
         setTotalPrice(doc.data().price);
@@ -100,6 +103,7 @@ const CustomizeProduct = () => {
       });
     };
 
+    // Henter alle ingredienser fra firestore
     const getAllIngredients = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "ingredients/default"), (doc) => {
         setAllIngredients(doc.data().ingredients);
@@ -110,11 +114,13 @@ const CustomizeProduct = () => {
     getProductInfo();
   }, []);
 
+  // Bruges til at øge mængden
   const handleAmountIncrease = () => {
     setAmount((amount) => amount + 1);
     setTotalPrice((price) => price + productPrice);
   };
 
+  // Bruges til at sænke mængden, men ikke til mindre én.
   const handleAmountDecrease = () => {
     if (amount > 1) {
       setAmount((amount) => amount - 1);
@@ -157,7 +163,6 @@ const CustomizeProduct = () => {
       bread: chosenBread,
       name: productName,
     };
-
 
     localStorageBasket(completeProduct, productIndex);
     if (!customerWantsToEditProduct) {
@@ -219,13 +224,17 @@ const CustomizeProduct = () => {
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <img
-        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 object-cover lg:h-96 md:mx-auto ${loadedImage ? null : 'blur-lg'}`}
+        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 object-cover lg:h-96 md:mx-auto ${
+          loadedImage ? null : "blur-lg"
+        }`}
         src={productInfo?.imageURL}
         alt={`Billede af ${productInfo?.name}`}
-        onLoad={() => { setLoadedImage(true) }}
+        onLoad={() => {
+          setLoadedImage(true);
+        }}
       />
       <PageWrapperContainer>
-        {productInfo ?
+        {productInfo ? (
           <>
             <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
               <div className="mt-8">
@@ -258,7 +267,13 @@ const CustomizeProduct = () => {
                     {defaultIngredients?.map((ingredient, key) => {
                       return (
                         <div key={key} className="flex items-center gap-1 py-2 md:py-1">
-                          <input type="checkbox" name={ingredient} value={ingredient} id={`${ingredient}`} defaultChecked />
+                          <input
+                            type="checkbox"
+                            name={ingredient}
+                            value={ingredient}
+                            id={`${ingredient}`}
+                            defaultChecked
+                          />
                           <label className="font-medium" htmlFor={ingredient}>
                             {ingredient}
                           </label>
@@ -344,15 +359,14 @@ const CustomizeProduct = () => {
               amount={amount}
             />
           </>
-          :
+        ) : (
           <>
             <div className="flex mt-10 flex-col justify-center w-full mx-auto items-center gap-1">
               <p className="font-medium text-xl">Indlæser produkt</p>
               <PulseLoader color="#373737" size={13} />
             </div>
           </>
-        }
-
+        )}
       </PageWrapperContainer>
     </>
   );
