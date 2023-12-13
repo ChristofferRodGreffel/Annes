@@ -165,6 +165,7 @@ const CustomizeProduct = () => {
     };
 
     localStorageBasket(completeProduct, productIndex);
+    
     if (!customerWantsToEditProduct) {
       toast.success("Produkt tilføjet", DefaultToastifySettings);
       navigate("/");
