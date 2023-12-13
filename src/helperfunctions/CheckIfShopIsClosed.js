@@ -1,5 +1,7 @@
 export function CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed) {
 
+    // Udviklet primært af Sebastian
+
     const shopClosingTime = 1830;
     const currentDate = new Date();
 
@@ -11,6 +13,8 @@ export function CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed) {
 
     const currentTimeHourAndMinuteFormatted = Number(`${currentTimeHourFormatted}${currentTimeMinuteFormatted}`)
 
+
+    // Hvis man har valgt samme dag og klokken er mere end lukketid
     if (
         currentDateFormatted === chosenCollectionDateFormatted &&
         currentTimeHourAndMinuteFormatted >= shopClosingTime

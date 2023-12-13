@@ -1,7 +1,7 @@
 import { collection, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
-// Udviklet primært af Sebastian
+// Bruges ikke.
 
 // Example of how to use --> change status from pending to recieved
 // automaticChangeOfStatus("status", "pending", "recieved")
