@@ -11,6 +11,7 @@ import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoCont
 import localStorageBasket from "../../helperfunctions/LocalStorageBasket";
 import { PulseLoader } from "react-spinners";
 
+// Udviklet fælles i gruppen
 
 const CustomizeProduct = () => {
   const { productName } = useParams();

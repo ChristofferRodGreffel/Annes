@@ -13,6 +13,8 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import { toast } from "react-toastify";
 import { timestampConvert } from "../../helperfunctions/TimestampConvert";
 
+// Udviklet fælles i gruppen
+
 const OrderDetails = () => {
   const { orderDocId } = useParams();
 

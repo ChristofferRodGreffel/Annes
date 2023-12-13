@@ -4,6 +4,8 @@ import PageH1Title from "../../components/PageH1Title";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import MenuCategoryLink from "../../components/MenuCategoryLink";
 
+// Udviklet fælles i gruppen
+
 const MenuOverview = () => {
   return (
     <>

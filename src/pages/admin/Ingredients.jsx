@@ -11,6 +11,8 @@ import { PulseLoader } from "react-spinners";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
 
+// Udviklet fælles i gruppen
+
 const Ingredients = () => {
   const [ingredient, setIngredient] = useState("");
   const [allIngredients, setAllIngredients] = useState(null);

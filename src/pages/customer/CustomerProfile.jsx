@@ -12,6 +12,7 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import { collection, doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore";
 import { PulseLoader } from "react-spinners";
 
+// Udviklet fælles i gruppen
 
 const CustomerProfile = () => {
   const navigate = useNavigate();

@@ -15,7 +15,7 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import { PulseLoader } from "react-spinners";
 import ProductCard from "../../components/ProductCard";
 
-// Denne komponent er udviklet i fællesskab blandt begge gruppemedlemmer
+// Udviklet fælles i gruppen
 
 function CreateMenuProduct() {
   // Sætter titlen på siden
@@ -287,7 +287,9 @@ function CreateMenuProduct() {
             <div className="xl:hidden flex flex-col justify-center items-center">
               <div className="bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
                 <div className="flex flex-col gap-8 p-8">
-                  <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">Produktoversigt</h3>
+                  <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">
+                    Produktoversigt
+                  </h3>
                   <div className="flex flex-col">
                     <p className="font-semibold">Navn</p>
                     {productName ? (
@@ -374,13 +376,7 @@ function CreateMenuProduct() {
                 )}
               </button>
             </div>
-
           </div>
-
-
-
-
-
         </AdminContentWrapper>
 
         <div className="max-xl:hidden sticky top-0 w-1/2 min-w-productOverviewMinWidth h-screen flex flex-col justify-center items-center">

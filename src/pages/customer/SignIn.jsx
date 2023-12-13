@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { collection, getDocs } from "firebase/firestore";
 
+// Udviklet fælles i gruppen
+
 const SignIn = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();

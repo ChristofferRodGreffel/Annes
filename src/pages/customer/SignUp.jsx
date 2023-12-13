@@ -11,6 +11,8 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import { PulseLoader } from "react-spinners";
 import { doc, setDoc } from "firebase/firestore";
 
+// Udviklet fælles i gruppen
+
 const SignUp = () => {
   const formRef = useRef(null);
   const navigate = useNavigate();

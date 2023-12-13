@@ -9,6 +9,8 @@ import { PulseLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
 
+// Udviklet fælles i gruppen
+
 function LandingPage() {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);

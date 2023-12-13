@@ -15,6 +15,8 @@ import { PulseLoader } from "react-spinners";
 import { CheckIfShopIsClosed } from "../../helperfunctions/CheckIfShopIsClosed";
 import { CalculateAmountOfEachBread } from "../../helperfunctions/CalculateAmountOfEachBread";
 
+// Udviklet fælles i gruppen
+
 function CheckoutOverview() {
   const [amountFromBasket, setAmountFromBasket] = useState(0);
   const [priceFromBasket, setPriceFromBasket] = useState(0);

@@ -12,6 +12,8 @@ import { timestampConvert } from "../../helperfunctions/TimestampConvert";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 
+// Udviklet fælles i gruppen
+
 const OrderStatus = () => {
   const { orderId } = useParams();
   const [currentOrderId, setCurrentOrderId] = useState("");

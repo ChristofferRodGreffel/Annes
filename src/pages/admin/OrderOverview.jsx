@@ -14,6 +14,8 @@ import CategoryShowHideButton from "../../components/CategoryShowHideButton";
 import OrderFiltering from "../../components/OrderFiltering";
 import { sortOrderArrays } from "../../helperfunctions/SortOrderArrays";
 
+// Udviklet fælles i gruppen
+
 const OrderOverview = () => {
   const navigate = useNavigate();
 

@@ -10,6 +10,8 @@ import ProductCard from "../../components/ProductCard";
 import { toast } from "react-toastify";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 
+// Udviklet fælles i gruppen
+
 const EditMenu = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState([]);
