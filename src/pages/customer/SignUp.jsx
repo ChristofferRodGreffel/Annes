@@ -87,9 +87,9 @@ const SignUp = () => {
               <input type="tel" required name="phone" />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="email">Din email*</label>
+              <label htmlFor="email">Din email</label>
               <input type="email" required name="email" />
-              <p className="italic text-sm">*Du modtager en mail mod verifikation</p>
+              {/* <p className="italic text-sm">*Du modtager en mail med verifikation</p> */}
             </div>
 
             <div className="flex flex-col">
