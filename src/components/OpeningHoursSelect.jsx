@@ -36,8 +36,6 @@ const OpeningHoursSelect = (props) => {
       const startHour = !isWeekend ? 7 : 10;
       const endHour = 18;
 
-      console.log(todayHour >=  startHour)
-
       // Hvis man har valgt den aktuelle dag og nurværende time er større eller lig med åbningstimen
       // får man mulighed for at vælge "Hurtigst muligt"
       const openingHoursArray = currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() && todayHour >= startHour ? ["Hurtigst muligt"] : [];
