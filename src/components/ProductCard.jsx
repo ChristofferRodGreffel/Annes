@@ -4,6 +4,8 @@ import { PulseLoader } from "react-spinners";
 
 const ProductCard = (props) => {
 
+  // Udviklet fælles i gruppen
+
   const [loadedImage, setLoadedImage] = useState(false)
 
   useEffect(() => {

@@ -4,6 +4,9 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
 function TopRowOrderOverview(props) {
+
+  // Udviklet primært af Sebastian 
+
   const [date, setDate] = useState(new Date());
 
   const [amountUntilBusy, setAmountUntilBusy] = useState(0)
@@ -12,6 +15,7 @@ function TopRowOrderOverview(props) {
   const [percentageOfOpenOrders, setPercentageOfOpenOrders] = useState(0);
 
   useEffect(() => {
+    // Bruges som klokke
     const intervalId = setInterval(() => {
       setDate(new Date());
     }, 1000);
@@ -19,6 +23,8 @@ function TopRowOrderOverview(props) {
   }, []);
 
   useEffect(() => {
+    // Henter information fra Firestore om hvor mange ordre butikken
+    // kan håndterer. Kan sættes under indstillinger i Admin siderne
     const getAmountUntilBusy = async () => {
       const q = query(collection(FIREBASE_DB, "admin-settings"));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -34,6 +40,7 @@ function TopRowOrderOverview(props) {
   }, []);
 
   useEffect(() => {
+    // Beregner antallet af åbne ordre samt procenten ift. hvor mange ordre butikken kan håndtere
     if (props) {
       let AmountOfRecivedOrders = props.recivedOrders?.length || 0;
       let AmountOfAccepteddOrders = props.acceptedOrders?.length || 0;
@@ -41,6 +48,7 @@ function TopRowOrderOverview(props) {
 
       const totalNumberOfOpenOrders = AmountOfRecivedOrders + AmountOfAccepteddOrders + AmountOfReadyOrders;
 
+      // amountUntilBusy er det tal fra Firestore
       const percentageOfOpenOrders = (totalNumberOfOpenOrders / amountUntilBusy) * 100;
 
       setAmountOfOpenOrders(totalNumberOfOpenOrders);

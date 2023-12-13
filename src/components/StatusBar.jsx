@@ -1,6 +1,10 @@
 import React from "react";
 
 const StatusBar = (props) => {
+
+  // Udviklet primært af Christoffer
+  // Bruges i Orderstatus
+
   return (
     <div className="flex items-center w-auto max-w-[1500px] m-auto">
       <div className="flex items-center w-full">

@@ -4,6 +4,10 @@ import { FIREBASE_DB } from "../../firebase-config";
 import { timestampConvert } from "../helperfunctions/TimestampConvert";
 
 const UpdatesBar = (props) => {
+
+  // Udviklet primært af Christoffer
+  // Bruges i OrderStatus
+
   const [updates, setUpdates] = useState();
 
   // Get updates from firestore

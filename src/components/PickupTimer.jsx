@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const PickupTimer = (props) => {
+
+  // Udviklet primært af Christoffer
+  // Bruges i Ordercard - viser hvor lang tid der går til at kunden henter ordre
+
   const [timeLeft, setTimeLeft] = useState(props.remainingTime);
 
   useEffect(() => {
@@ -19,6 +23,7 @@ const PickupTimer = (props) => {
     return () => clearInterval(intervalId);
   }, [props.remainingTime]);
 
+  // Formaterer tiden
   const formatTime = (time) => {
     const hours = Math.floor(time / (60 * 60 * 1000));
     const minutes = Math.floor((time % (60 * 60 * 1000)) / (60 * 1000));

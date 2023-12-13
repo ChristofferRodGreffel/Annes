@@ -1,12 +1,14 @@
 import { collection, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
-// Example of how to use - change status from pending to recieved
+// Udviklet primært af Sebastian
+
+// Example of how to use --> change status from pending to recieved
 // automaticChangeOfStatus("status", "pending", "recieved")
 
 
 const setNewOrderStatus = async (orderRef, newStatus) => {
-    // To update age and favorite color:
+    // To update new status
     await updateDoc(orderRef, {
       status: newStatus,
     });
