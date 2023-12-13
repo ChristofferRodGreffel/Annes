@@ -1,3 +1,5 @@
+// Udviklet primært af Christoffer
+
 export function timestampConvert(stamp, type) {
   let unixTimestamp = stamp;
 
@@ -16,6 +18,7 @@ export function timestampConvert(stamp, type) {
   // Get seconds part from the timestamp
   let seconds = dateObj.getSeconds();
 
+  // Formaterer til det resultat, som vi ønsker
   switch (type) {
     case "stampToHourMinute":
       return hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0");

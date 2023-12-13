@@ -3,9 +3,14 @@ import { FIREBASE_DB } from "../../firebase-config";
 import { useEffect } from "react";
 import { sortOrderArrays } from "./SortOrderArrays";
 
-export function receiveFilteredOrders(setRecievedOrders, filterByOption, filterByValue) {
+// Udviklet fælles i gruppen
+
+export function receiveFilteredOrders(setOrders, filterByOption, filterByValue) {
   //  recieve all orders with provided option and value
 
+  // Henter alle ordre ud fra en specifik status og sorterer efter dato
+  // For hver ordre bliver de sat i et midlertidig array
+  // Som til sidst bliver sat i dens useState. 
   const q = query(
     collection(FIREBASE_DB, "orders"),
     where(filterByOption, "==", filterByValue),
@@ -18,7 +23,7 @@ export function receiveFilteredOrders(setRecievedOrders, filterByOption, filterB
       querySnapshot.forEach((doc) => {
         resultArray.push(doc.data());
       });
-      setRecievedOrders(resultArray);
+      setOrders(resultArray);
     }
   });
 }
