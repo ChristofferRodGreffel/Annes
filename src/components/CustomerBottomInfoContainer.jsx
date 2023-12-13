@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 function CustomerBottomInfoContainer(props) {
+
+  // Udviklet fælles i gruppen
+
   const [amountOfChosenProducts, setAmountOfChosenProducts] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 

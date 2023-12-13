@@ -2,6 +2,11 @@ import React from "react";
 import CustomButton from "./CustomButton";
 
 function CustomInputWithLabel(props) {
+
+  // Udviklet primært af Sebastian
+  // Bruges i diverse sammenhænge hvor vi skal bruge et input. Props.type bruges til at vælge
+  // Hvilken del man skal have fat i.
+
   return (
     <>
       {props.type == "text" && (

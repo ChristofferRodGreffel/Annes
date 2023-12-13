@@ -4,14 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomerNavigation from "./CustomerNavigation";
 
 const CustomerHeader = (props) => {
+
+  // Udviklet primært af Christoffer
+
   const navigate = useNavigate();
   const [amountFromBasket, setAmountFromBasket] = useState(0);
 
+  // Åbner menuen
   const handleOpenNavigation = () => {
     const customerNav = document.querySelector("#customerNav");
     customerNav.style.left = "0";
   };
 
+  // Går en skærm tilbage hvis man ikke har givet et link
   const handleGoBack = () => {
     if (props.customLink) {
       navigate(props.customLink);
@@ -20,6 +25,7 @@ const CustomerHeader = (props) => {
     }
   };
 
+  // Sætter antallet af produkter i kurven
   useEffect(() => {
     const basketFromStorage = JSON.parse(localStorage.getItem("customerCheckout"));
 

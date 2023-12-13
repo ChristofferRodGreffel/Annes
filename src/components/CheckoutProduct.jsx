@@ -1,6 +1,9 @@
 import React from "react";
 
 const CheckoutProduct = (props) => {
+
+  // Udviklet fælles i gruppen
+
   return (
     <div>
       <div className={`py-4 border-t-2 border-dark font-medium ${props.index + 1 === props.length && "border-b-2"}`}>
@@ -54,7 +57,7 @@ const CheckoutProduct = (props) => {
         </div>
         <div className="flex justify-between mt-3 items-center">
           <div className="flex gap-2 text-white">
-            <button className="font-semibold px-10 py-2 bg-primary rounded-3xl" onClick={() => {props.handleEditProduct(props)}}>Ret</button>
+            <button className="font-semibold px-10 py-2 bg-primary rounded-3xl" onClick={() => { props.handleEditProduct(props) }}>Ret</button>
             <button
               onClick={() => props.handleDeleteProduct(props.index)}
               className="font-semibold px-6 py-2 bg-red rounded-3xl"

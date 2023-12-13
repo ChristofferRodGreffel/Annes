@@ -1,6 +1,9 @@
 import React from "react";
 
 const IngredientCheckbox = (props) => {
+
+  // Udviklet fælles i gruppen
+
   return (
     <div className="flex flex-row items-center py-2 gap-1 md:py-1">
       <input

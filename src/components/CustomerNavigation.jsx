@@ -8,6 +8,7 @@ const CustomerNavigation = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  // Tjekker om man er admin
   const checkAdminStatus = async (user) => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
     querySnapshot.forEach((doc) => {
@@ -20,8 +21,7 @@ const CustomerNavigation = () => {
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
+        // User is signed in
         const uid = user.uid;
         setLoggedIn(true);
         checkAdminStatus(uid);
@@ -34,6 +34,7 @@ const CustomerNavigation = () => {
     });
   }, []);
 
+  // Lukker menuen
   const handleCloseNav = () => {
     const customerNav = document.querySelector("#customerNav");
     if (window.innerWidth > 1023) {

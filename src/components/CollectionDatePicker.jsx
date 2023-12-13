@@ -4,6 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import da from "date-fns/locale/da";
 
 function CollectionDatePicker(props) {
+
+  // Udviklet fælles i gruppen
+  
   registerLocale("da", da);
 
   return (

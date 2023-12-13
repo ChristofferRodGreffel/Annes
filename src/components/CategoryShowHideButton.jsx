@@ -1,6 +1,9 @@
 import React from "react";
 
 const CategoryShowHideButton = (props) => {
+
+  // Udviklet fælles i gruppen
+  
   const handleChangeVisibility = () => {
     props.setState(!props.state);
   };

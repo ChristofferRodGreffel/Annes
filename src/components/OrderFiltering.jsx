@@ -1,6 +1,10 @@
 import React from "react";
 
 const OrderFiltering = (props) => {
+
+  // Udviklet primært af Sebasitan
+
+  // Viser boksen til at admin-brugeren kan sortere
   return (
     <select
       onChange={(e) => {

@@ -1,6 +1,10 @@
 import React from "react";
 
 const OrderDetailsProduct = (props) => {
+
+  // Udviklet primært af Christoffer
+
+  // Bruges til at ændre fra det lange navn til forkortelse 
   const convertBreadType = (bread) => {
     switch (bread) {
       case "Glutenfri":

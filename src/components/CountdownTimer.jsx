@@ -3,6 +3,9 @@ import { FIREBASE_DB } from "../../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 
 const CountdownTimer = (props) => {
+
+  // Udviklet primært af Christoffer
+
   const [remainingTime, setRemainingTime] = useState(props.initialRemainingTime);
 
   useEffect(() => {
@@ -24,7 +27,7 @@ const CountdownTimer = (props) => {
     // Change status in firestore to cancelled
     const orderRef = doc(FIREBASE_DB, "orders", props.orderId);
 
-    // To update age and favorite color:
+    // Update Firestore
     await updateDoc(orderRef, {
       canCancel: false,
     });

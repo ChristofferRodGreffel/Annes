@@ -4,11 +4,15 @@ import PickupTimer from "./PickupTimer";
 import { useNavigate } from "react-router-dom";
 
 const OrderCard = (props) => {
+
+  // Udviklet fælles i gruppen
+
   const [remainingTime, setRemainingTime] = useState();
   const [remainingHours, setRemainingHours] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Beregner hvornår ordren skal hentes
     const currentTime = new Date().getTime();
     const pickupTimestamp = props.order.pickup.time.seconds;
     const pickupTime = new Date(pickupTimestamp * 1000).getTime();
@@ -22,12 +26,14 @@ const OrderCard = (props) => {
   }, [props]);
 
   const getTotalAmount = () => {
+    // Sætter antallet af produkter i ordren
     let totalAmountFromBasket = 0;
     props.order.order.forEach((subData) => (totalAmountFromBasket += subData.amount));
     return totalAmountFromBasket;
   };
 
   const checkPickupTime = () => {
+    // Tjekker om man har valgt den aktuelle dag
     const today = new Date().toLocaleDateString("en-GB");
 
     const dateStamp = props.order.pickup.date.seconds;
@@ -36,6 +42,7 @@ const OrderCard = (props) => {
     let pickup;
 
     if (orderDate !== today) {
+      // Find timestampConvert i helperfunctions
       pickup = timestampConvert(dateStamp, "stampToDate");
       return pickup;
     } else {

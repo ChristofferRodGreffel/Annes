@@ -6,6 +6,8 @@ import { signOut } from "firebase/auth";
 import useWindowDimensions from "../helperfunctions/WindowWidth";
 import { useEffect } from "react";
 
+// Udviklet fælles i gruppen
+
 const AdminSidebar = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
@@ -14,6 +16,7 @@ const AdminSidebar = () => {
   const { height, width } = useWindowDimensions();
 
   useEffect(() => {
+    // Sætter sidebaren til åben, hvis skærmen er større end 1034px
     if (width >= 1034) {
       setSideBarOpen(true);
     }

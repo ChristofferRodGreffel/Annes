@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
 
 const ImageUpload = (props) => {
+
+  // Udviklet fælles i gruppen
+  // Bruges til at uploade et billede på admin siden under "Tilføj produkt" 
+
   return (
     <div>
       <ImageUploading

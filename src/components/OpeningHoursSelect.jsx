@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const OpeningHoursSelect = (props) => {
+
+  // Udviklet primært af Sebastian
+
   const [openingHours, setOpeningHours] = useState([]);
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, and so on
@@ -21,6 +24,7 @@ const OpeningHoursSelect = (props) => {
     // Function to calculate the opening hours based on the current day
     const calculateOpeningHours = () => {
       const currentDay = daysOfWeek[today];
+      // Tjekker om det er weekend
       let isWeekend =
         today === 0 ||
         today === 6 ||
@@ -31,9 +35,8 @@ const OpeningHoursSelect = (props) => {
       const startHour = !isWeekend ? 7 : 10;
       const endHour = 18;
 
+      // Hvis man har valgt den aktuelle dag får man mulighed for at vælge "Hurtigst muligt"
       const openingHoursArray = currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString() ? ["Hurtigst muligt"] : [];
-
-      // const openingHoursArray = ["Hurtigst muligt"];
 
       for (let hour = startHour; hour <= endHour; hour++) {
         for (let minute = 0; minute < 60; minute += 10) {
@@ -46,10 +49,12 @@ const OpeningHoursSelect = (props) => {
           if (currentDate.toLocaleDateString() === props.chosenCollectionDate.toLocaleDateString()) {
             // sørger for at man ikke kan vælge en tid om mindre end 10 min.
             if (hour < todayHour || (hour === todayHour && minute < todayMinute + 10)) {
+              // Kører videre i stedet for at hoppe helt ud af funktionen
               continue;
             }
           }
 
+          // Formaterer tiden, så den ser pæn ud
           const formattedHour = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
           openingHoursArray.push(formattedHour);
         }

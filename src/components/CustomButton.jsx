@@ -1,6 +1,10 @@
 import React from "react";
 
 const CustomButton = (props) => {
+
+  // Udviklet fælles i gruppen
+  // Bruges som knaper
+
   return (
     <button
       className={`flex cursor-pointer justify-center items-center gap-2 bg-primary rounded-lg p-3 md:p-2 text-white font-semibold ${

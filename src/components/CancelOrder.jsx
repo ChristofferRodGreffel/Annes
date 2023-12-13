@@ -3,6 +3,8 @@ import CountdownTimer from "./CountdownTimer";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebase-config";
 
+// Udviklet primært af Christoffer
+
 const CancelOrder = (props) => {
   const [elapsedTime, setElapsedTime] = useState();
   const [remainingTime, setRemainingTime] = useState(5 * 60 * 1000); // 5 minutes in milliseconds
@@ -31,7 +33,7 @@ const CancelOrder = (props) => {
         type: "cancel",
       };
 
-      // To update age and favorite color:
+      // To update in Firestore:
       await updateDoc(orderRef, {
         status: "userCancelled",
         canCancel: false,
