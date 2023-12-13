@@ -40,19 +40,18 @@ const OrderDetailsProduct = (props) => {
           <p className="text-md font-semibold max-w-[250px]">
             {props.order.amount} x {props.order.name}
           </p>
+          {props.order.name.toLowerCase().includes("pesto") && props.order.dressing.top !== "Pesto" && props.order.dressing.bottom !== "Pesto" && (
+            <p className="text-red font-bold">OBS: Uden pesto</p>
+          )}
           <div>
-            {props.order.dressing.top !== "Mayo" && (
-              <div className="flex justify-between mt-1 gap-2">
-                <p className="font-semibold">Dressing top:</p>
-                <p className="text-green font-semibold">{props.order.dressing.top}</p>
-              </div>
-            )}
-            {props.order.dressing.bottom !== "Mayo" && (
-              <div className="flex justify-between gap-2">
-                <p className="font-semibold">Dressing bund:</p>
-                <p className="text-green font-semibold">{props.order.dressing.bottom}</p>
-              </div>
-            )}
+            <div className="flex justify-between mt-1 gap-2">
+              <p className="font-semibold">Dressing top:</p>
+              <p className="text-green font-semibold">{props.order.dressing.top}</p>
+            </div>
+            <div className="flex justify-between gap-2">
+              <p className="font-semibold">Dressing bund:</p>
+              <p className="text-green font-semibold">{props.order.dressing.bottom}</p>
+            </div>
           </div>
         </div>
         <div className="flex gap-2">
