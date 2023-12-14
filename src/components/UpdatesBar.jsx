@@ -13,7 +13,9 @@ const UpdatesBar = (props) => {
   // Get updates from firestore
   useEffect(() => {
     const unsub = onSnapshot(doc(FIREBASE_DB, "orders", props.orderId), (doc) => {
-      setUpdates(doc.data().updates);
+      if(doc.data()?.updates) {
+        setUpdates(doc.data().updates);
+      }
     });
   }, []);
 

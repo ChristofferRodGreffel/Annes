@@ -156,6 +156,7 @@ function CheckoutOverview() {
     }
 
 
+
     const completeOrder = {
       orderPlacedAt: new Date(),
       amountOfBreadTypes: resultAmountOfBreadTypes,
