@@ -84,7 +84,7 @@ const OrderStatus = () => {
                       <div className="flex flex-col">
                         <div className="flex gap-4">
                           <p className="text-xl text-red font-semibold">Besked fra butikken:</p>
-                          <p className="text-xl font-semibold">{comment.messageToCustomer}</p>
+                          <p className="text-xl font-semibold max-w-readable">{comment.messageToCustomer}</p>
                         </div>
                         <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
                       </div>
