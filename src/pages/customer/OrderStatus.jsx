@@ -45,6 +45,12 @@ const OrderStatus = () => {
         customLink="/bestil-online"
       />
       <PageWrapperContainer>
+        {!currentOrder && (
+          <>
+            <p className="text-xl font-semibold">Der er ingen ordre med dette ID.</p>
+            <p>Hvis du mener det er en fejl er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
+          </>
+        )}
         {currentOrder && (
           <div className="mt-8 mb-10">
             <div className="flex justify-between items-center">

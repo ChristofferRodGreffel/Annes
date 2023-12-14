@@ -8,6 +8,8 @@ const CustomerNavigation = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [latestOrderId, setLatestOrderId] = useState("")
+
   // Tjekker om man er admin
   const checkAdminStatus = async (user) => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
@@ -44,6 +46,14 @@ const CustomerNavigation = () => {
     }
   };
 
+  useEffect(() => {
+    const latestOrderIdFromStorage = JSON.parse(localStorage.getItem("currentOrder"))
+
+    if (latestOrderIdFromStorage) {
+      setLatestOrderId(latestOrderIdFromStorage)
+    }
+  }, [])
+
   return (
     <nav
       id="customerNav"
@@ -56,10 +66,12 @@ const CustomerNavigation = () => {
           <i className="fa-solid fa-utensils"></i>
         </Link>
         <hr />
-        <Link to={"/følg-bestilling"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
-          <h3>Bestillinger</h3>
-          <i className="fa-solid fa-clock-rotate-left"></i>
-        </Link>
+        {latestOrderId && (
+          <Link to={`/følg-bestilling/${latestOrderId}`} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+            <h3>Bestillinger</h3>
+            <i className="fa-solid fa-clock-rotate-left"></i>
+          </Link>
+        )}
         <hr />
         <Link to={"/favoritter"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
           <h3>Favoritter</h3>
