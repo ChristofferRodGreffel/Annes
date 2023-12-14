@@ -22,6 +22,7 @@ import OrderStatus from "./pages/customer/OrderStatus";
 import OrderDetails from "./pages/admin/OrderDetails";
 import OrderHistory from "./pages/admin/OrderHistory";
 import Statistics from "./pages/admin/Statistics";
+import Favorites from "./pages/customer/Favorites";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -66,6 +67,7 @@ function App() {
         <Route path="/bestil-online" element={<LandingPage />} />
         <Route path="/følg-bestilling/:orderId" element={<OrderStatus />} />
         <Route path="/log-ind" element={<SignIn />} />
+        <Route path="/favoritter" element={<Favorites />} />
         <Route path="/opret-profil" element={<SignUp />} />
         <Route path="/bestil-online/:productName" element={<CustomizeProduct />} />
         <Route path="*" element={<LandingPage />} />

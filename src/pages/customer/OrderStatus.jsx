@@ -88,6 +88,8 @@ const OrderStatus = () => {
                 <h3 className="font-bold">Afhentningsdato</h3>
                 <p>{timestampConvert(currentOrder.pickup.date.seconds, "stampToDate")}</p>
               </div>
+              <p className="max-w-readable">Har du spørgsmål, brug for hjælp eller lignende, er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
+
             </div>
             <div className="mt-8">
               <CancelOrder
