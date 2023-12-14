@@ -187,7 +187,7 @@ const OrderDetails = () => {
                     </div>
                   </div>
                   <div className="w-full mt-7">
-                    <div className="bg-mainGrey h-full p-4 rounded-lg">
+                    <div className="bg-mainGrey min-h-[20rem] p-4 rounded-lg">
                       {orderDetails.order.map((order, key) => {
                         return (
                           <div key={key}>
