@@ -110,6 +110,12 @@ const CustomerProfile = () => {
     )
   }
 
+  const goToLatestOrder = () => {
+    const latestOrderIdFromStorage = JSON.parse(localStorage.getItem("currentOrder"))
+    if (latestOrderIdFromStorage) {
+      navigate(`/følg-bestilling/${latestOrderIdFromStorage}`)
+    }
+  }
 
   return (
     <>
@@ -139,7 +145,7 @@ const CustomerProfile = () => {
                   <CustomButton title="Vip-fordele" />
                   <CustomButton title="Indstillinger" />
                   <CustomButton title="Gå til favoritter" />
-                  <CustomButton title="Gå til bestillinger" />
+                  <CustomButton title="Gå til bestillinger" function={goToLatestOrder} />
                 </div>
               </div>
               <div className="max-w-lg">

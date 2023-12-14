@@ -75,6 +75,24 @@ const OrderStatus = () => {
               {currentOrder?.status === "shopCancelled" && <p>"Butikken har annulleret din ordre"</p>}
               <i className="fa-solid fa-comment absolute -right-2 -top-5 text-8xl opacity-10 text-grey"></i>
             </div>
+            <div>
+              {currentOrder?.commentsFromShop?.length !== 0 && (
+                <>
+                  <p className="max-w-readable">Har du spørgsmål, er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
+                  {currentOrder?.commentsFromShop?.slice(0).reverse().map((comment) => {
+                    return (
+                      <div className="flex flex-col">
+                        <div className="flex gap-4">
+                          <p className="text-xl text-red font-semibold">Besked fra butikken:</p>
+                          <p className="text-xl font-semibold">{comment.messageToCustomer}</p>
+                        </div>
+                        <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
+                      </div>
+                    )
+                  })}
+                </>
+              )}
+            </div>
             <div className="mt-10 full-width">
               <div className="flex justify-between items-center">
                 <h3 className="font-bold">Afhentningstid</h3>

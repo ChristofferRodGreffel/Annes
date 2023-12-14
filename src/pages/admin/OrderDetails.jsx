@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/AdminSidebar";
 import PageH1Title from "../../components/PageH1Title";
@@ -12,6 +12,7 @@ import OrderButton from "../../components/OrderButton";
 import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSettings";
 import { toast } from "react-toastify";
 import { timestampConvert } from "../../helperfunctions/TimestampConvert";
+import CustomInputWithLabel from "../../components/CustomInputWithLabel";
 
 // Udviklet fælles i gruppen
 
@@ -37,13 +38,13 @@ const OrderDetails = () => {
     orderDetails.order.forEach((order) => {
       totalPrice += order.price;
     });
-    if(orderDetails.bagged) {
-    totalPrice += 4;
-  }
+    if (orderDetails.bagged) {
+      totalPrice += 4;
+    }
     return totalPrice;
   };
 
-  const changeStatus = async (newStatus, message) => {
+  const changeStatus = async (newStatus, message, messageToCustomer) => {
     const orderRef = doc(FIREBASE_DB, "orders", orderDocId);
 
     const newUpdate = {
@@ -56,13 +57,42 @@ const OrderDetails = () => {
       status: newStatus,
       updates: arrayUnion(newUpdate),
     }).then(() => {
-      toast.success(`Status ændret`, DefaultToastifySettings);
+      if(newStatus !== orderDetails.status) {
+        toast.success(`Status ændret`, DefaultToastifySettings);
+      } else {
+        // Status på ordren har ikke ændret sig, hvilket betyder at Admin har sendt en kommentar
+        const obj = {
+          messageToCustomer: messageToCustomer,
+          date: new Date()
+        }
+        updateDoc(orderRef, {
+          commentsFromShop: arrayUnion(obj),
+        })
+        toast.success(`Besked sendt`, DefaultToastifySettings);
+      }
     });
 
     if (newStatus === "picked") {
       navigate("/ordre-oversigt");
     }
   };
+
+
+  const commentToCustomerRef = useRef(null)
+  const handleSendCommentToCustomer = (e) => {
+    e.preventDefault()
+    if (commentToCustomerRef) {
+      const value = commentToCustomerRef.current.commentFieldToCustomer.value
+
+      if(!value) {
+        toast.error("Beskeden kan ikke være tom...", DefaultToastifySettings);
+      } else {
+        // Opdaterer status hos kunden
+        changeStatus(orderDetails.status, "Butikken har sendt en besked", value)
+        commentToCustomerRef.current.commentFieldToCustomer.value = ""
+      }
+    }
+  }
 
   return (
     <>
@@ -206,6 +236,19 @@ const OrderDetails = () => {
                           />
                         </>
                       )}
+                    </div>
+                    <div className="my-10 pb-20" >
+                      <form ref={commentToCustomerRef}>
+                        <CustomInputWithLabel
+                          type="textarea"
+                          label="Kommentar til kunden"
+                          name="commentFieldToCustomer"
+                          placeholder="Skriv kommentar her..."
+                          button={true}
+                          buttonText="Send kommentar"
+                          customOnClick={handleSendCommentToCustomer}
+                        />
+                      </form>
                     </div>
                   </div>
                 </div>
