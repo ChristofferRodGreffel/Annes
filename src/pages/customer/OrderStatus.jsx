@@ -78,7 +78,6 @@ const OrderStatus = () => {
             <div>
               {currentOrder?.commentsFromShop && (
                 <>
-                  <p className="max-w-readable">Har du spørgsmål, er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
                   {currentOrder?.commentsFromShop?.slice(0).reverse().map((comment) => {
                     return (
                       <div className="flex flex-col">
