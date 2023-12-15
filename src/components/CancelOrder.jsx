@@ -11,7 +11,7 @@ const CancelOrder = (props) => {
 
   useEffect(() => {
     const timeNow = new Date().getTime();
-    let timestamp = props.placedAt?.seconds;
+    let timestamp = props.placedAt.seconds;
     let timeAtOrder = timestamp * 1000;
     const elapsedTime = timeNow - timeAtOrder;
     setElapsedTime(elapsedTime);

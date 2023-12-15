@@ -140,17 +140,17 @@ function CheckoutOverview() {
   // Vi bygger et samlet objekt som indeholder alt information omkring ordren.
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     const resultAmountOfBreadTypes = CalculateAmountOfEachBread(allBasketProducts)
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
     const pickupDateYear = chosenCollectionDate.getFullYear()
-    const pickupDateMonth = chosenCollectionDate.getMonth()
+    const pickupDateMonth = chosenCollectionDate.getMonth() + 1
     const pickupDateDate = chosenCollectionDate.getDate()
     
     let pickupDateTime;
-    
+
     if (chosenCollectionTime !== "Hurtigst muligt") {
       const tempDateString = `${pickupDateYear} ${pickupDateMonth} ${pickupDateDate} ${chosenCollectionTime}:00`;
       pickupDateTime = new Date(tempDateString);
