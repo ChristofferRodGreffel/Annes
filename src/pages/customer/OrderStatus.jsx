@@ -48,7 +48,10 @@ const OrderStatus = () => {
         {!currentOrder && (
           <>
             <p className="text-xl font-semibold">Der er ingen ordre med dette ID.</p>
-            <p>Hvis du mener det er en fejl er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
+            <p>
+              Hvis du mener det er en fejl er du velkommen til at ringe til butikken på tlf.{" "}
+              <span className="font-semibold">22 13 35 78</span>
+            </p>
           </>
         )}
         {currentOrder && (
@@ -78,17 +81,22 @@ const OrderStatus = () => {
             <div>
               {currentOrder?.commentsFromShop && (
                 <>
-                  {currentOrder?.commentsFromShop?.slice(0).reverse().map((comment) => {
-                    return (
-                      <div className="flex flex-col">
-                        <div className="flex gap-4">
-                          <p className="text-xl text-red font-semibold">Besked fra butikken:</p>
-                          <p className="text-xl font-semibold max-w-readable">{comment.messageToCustomer}</p>
+                  {currentOrder?.commentsFromShop
+                    ?.slice(0)
+                    .reverse()
+                    .map((comment, key) => {
+                      return (
+                        <div key={key} className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-2">
+                            <p className="text-xl text-primary font-semibold">Besked fra butikken:</p>
+                            <div className="p-4 border-dark border-2 rounded-xl w-full md:min-w-[300px] md:max-w-max">
+                              <p className="text-md font-medium italic max-w-readable">"{comment.messageToCustomer}"</p>
+                            </div>
+                          </div>
+                          <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
                         </div>
-                        <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
-                      </div>
-                    )
-                  })}
+                      );
+                    })}
                 </>
               )}
             </div>
@@ -105,8 +113,10 @@ const OrderStatus = () => {
                 <h3 className="font-bold">Afhentningsdato</h3>
                 <p>{timestampConvert(currentOrder.pickup.date.seconds, "stampToDate")}</p>
               </div>
-              <p className="max-w-readable">Har du spørgsmål, brug for hjælp eller lignende, er du velkommen til at ringe til butikken på tlf. <span className="font-semibold">22 13 35 78</span></p>
-
+              <p className="max-w-readable mt-4">
+                Har du spørgsmål, brug for hjælp eller lignende, er du velkommen til at ringe til butikken på tlf.{" "}
+                <span className="font-semibold">22 13 35 78</span>
+              </p>
             </div>
             <div className="mt-8">
               <CancelOrder

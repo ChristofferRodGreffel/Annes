@@ -8,7 +8,7 @@ const CustomerNavigation = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const [latestOrderId, setLatestOrderId] = useState("")
+  const [latestOrderId, setLatestOrderId] = useState("");
 
   // Tjekker om man er admin
   const checkAdminStatus = async (user) => {
@@ -47,40 +47,40 @@ const CustomerNavigation = () => {
   };
 
   useEffect(() => {
-    const latestOrderIdFromStorage = JSON.parse(localStorage.getItem("currentOrder"))
+    const latestOrderIdFromStorage = JSON.parse(localStorage.getItem("currentOrder"));
 
     if (latestOrderIdFromStorage) {
-      setLatestOrderId(latestOrderIdFromStorage)
+      setLatestOrderId(latestOrderIdFromStorage);
     }
-  }, [])
+  }, []);
 
   return (
     <nav
       id="customerNav"
-      className="fixed z-[999] top-0 left-[-80%] bg-primary h-screen w-4/5 md:w-2/5 md:left-[-40%] text-white text-2xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
+      className="fixed z-[999] top-0 left-[-80%] bg-primary h-screen w-4/5 md:w-2/5 md:left-[-40%] text-white text-xl font-semibold transition-all duration-500 ease-in-out overflow-auto"
     >
       <i onClick={handleCloseNav} className="fa-solid fa-xmark text-4xl p-8 cursor-pointer"></i>
       <div className="mt-14">
-        <Link to={"/bestil-online"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+        <Link to={"/bestil-online"} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
           <h3>Bestil online</h3>
           <i className="fa-solid fa-utensils"></i>
         </Link>
         <hr />
         {latestOrderId && (
-          <Link to={`/følg-bestilling/${latestOrderId}`} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+          <Link to={`/følg-bestilling/${latestOrderId}`} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
             <h3>Bestillinger</h3>
             <i className="fa-solid fa-clock-rotate-left"></i>
           </Link>
         )}
         <hr />
-        <Link to={"/favoritter"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+        <Link to={"/favoritter"} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
           <h3>Favoritter</h3>
           <i className="fa-solid fa-heart"></i>
         </Link>
         <hr />
         {loggedIn ? (
           <>
-            <Link to={"/profil"} className="flex items-center gap-2 py-7 pl-8 cursor-pointer">
+            <Link to={"/profil"} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
               <h3>Profil</h3>
               <i className="fa-solid fa-user"></i>
             </Link>

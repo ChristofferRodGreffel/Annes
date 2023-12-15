@@ -71,7 +71,7 @@ const SignIn = () => {
     <>
       <CustomerHeader nav={false} />
       <PageWrapperContainer>
-        <div className="mt-28">
+        <div className="mt-16">
           <BackButtonWithArrow linkText="Fortsæt uden log ind" linkTo="/bestil-online" />
           <div className="mb-5">
             <h1 className="font-bold text-3xl">Velkommen tilbage</h1>
