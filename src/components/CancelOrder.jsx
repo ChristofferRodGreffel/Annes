@@ -7,7 +7,7 @@ import { FIREBASE_DB } from "../../firebase-config";
 
 const CancelOrder = (props) => {
   const [elapsedTime, setElapsedTime] = useState();
-  const [remainingTime, setRemainingTime] = useState(5 * 60 * 1000); // 5 minutes in milliseconds
+  const [remainingTime, setRemainingTime] = useState(3 * 60 * 1000); // 5 minutes in milliseconds
 
   useEffect(() => {
     const timeNow = new Date().getTime();
