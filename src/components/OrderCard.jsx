@@ -14,7 +14,7 @@ const OrderCard = (props) => {
   useEffect(() => {
     // Beregner hvornår ordren skal hentes
     const currentTime = new Date().getTime();
-    const pickupTimestamp = props.order.pickup.time.seconds;
+    const pickupTimestamp = props.order.pickup.time?.seconds;
     const pickupTime = new Date(pickupTimestamp * 1000).getTime();
 
     const timeRemaining = pickupTime - currentTime;
@@ -36,7 +36,7 @@ const OrderCard = (props) => {
     // Tjekker om man har valgt den aktuelle dag
     const today = new Date().toLocaleDateString("en-GB");
 
-    const dateStamp = props.order.pickup.date.seconds;
+    const dateStamp = props.order.pickup.date?.seconds;
     const orderDate = new Date(dateStamp * 1000).toLocaleDateString("en-GB");
 
     let pickup;
@@ -46,7 +46,7 @@ const OrderCard = (props) => {
       pickup = timestampConvert(dateStamp, "stampToDate");
       return pickup;
     } else {
-      pickup = timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute");
+      pickup = timestampConvert(props.order.pickup.time?.seconds, "stampToHourMinute");
       return pickup;
     }
   };
@@ -63,7 +63,7 @@ const OrderCard = (props) => {
               <div>
                 <h1 className="font-bold text-lg rounded-xl">Ordre #{props.order.orderNo}</h1>
                 <div className="text-sm font-medium leading-tight font pt-0.5">
-                  <p>{timestampConvert(props.order.orderPlacedAt.seconds, "stampToDateAndHourMinute")}</p>
+                  <p>{timestampConvert(props.order.orderPlacedAt?.seconds, "stampToDateAndHourMinute")}</p>
                   <p>{props.order.customerInfo.name}</p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ const OrderCard = (props) => {
           <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
             {props.order.pickup.time !== "Hurtigst muligt" ? (
               remainingHours >= 24 ? (
-                <p>Afhentes kl. {timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute")}</p>
+                <p>Afhentes kl. {timestampConvert(props.order.pickup.time?.seconds, "stampToHourMinute")}</p>
               ) : (
                 <p>
                   Afhentes om: <PickupTimer remainingTime={remainingTime} />

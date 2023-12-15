@@ -140,7 +140,7 @@ const OrderDetails = () => {
                   <p>
                     {orderDetails.pickup.time == "Hurtigst muligt"
                       ? "Hurtigst muligt"
-                      : timestampConvert(orderDetails.pickup.time.seconds, "stampToPreciseDate")}
+                      : timestampConvert(orderDetails.pickup.time?.seconds, "stampToPreciseDate")}
                   </p>
                 </div>
                 <div className="flex flex-col lg:flex-row gap-5 mt-5 mb-8 ">
