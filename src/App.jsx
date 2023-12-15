@@ -65,7 +65,7 @@ function App() {
         <Route path="/kurv" element={<CheckoutOverview />} />
         <Route path="/profil" element={<CustomerProfile />} />
         <Route path="/bestil-online" element={<LandingPage />} />
-        <Route path="/følg-bestilling/:orderId?" element={<OrderStatus />} />
+        <Route path="/følg-bestilling/:orderId" element={<OrderStatus />} />
         <Route path="/log-ind" element={<SignIn />} />
         <Route path="/favoritter" element={<Favorites />} />
         <Route path="/opret-profil" element={<SignUp />} />
