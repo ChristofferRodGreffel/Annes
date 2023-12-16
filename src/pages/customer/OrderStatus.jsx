@@ -35,6 +35,12 @@ const OrderStatus = () => {
     toast.error("Funktionen er ikke lavet", DefaultToastifySettings);
   };
 
+  const handleShareOrder = async () => {
+    await navigator.clipboard.writeText(location.href);
+    toast.success(`Link kopieret ${location.href}`, DefaultToastifySettings);
+
+  }
+
   return (
     <>
       <CustomerHeader
@@ -58,7 +64,7 @@ const OrderStatus = () => {
           <div className="mt-8 mb-10">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-2xl">Ordre #{currentOrder?.orderNo}</h1>
-              <div className="flex items-center gap-2 text-lg">
+              <div className="flex items-center gap-2 text-lg cursor-pointer" onClick={handleShareOrder}>
                 <p className="font-semibold">Del ordre</p>
                 <i className="fa-solid fa-share-from-square text-xl"></i>
               </div>
