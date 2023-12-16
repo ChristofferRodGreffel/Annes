@@ -13,14 +13,14 @@ const AdminSidebar = () => {
   const [sidebarOpen, setSideBarOpen] = useState(false);
 
   // useWindowDimensions is in helperfunctions
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     // Sætter sidebaren til åben, hvis skærmen er større end 1034px
     if (width >= 1034) {
       setSideBarOpen(true);
     }
-  }, [height, width]);
+  }, [width]);
 
   const handleUserLogout = () => {
     signOut(FIREBASE_AUTH)
