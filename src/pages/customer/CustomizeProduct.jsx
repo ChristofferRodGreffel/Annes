@@ -264,7 +264,7 @@ const CustomizeProduct = () => {
                   <label className="text-lg font-semibold" htmlFor="ingredientsForm">
                     Standard ingredienser
                   </label>
-                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full mt-1">
+                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full xs:w-max mt-1">
                     {defaultIngredients?.map((ingredient, key) => {
                       return (
                         <div key={key} className="flex items-center gap-1 py-2 md:py-1">
@@ -285,7 +285,7 @@ const CustomizeProduct = () => {
                 </div>
                 <div className="mt-5">
                   <h2 className="mb-2 text-lg font-semibold">Vælg dressing</h2>
-                  <div className="flex flex-col gap-3 w-2/3">
+                  <div className="flex flex-col gap-3 w-2/3 xs:w-max">
                     <div className="flex flex-row w-full items-center justify-between gap-3">
                       <label htmlFor="dressingSelectTop">Top</label>
                       <select
@@ -302,7 +302,7 @@ const CustomizeProduct = () => {
                         <option value="Chilimayo">Chilimayo +5 kr.</option>
                       </select>
                     </div>
-                    <div className="flex flex-row w-full items-center justify-between gap-3">
+                    <div className="flex flex-row w-full xs:w-max items-center justify-between gap-3">
                       <label htmlFor="dressingSelectBottom">Bund</label>
                       <select
                         className="border-2 border-dark rounded-full w-fit py-1 px-3 font-medium"
@@ -323,7 +323,7 @@ const CustomizeProduct = () => {
 
                 <div className="mt-5">
                   <h2 className="text-lg font-semibold">Ekstra fyld*</h2>
-                  <form id="extraIngredients" className="grid grid-cols-2 w-full mt-2 gap-2">
+                  <form id="extraIngredients" className="grid grid-cols-2 w-full xs:w-max mt-2 gap-2 xs:gap-6">
                     {allIngredients?.map((ingredient, key) => {
                       return (
                         <div key={key}>
@@ -336,7 +336,7 @@ const CustomizeProduct = () => {
                       );
                     })}
                   </form>
-                  <p className="mt-3">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
+                  <p className="mt-3 max-w-readable">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
                 </div>
               </div>
               <div className="mt-5">
