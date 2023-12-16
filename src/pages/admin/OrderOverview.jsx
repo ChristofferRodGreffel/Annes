@@ -36,6 +36,7 @@ const OrderOverview = () => {
   const [cancelledVisibility, setCancelledVisiblity] = useState(true);
 
   useEffect(() => {
+    // Bruges til at have alle ordre samlet, til når brugeren søger
     const getAllOrderNumbersWithName = async () => {
       const q = query(collection(FIREBASE_DB, "orders"), where("orderNo", ">", 0));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -56,6 +57,19 @@ const OrderOverview = () => {
     getAllOrderNumbersWithName();
   }, []);
 
+    // Når en bruger skriver i søgefeltet
+    const handleShowFilteredOrders = async (e) => {
+      const inputValue = e.target.value.toLowerCase();
+      if (inputValue) {
+        const filtered = allOrderNumbersWithName.filter(
+          (order) => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue)
+        );
+        setFilteredOrdersArray(filtered);
+      } else {
+        setFilteredOrdersArray();
+      }
+    };
+
   useEffect(() => {
     listenToNewOrders();
   }, []);
@@ -70,17 +84,6 @@ const OrderOverview = () => {
     receiveFilteredOrders(setShopCancelledOrders, "status", "shopCancelled");
   }, []);
 
-  const handleShowFilteredOrders = async (e) => {
-    const inputValue = e.target.value.toLowerCase();
-    if (inputValue) {
-      const filtered = allOrderNumbersWithName.filter(
-        (order) => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue)
-      );
-      setFilteredOrdersArray(filtered);
-    } else {
-      setFilteredOrdersArray();
-    }
-  };
 
   const handleSortOrders = (e) => {
     const allArrays = [

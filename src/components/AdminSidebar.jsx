@@ -72,7 +72,7 @@ const AdminSidebar = () => {
               }
             >
               <i className="fa-solid fa-clock-rotate-left text-lg"></i>
-              Ordre historik
+              Tidl. ordre
             </NavLink>
             <NavLink
               to={"/statistik"}
@@ -105,7 +105,7 @@ const AdminSidebar = () => {
               }
             >
               <i className="fa-solid fa-book-open text-lg"></i>
-              Guides
+              Guide
             </NavLink>
             <NavLink
               to={"/admin-indstillinger"}

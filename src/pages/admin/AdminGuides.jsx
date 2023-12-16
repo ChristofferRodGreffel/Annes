@@ -119,7 +119,7 @@ const AdminGuides = () => {
                 <AdminSidebar />
                 <AdminContentWrapper>
                     <BackButtonWithArrow linkText="Tilbage til Ordre oversigt" linkTo="/ordre-oversigt" />
-                    <PageH1Title>Sådan bruger du hjemmesiden</PageH1Title>
+                    <PageH1Title>Sådan bruger du systemet</PageH1Title>
                     <div className="flex flex-col gap-5 mt-10">
                     <p>Siden er ikke lavet</p>
 
