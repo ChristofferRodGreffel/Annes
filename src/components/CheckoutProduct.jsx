@@ -12,10 +12,10 @@ const CheckoutProduct = (props) => {
           <div className="flex items-center justify-between min-w-[95px] select-none mt-1">
             <i
               onClick={() => props.decrease(props.product)}
-              className={`fa-solid fa-circle-minus text-xl ${props.product.amount === 1 && `text-grey`}`}
+              className={`fa-solid fa-circle-minus text-xl cursor-pointer ${props.product.amount === 1 && `text-grey`}`}
             ></i>
             <p className="font-bold text-2xl">{props.product.amount}</p>
-            <i onClick={() => props.increase(props.product)} className="fa-solid fa-circle-plus text-xl"></i>
+            <i onClick={() => props.increase(props.product)} className="fa-solid fa-circle-plus text-xl cursor-pointer"></i>
           </div>
         </div>
         <div className="flex justify-between">

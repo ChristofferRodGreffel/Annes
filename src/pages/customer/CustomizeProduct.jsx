@@ -344,10 +344,10 @@ const CustomizeProduct = () => {
                 <div className="flex items-center justify-between min-w-[95px] w-fit select-none mt-1">
                   <i
                     onClick={handleAmountDecrease}
-                    className={`fa-solid fa-circle-minus text-xl ${amount === 1 && `text-grey`}`}
+                    className={`fa-solid fa-circle-minus text-xl cursor-pointer ${amount === 1 && `text-grey`}`}
                   ></i>
                   <p className="font-bold text-2xl">{amount}</p>
-                  <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl"></i>
+                  <i onClick={handleAmountIncrease} className="fa-solid fa-circle-plus text-xl cursor-pointer"></i>
                 </div>
               </div>
             </div>

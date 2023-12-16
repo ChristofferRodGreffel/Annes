@@ -17,7 +17,7 @@ const CancelOrder = (props) => {
     setElapsedTime(elapsedTime);
 
     // Calculate remaining time
-    const newRemainingTime = Math.max(5 * 60 * 1000 - elapsedTime, 0);
+    const newRemainingTime = Math.max(3 * 60 * 1000 - elapsedTime, 0);
     setRemainingTime(newRemainingTime);
   }, []);
 
