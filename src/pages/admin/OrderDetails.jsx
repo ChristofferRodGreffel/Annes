@@ -5,7 +5,7 @@ import PageH1Title from "../../components/PageH1Title";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 import CustomButton from "../../components/CustomButton";
-import { arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
 import OrderDetailsProduct from "../../components/OrderDetailsProduct";
 import OrderButton from "../../components/OrderButton";
@@ -27,8 +27,10 @@ const OrderDetails = () => {
   useEffect(() => {
     if (orderDocId) {
       const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderDocId), (doc) => {
-        setOrderDetails(doc.data());
-        setAmountOfBreadTypes(doc.data().amountOfBreadTypes);
+        if (doc.data()) {
+          setOrderDetails(doc.data());
+          setAmountOfBreadTypes(doc.data().amountOfBreadTypes);
+        }
       });
     }
   }, [orderDocId]);
@@ -94,6 +96,7 @@ const OrderDetails = () => {
     }
   }
 
+  // Bruges til at oversætte samt skrive forklaring til statussen ved siden af ordre nummeret
   const translatedStatus = (status) => {
     switch (status) {
       case "recieved":
@@ -115,7 +118,18 @@ const OrderDetails = () => {
       default:
         break;
     }
-  } 
+  }
+
+  const handleDeleteOrder = async () => {
+
+    // Hvis man trykker på "OK" bliver dokumentet slettet i Firestore
+    if (confirm("Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan ikke længere se bestillingen.") == true) {
+      await deleteDoc(doc(FIREBASE_DB, "orders", orderDetails.orderDocId)).then(() => {
+        toast.success("Ordre slettet", DefaultToastifySettings)
+        navigate("/ordre-oversigt")
+      })
+    }
+  }
 
   return (
     <>
@@ -134,7 +148,7 @@ const OrderDetails = () => {
                       </button>
                     </div>
                     <div className="bg-red py-2 px-6 rounded-lg">
-                      <button>
+                      <button onClick={handleDeleteOrder}>
                         Slet ordre <i className="fa-solid fa-trash-can"></i>
                       </button>
                     </div>
@@ -299,7 +313,10 @@ const OrderDetails = () => {
                 </div>
               </>
             ) : (
-              <></>
+              <>
+                <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
+                <p>Der ser ikke ud til at være en ordre med dette id.</p>
+              </>
             )}
           </AdminContentWrapper>
         </div>
