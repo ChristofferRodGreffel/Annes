@@ -57,7 +57,7 @@ const OrderDetails = () => {
       status: newStatus,
       updates: arrayUnion(newUpdate),
     }).then(() => {
-      if(newStatus !== orderDetails.status) {
+      if (newStatus !== orderDetails.status) {
         toast.success(`Status ændret`, DefaultToastifySettings);
       } else {
         // Status på ordren har ikke ændret sig, hvilket betyder at Admin har sendt en kommentar
@@ -84,7 +84,7 @@ const OrderDetails = () => {
     if (commentToCustomerRef) {
       const value = commentToCustomerRef.current.commentFieldToCustomer.value
 
-      if(!value) {
+      if (!value) {
         toast.error("Beskeden kan ikke være tom...", DefaultToastifySettings);
       } else {
         // Opdaterer status hos kunden
@@ -249,6 +249,28 @@ const OrderDetails = () => {
                           customOnClick={handleSendCommentToCustomer}
                         />
                       </form>
+                      <div className="mt-10">
+                        {orderDetails?.commentsFromShop && (
+                          <>
+                            {orderDetails?.commentsFromShop
+                              ?.slice(0)
+                              .reverse()
+                              .map((comment, key) => {
+                                return (
+                                  <div key={key} className="flex flex-col gap-2 mb-4">
+                                    <div className="flex flex-col">
+                                      <p className="text-xl text-primary font-semibold">Besked fra butikken:</p>
+                                      <div className="p-4 border-dark border-2 rounded-xl w-full md:min-w-[300px] md:max-w-max">
+                                        <p className="text-md font-medium italic max-w-readable">"{comment.messageToCustomer}"</p>
+                                      </div>
+                                    </div>
+                                    <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
+                                  </div>
+                                );
+                              })}
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

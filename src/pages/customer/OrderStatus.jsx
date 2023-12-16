@@ -86,8 +86,8 @@ const OrderStatus = () => {
                     .reverse()
                     .map((comment, key) => {
                       return (
-                        <div key={key} className="flex flex-col gap-2">
-                          <div className="flex flex-col gap-2">
+                        <div key={key} className="flex flex-col gap-2 mb-4">
+                          <div className="flex flex-col">
                             <p className="text-xl text-primary font-semibold">Besked fra butikken:</p>
                             <div className="p-4 border-dark border-2 rounded-xl w-full md:min-w-[300px] md:max-w-max">
                               <p className="text-md font-medium italic max-w-readable">"{comment.messageToCustomer}"</p>
