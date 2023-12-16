@@ -239,7 +239,7 @@ const CustomizeProduct = () => {
           <>
             <div className="breakout mb-28 md:w-3/6 md:mx-auto md:flex md:flex-col">
               <div className="mt-8">
-                <h1 className="text-3xl font-bold">{productInfo?.name}</h1>
+                <h1 className="text-3xl font-bold text-center">{productInfo?.name}</h1>
                 <div className="flex flex-col w-fit mt-5">
                   <label className="text-lg font-semibold mb-1" htmlFor="breadSelect">
                     Vælg brød
