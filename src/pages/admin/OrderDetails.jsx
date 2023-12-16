@@ -94,6 +94,28 @@ const OrderDetails = () => {
     }
   }
 
+  const translatedStatus = (status) => {
+    switch (status) {
+      case "recieved":
+        return "Modtaget";
+
+      case "accepted":
+        return "Accepteret";
+
+      case "ready":
+        return "Klar til afhentning";
+
+      case "picked":
+        return "Afhentet";
+      case "shopCancelled":
+        return "Butikken har afvist ordren";
+      case "userCancelled":
+        return "Kunden har afvist ordren";
+      default:
+        break;
+    }
+  } 
+
   return (
     <>
       <>
@@ -118,7 +140,7 @@ const OrderDetails = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
-                  <h1 className="text-2xl font-bold">Ordre #{orderDetails.orderNo}</h1>
+                  <h1 className="text-2xl font-bold">Ordre #{orderDetails.orderNo} <span className="text-primary text-xl font-semibold italic">- {translatedStatus(orderDetails.status)}</span></h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
                     <div className="flex gap-2">
