@@ -123,7 +123,7 @@ const OrderDetails = () => {
   const handleDeleteOrder = async () => {
 
     // Hvis man trykker på "OK" bliver dokumentet slettet i Firestore
-    if (confirm("Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan ikke længere se bestillingen.") == true) {
+    if (confirm("Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan se bestillingen fremover.") == true) {
       await deleteDoc(doc(FIREBASE_DB, "orders", orderDetails.orderDocId)).then(() => {
         toast.success("Ordre slettet", DefaultToastifySettings)
         navigate("/ordre-oversigt")
