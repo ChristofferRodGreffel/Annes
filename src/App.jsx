@@ -23,6 +23,7 @@ import OrderDetails from "./pages/admin/OrderDetails";
 import OrderHistory from "./pages/admin/OrderHistory";
 import Statistics from "./pages/admin/Statistics";
 import Favorites from "./pages/customer/Favorites";
+import AdminGuides from "./pages/admin/AdminGuides";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -60,6 +61,7 @@ function App() {
             <Route path="/ordre-historik" element={<OrderHistory />} />
             <Route path="/statistik" element={<Statistics />} />
             <Route path="/admin-indstillinger" element={<AdminSettings />} />
+            <Route path="/admin-guides" element={<AdminGuides />} />
           </>
         )}
         <Route path="/kurv" element={<CheckoutOverview />} />

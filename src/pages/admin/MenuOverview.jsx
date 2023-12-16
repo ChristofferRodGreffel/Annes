@@ -29,7 +29,6 @@ const MenuOverview = () => {
               icon="fa-solid fa-wheat-awn"
               link="/menu-oversigt/ingredienser"
             />
-            <MenuCategoryLink title="Medarbejder guides" icon="fa-solid fa-book-open" link="#" />
           </div>
         </AdminContentWrapper>
       </div>

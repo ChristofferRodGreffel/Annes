@@ -97,6 +97,17 @@ const AdminSidebar = () => {
               Menu
             </NavLink>
             <NavLink
+              to={"/admin-guides"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-book-open text-lg"></i>
+              Guides
+            </NavLink>
+            <NavLink
               to={"/admin-indstillinger"}
               className={({ isActive }) =>
                 isActive
