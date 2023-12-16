@@ -125,7 +125,7 @@ const OrderDetails = () => {
     // Hvis man trykker på "OK" bliver dokumentet slettet i Firestore
     if (confirm("Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan se bestillingen fremover.") == true) {
       await deleteDoc(doc(FIREBASE_DB, "orders", orderDetails.orderDocId)).then(() => {
-        toast.success("Ordre slettet", DefaultToastifySettings)
+        toast.success(`Ordre nr. ${orderDetails.orderNo} blev slettet fra systemet`, DefaultToastifySettings)
         navigate("/ordre-oversigt")
       })
     }
@@ -142,16 +142,12 @@ const OrderDetails = () => {
                 <div className="flex justify-between items-center mb-10">
                   <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
                   <div className="flex gap-6 text-white items-center">
-                    <div className="bg-primary py-2 px-6 rounded-lg">
-                      <button>
+                      <button className="bg-primary py-2 px-6 rounded-lg">
                         Print <i className="fa-solid fa-print"></i>
                       </button>
-                    </div>
-                    <div className="bg-red py-2 px-6 rounded-lg">
-                      <button onClick={handleDeleteOrder}>
+                      <button className="bg-red py-2 px-6 rounded-lg" onClick={handleDeleteOrder}>
                         Slet ordre <i className="fa-solid fa-trash-can"></i>
                       </button>
-                    </div>
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
