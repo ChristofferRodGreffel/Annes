@@ -97,16 +97,17 @@ const OrderDetails = () => {
   const translatedStatus = (status) => {
     switch (status) {
       case "recieved":
-        return "Modtaget";
+        return "Ordren er modtaget af butikken";
 
       case "accepted":
-        return "Accepteret";
+        return "Ordren er accepteret af butikken";
 
       case "ready":
-        return "Klar til afhentning";
+        return "Ordren er markeret som klar til afhentning";
 
       case "picked":
-        return "Afhentet";
+        return "Ordren er afhentet";
+
       case "shopCancelled":
         return "Butikken har afvist ordren";
       case "userCancelled":
