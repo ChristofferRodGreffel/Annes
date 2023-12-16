@@ -36,8 +36,9 @@ const OrderStatus = () => {
   };
 
   const handleShareOrder = async () => {
-    await navigator.clipboard.writeText(location.href);
-    toast.success(`Link kopieret ${location.href}`, DefaultToastifySettings);
+    await navigator.clipboard.writeText(location.href).then(() => {
+      toast.success(`Link kopieret ${location.href}`, DefaultToastifySettings);
+    })
 
   }
 
