@@ -264,7 +264,7 @@ const CustomizeProduct = () => {
                   <label className="text-lg font-semibold" htmlFor="ingredientsForm">
                     Standard ingredienser
                   </label>
-                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full xs:w-max mt-1">
+                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full gap-4 xs:w-max mt-1">
                     {defaultIngredients?.map((ingredient, key) => {
                       return (
                         <div key={key} className="flex items-center gap-1 py-2 md:py-1">
