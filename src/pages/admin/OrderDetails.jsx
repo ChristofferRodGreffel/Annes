@@ -65,11 +65,11 @@ const OrderDetails = () => {
         // Status på ordren har ikke ændret sig, hvilket betyder at Admin har sendt en kommentar
         const obj = {
           messageToCustomer: messageToCustomer,
-          date: new Date()
-        }
+          date: new Date(),
+        };
         updateDoc(orderRef, {
           commentsFromShop: arrayUnion(obj),
-        })
+        });
         toast.success(`Besked sendt`, DefaultToastifySettings);
       }
     });
@@ -79,22 +79,21 @@ const OrderDetails = () => {
     }
   };
 
-
-  const commentToCustomerRef = useRef(null)
+  const commentToCustomerRef = useRef(null);
   const handleSendCommentToCustomer = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (commentToCustomerRef) {
-      const value = commentToCustomerRef.current.commentFieldToCustomer.value
+      const value = commentToCustomerRef.current.commentFieldToCustomer.value;
 
       if (!value) {
         toast.error("Beskeden kan ikke være tom...", DefaultToastifySettings);
       } else {
         // Opdaterer status hos kunden
-        changeStatus(orderDetails.status, "Butikken har sendt en besked", value)
-        commentToCustomerRef.current.commentFieldToCustomer.value = ""
+        changeStatus(orderDetails.status, "Butikken har sendt en besked", value);
+        commentToCustomerRef.current.commentFieldToCustomer.value = "";
       }
     }
-  }
+  };
 
   // Bruges til at oversætte samt skrive forklaring til statussen ved siden af ordre nummeret
   const translatedStatus = (status) => {
@@ -118,18 +117,21 @@ const OrderDetails = () => {
       default:
         break;
     }
-  }
+  };
 
   const handleDeleteOrder = async () => {
-
     // Hvis man trykker på "OK" bliver dokumentet slettet i Firestore
-    if (confirm("Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan se bestillingen fremover.") == true) {
+    if (
+      confirm(
+        "Er du sikker på at du vil slette ordren fra systemet? Det kan ikke fortrydes, og hverken butikken eller kunden kan se bestillingen fremover."
+      ) == true
+    ) {
       await deleteDoc(doc(FIREBASE_DB, "orders", orderDetails.orderDocId)).then(() => {
-        toast.success(`Ordre nr. ${orderDetails.orderNo} blev slettet fra systemet`, DefaultToastifySettings)
-        navigate("/ordre-oversigt")
-      })
+        toast.success(`Ordre nr. ${orderDetails.orderNo} blev slettet fra systemet`, DefaultToastifySettings);
+        navigate("/ordre-oversigt");
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -142,23 +144,33 @@ const OrderDetails = () => {
                 <div className="flex justify-between items-center mb-10">
                   <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
                   <div className="flex gap-6 text-white items-center">
-                      <button className="bg-primary py-2 px-6 rounded-lg">
-                        Print <i className="fa-solid fa-print"></i>
-                      </button>
-                      <button className="bg-red py-2 px-6 rounded-lg" onClick={handleDeleteOrder}>
-                        Slet ordre <i className="fa-solid fa-trash-can"></i>
-                      </button>
+                    <button className="bg-primary py-2 px-6 rounded-lg font-semibold">
+                      Print <i className="fa-solid fa-print"></i>
+                    </button>
+                    <button className="bg-red py-2 px-6 rounded-lg font-semibold" onClick={handleDeleteOrder}>
+                      Slet ordre <i className="fa-solid fa-trash-can"></i>
+                    </button>
                   </div>
                 </div>
                 <div className="flex justify-between items-center border-b-2 border-dark">
-                  <h1 className="text-2xl font-bold">Ordre #{orderDetails.orderNo} <span className="text-primary text-xl font-semibold italic">- {translatedStatus(orderDetails.status)}</span></h1>
+                  <h1 className="text-2xl font-bold">
+                    Ordre #{orderDetails.orderNo}{" "}
+                    <span className="text-primary text-lg font-semibold">
+                      - {translatedStatus(orderDetails.status)}
+                    </span>
+                  </h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
                     <div className="flex gap-2">
                       {amountOfBreadTypes?.map((bread, key) => {
                         if (bread.amount != 0) {
                           return (
-                            <p key={key} className={`font-light text-2xl ${bread.shortName === "GF" ? "text-red font-semibold" : undefined}`}>
+                            <p
+                              key={key}
+                              className={`font-light text-2xl ${
+                                bread.shortName === "GF" ? "text-red font-semibold" : undefined
+                              }`}
+                            >
                               {bread.amount}
                               {bread.shortName}
                             </p>
@@ -270,7 +282,7 @@ const OrderDetails = () => {
                         </>
                       )}
                     </div>
-                    <div className="my-10 pb-20" >
+                    <div className="my-10">
                       <form ref={commentToCustomerRef}>
                         <CustomInputWithLabel
                           type="textarea"
@@ -294,7 +306,9 @@ const OrderDetails = () => {
                                     <div className="flex flex-col">
                                       <p className="text-xl text-primary font-semibold">Besked fra butikken:</p>
                                       <div className="p-4 border-dark border-2 rounded-xl w-full md:min-w-[300px] md:max-w-max">
-                                        <p className="text-md font-medium italic max-w-readable">"{comment.messageToCustomer}"</p>
+                                        <p className="text-md font-medium italic max-w-readable">
+                                          "{comment.messageToCustomer}"
+                                        </p>
                                       </div>
                                     </div>
                                     <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
