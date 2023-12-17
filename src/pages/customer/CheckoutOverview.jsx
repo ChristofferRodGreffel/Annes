@@ -62,10 +62,13 @@ function CheckoutOverview() {
   }, [uid])
 
   useEffect(() => {
-    if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString()) {
+    const todayHour = new Date().getHours();
+    let isWeekend = chosenCollectionDate.getDay() === 0 || chosenCollectionDate.getDay() === 6; // Sunday or Saturday
+    const startHour = !isWeekend ? 7 : 10;
+
+    if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() && todayHour >= startHour) {
       setChosenCollectionTime("Hurtigst muligt");
     } else {
-      let isWeekend = chosenCollectionDate.getDay() === 0 || chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 
       let formattedHour;
       if (isWeekend) {
@@ -148,7 +151,7 @@ function CheckoutOverview() {
     const pickupDateYear = chosenCollectionDate.getFullYear()
     const pickupDateMonth = chosenCollectionDate.getMonth() + 1
     const pickupDateDate = chosenCollectionDate.getDate()
-    
+
     let pickupDateTime;
 
     if (chosenCollectionTime !== "Hurtigst muligt") {
@@ -157,7 +160,7 @@ function CheckoutOverview() {
     } else {
       pickupDateTime = "Hurtigst muligt";
     }
-    
+
     const completeOrder = {
       orderPlacedAt: new Date(),
       amountOfBreadTypes: resultAmountOfBreadTypes,
