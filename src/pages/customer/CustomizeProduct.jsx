@@ -10,6 +10,7 @@ import { DefaultToastifySettings } from "../../helperfunctions/DefaultToastSetti
 import CustomerBottomInfoContainer from "../../components/CustomerBottomInfoContainer";
 import localStorageBasket from "../../helperfunctions/LocalStorageBasket";
 import { PulseLoader } from "react-spinners";
+import { compare } from "../../helperfunctions/Compare";
 
 // Udviklet fælles i gruppen
 
@@ -106,7 +107,10 @@ const CustomizeProduct = () => {
     // Henter alle ingredienser fra firestore
     const getAllIngredients = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "ingredients/default"), (doc) => {
-        setAllIngredients(doc.data().ingredients);
+
+        const sorted = doc.data().ingredients.sort(compare);
+
+        setAllIngredients(sorted);
       });
     };
 
