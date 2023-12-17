@@ -103,7 +103,7 @@ const OrderDetails = () => {
         return "Ordren er modtaget af butikken";
 
       case "accepted":
-        return "Ordren er accepteret af butikken";
+        return "Ordren er godkendt af butikken";
 
       case "ready":
         return "Ordren er markeret som klar til afhentning";
@@ -233,8 +233,8 @@ const OrderDetails = () => {
                       {orderDetails.status === "recieved" && (
                         <>
                           <OrderButton
-                            function={() => changeStatus("accepted", "Bestilling accepteret")}
-                            text="Accepter bestilling"
+                            function={() => changeStatus("accepted", "Bestilling godkendt")}
+                            text="Godkend bestilling"
                             green="true"
                           />
                           <OrderButton
