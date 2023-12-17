@@ -26,8 +26,6 @@ const OpeningHoursSelect = (props) => {
       const currentDay = daysOfWeek[today];
       // Tjekker om det er weekend
       let isWeekend =
-        today === 0 ||
-        today === 6 ||
         props.chosenCollectionDate.getDay() === 0 ||
         props.chosenCollectionDate.getDay() === 6; // Sunday or Saturday
 

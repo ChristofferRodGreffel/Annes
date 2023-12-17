@@ -69,7 +69,6 @@ function CheckoutOverview() {
     if (currentDate.toLocaleDateString() === chosenCollectionDate.toLocaleDateString() && todayHour >= startHour) {
       setChosenCollectionTime("Hurtigst muligt");
     } else {
-
       let formattedHour;
       if (isWeekend) {
         formattedHour = `${"10".padStart(2, "0")}:${"0".padStart(2, "0")}`;
