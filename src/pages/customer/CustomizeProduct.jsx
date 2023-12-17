@@ -279,7 +279,7 @@ const CustomizeProduct = () => {
                             id={`${ingredient}`}
                             defaultChecked
                           />
-                          <label className="font-medium" htmlFor={ingredient}>
+                          <label className="font-medium hover:text-primary hover:font-semibold cursor-pointer" htmlFor={ingredient}>
                             {ingredient}
                           </label>
                         </div>

@@ -13,7 +13,7 @@ const IngredientCheckbox = (props) => {
         value={props.ingredient.name}
         id={`checkbox-${props.ingredient.name}`}
       />
-      <label className="font-medium customBalance" htmlFor={`checkbox-${props.ingredient.name}`}>
+      <label className="font-medium customBalance hover:text-primary hover:font-semibold cursor-pointer" htmlFor={`checkbox-${props.ingredient.name}`}>
         {props.ingredient.name} {props.ingredient.price != 0 && `(${props.ingredient.price} kr.)`}
       </label>
     </div>
