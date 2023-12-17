@@ -16,7 +16,7 @@ const ProductCard = (props) => {
 
   return (
     <>
-      <div className={`h-full drop-shadow-md flex flex-col gap-2 bg-primary justify-between rounded-xl overflow-clip text-white ${loadedImage ? null : 'blur-lg'} ${props.setLoadingImg ? 'w-[400px]' : undefined}`}>
+      <div className={`h-full drop-shadow-md flex flex-col gap-2 bg-primary justify-between rounded-xl overflow-clip text-white hover:drop-shadow-lg ${loadedImage ? null : 'blur-lg'} ${props.setLoadingImg ? 'w-[400px]' : undefined}`}>
         <img
           loading="lazy"
           className={`h-28 aspect-video object-cover`}
