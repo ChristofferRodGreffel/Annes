@@ -66,11 +66,12 @@ const CustomerNavigation = () => {
           <i className="fa-solid fa-utensils"></i>
         </Link>
         <hr />
-        <Link to={`/bestillinger`} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
-          <h3>Mine bestillinger</h3>
-          <i className="fa-solid fa-clock-rotate-left"></i>
-        </Link>
-
+        {latestOrderId && (
+          <Link to={`/følg-bestilling/${latestOrderId}`} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
+            <h3>Mine bestillinger</h3>
+            <i className="fa-solid fa-clock-rotate-left"></i>
+          </Link>
+        )}
         <hr />
         <Link to={"/favoritter"} className="flex items-center gap-2 py-5 pl-8 cursor-pointer">
           <h3>Favoritter</h3>

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { timestampConvert } from "../helperfunctions/TimestampConvert";
 import PickupTimer from "./PickupTimer";
 import { useNavigate } from "react-router-dom";
-import { DefaultToastifySettings } from "../helperfunctions/DefaultToastSettings";
-import { toast } from "react-toastify";
 
 const OrderCard = (props) => {
+
   // Udviklet fælles i gruppen
 
   const [remainingTime, setRemainingTime] = useState();
@@ -17,9 +16,9 @@ const OrderCard = (props) => {
     const currentTime = new Date().getTime();
     const pickupTimestamp = props.order.pickup.time.seconds;
     const pickupTime = new Date(pickupTimestamp * 1000).getTime();
-
+    
     const timeRemaining = pickupTime - currentTime;
-
+    
     const timeRemainingInHours = Math.floor(timeRemaining / (60 * 60 * 1000));
     setRemainingHours(timeRemainingInHours);
 
@@ -52,10 +51,6 @@ const OrderCard = (props) => {
     }
   };
 
-  const handlePrintOrder = (e) => {
-    e.stopPropagation();
-    toast.error("Funktionen er ikke oprettet", DefaultToastifySettings);
-  };
 
   return (
     <>
@@ -73,10 +68,7 @@ const OrderCard = (props) => {
                   <p>{props.order.customerInfo.name}</p>
                 </div>
               </div>
-              <i
-                onClick={(e) => handlePrintOrder(e)}
-                className="fa-solid fa-print text-3xl text-grey cursor-pointer transition-all duration-75 ease-in-out hover:text-dark"
-              ></i>
+              <i className="fa-solid fa-print text-3xl text-grey cursor-pointer"></i>
             </div>
             <div className="flex flex-col items-center m-auto w-full">
               <p className="font-bold text-3xl border-b-2 border-primary">{getTotalAmount()} stk.</p>
@@ -86,34 +78,23 @@ const OrderCard = (props) => {
                 <p className="font-medium text-lg">Hurtigst muligt</p>
               )}
             </div>
+            {/* <div>
+              <p className="font-bold text-red text-center text-lg">OBS: 2 stk. GF</p>
+            </div> */}
           </div>
-          {props.order.status !== "userCancelled" && props.order.status !== "shopCancelled" && (
-            <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
-              {props.order.pickup.time !== "Hurtigst muligt" ? (
-                remainingHours >= 24 ? (
-                  <p>Afhentes kl. {timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute")}</p>
-                ) : (
-                  <p>
-                    {remainingTime <= 0 ? (
-                      "Afhentes snarest"
-                    ) : (
-                      <>
-                        Afhentes om: <PickupTimer remainingTime={remainingTime} />
-                      </>
-                    )}
-                  </p>
-                )
+          <div className="flex items-center justify-center relative bottom-3 bg-primary text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
+            {props.order.pickup.time !== "Hurtigst muligt" ? (
+              remainingHours >= 24 ? (
+                <p>Afhentes kl. {timestampConvert(props.order.pickup.time.seconds, "stampToHourMinute")}</p>
               ) : (
-                <p>Afhentes snarest</p>
-              )}
-            </div>
-          )}
-
-          {(props.order.status === "userCancelled" || props.order.status === "shopCancelled") && (
-            <div className="flex items-center justify-center relative bottom-3 bg-red text-white text-center -z-10 pt-4 pb-2 rounded-b-lg">
-              {props.order.status === "userCancelled" ? <p>Annulleret af kunde</p> : <p>Annulleret af butik</p>}
-            </div>
-          )}
+                <p>
+                  Afhentes om: <PickupTimer remainingTime={remainingTime} />
+                </p>
+              )
+            ) : (
+              <p>Afhentes snarest</p>
+            )}
+          </div>
         </div>
       )}
     </>

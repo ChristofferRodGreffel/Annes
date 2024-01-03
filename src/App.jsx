@@ -24,7 +24,6 @@ import OrderHistory from "./pages/admin/OrderHistory";
 import Statistics from "./pages/admin/Statistics";
 import Favorites from "./pages/customer/Favorites";
 import AdminGuides from "./pages/admin/AdminGuides";
-import AllCustomerOrders from "./pages/customer/AllCustomerOrders";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -57,9 +56,9 @@ function App() {
             <Route path="/menu-oversigt/rediger-menu" element={<EditMenu />} />
             <Route path="/menu-oversigt/ingredienser" element={<Ingredients />} />
             <Route path="/menu-oversigt" element={<MenuOverview />} />
-            <Route path="/ordre-historik" element={<OrderHistory />} />
             <Route path="/ordre-oversigt" element={<OrderOverview />} />
             <Route path="/ordre-oversigt/ordredetaljer/:orderDocId" element={<OrderDetails />} />
+            <Route path="/ordre-historik" element={<OrderHistory />} />
             <Route path="/statistik" element={<Statistics />} />
             <Route path="/admin-indstillinger" element={<AdminSettings />} />
             <Route path="/admin-guides" element={<AdminGuides />} />
@@ -69,7 +68,6 @@ function App() {
         <Route path="/profil" element={<CustomerProfile />} />
         <Route path="/bestil-online" element={<LandingPage />} />
         <Route path="/følg-bestilling/:orderId" element={<OrderStatus />} />
-        <Route path="/bestillinger" element={<AllCustomerOrders />} />
         <Route path="/log-ind" element={<SignIn />} />
         <Route path="/favoritter" element={<Favorites />} />
         <Route path="/opret-profil" element={<SignUp />} />

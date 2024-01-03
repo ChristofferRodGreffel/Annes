@@ -1,9 +1,10 @@
 import React from "react";
 
 const OrderDetailsProduct = (props) => {
+
   // Udviklet primært af Christoffer
 
-  // Bruges til at ændre fra det lange navn til forkortelse
+  // Bruges til at ændre fra det lange navn til forkortelse 
   const convertBreadType = (bread) => {
     switch (bread) {
       case "Glutenfri":
@@ -39,9 +40,9 @@ const OrderDetailsProduct = (props) => {
           <p className="text-md font-semibold max-w-[250px]">
             {props.order.amount} x {props.order.name}
           </p>
-          {props.order.name.toLowerCase().includes("pesto") &&
-            props.order.dressing.top !== "Pesto" &&
-            props.order.dressing.bottom !== "Pesto" && <p className="text-red font-bold">OBS: Uden pesto</p>}
+          {props.order.name.toLowerCase().includes("pesto") && props.order.dressing.top !== "Pesto" && props.order.dressing.bottom !== "Pesto" && (
+            <p className="text-red font-bold">OBS: Uden pesto</p>
+          )}
           <div>
             <div className="flex justify-between mt-1 gap-2">
               <p className="font-semibold">Dressing top:</p>
@@ -53,7 +54,7 @@ const OrderDetailsProduct = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-3 justify-between justify-self-end w-fit min-w-[210px] border-l-2">
+        <div className="flex gap-2">
           {props.order.added.length == 0 && props.order.removed.length == 0 && <p>Ingen ændringer</p>}
           {props.order.added.length !== 0 && (
             <ul>
@@ -80,8 +81,8 @@ const OrderDetailsProduct = (props) => {
             </ul>
           )}
         </div>
-        <div className="flex justify-self-end w-fit">
-          <p className="text-xl font-semibold p-3">{convertBreadType(props.order.bread)}</p>
+        <div>
+          <p className="text-xl font-semibold">{convertBreadType(props.order.bread)}</p>
         </div>
       </div>
       <hr className="border-1 border-dashed border-dark my-4" />

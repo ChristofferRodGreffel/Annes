@@ -4,6 +4,7 @@ import { FIREBASE_DB } from "../../firebase-config";
 import { timestampConvert } from "../helperfunctions/TimestampConvert";
 
 const UpdatesBar = (props) => {
+
   // Udviklet primært af Christoffer
   // Bruges i OrderStatus
 
@@ -12,7 +13,7 @@ const UpdatesBar = (props) => {
   // Get updates from firestore
   useEffect(() => {
     const unsub = onSnapshot(doc(FIREBASE_DB, "orders", props.orderId), (doc) => {
-      if (doc.data()?.updates) {
+      if(doc.data()?.updates) {
         setUpdates(doc.data().updates);
       }
     });

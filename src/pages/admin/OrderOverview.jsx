@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import AdminContentWrapper from "../../components/AdminContentWrapper";
 import AdminSidebar from "../../components/AdminSidebar";
 
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { collection, query, where, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
 import { FIREBASE_DB } from "../../../firebase-config";
+import { automaticChangeOfStatus } from "../../helperfunctions/AutomaticChangeOfStatus";
 import { listenToNewOrders } from "../../helperfunctions/ListenToNewOrders";
 import { receiveFilteredOrders } from "../../helperfunctions/ReceiveFilteredOrders";
 import OrderCard from "../../components/OrderCard";
@@ -12,9 +13,6 @@ import { useNavigate } from "react-router-dom";
 import CategoryShowHideButton from "../../components/CategoryShowHideButton";
 import OrderFiltering from "../../components/OrderFiltering";
 import { sortOrderArrays } from "../../helperfunctions/SortOrderArrays";
-import OrdreFlowCard from "../../components/OrdreFlowCard";
-import ScrollContainer from "react-indiana-drag-scroll";
-import "react-indiana-drag-scroll/dist/style.css";
 
 // Udviklet fælles i gruppen
 
@@ -48,8 +46,6 @@ const OrderOverview = () => {
             let obj = {
               orderNo: doc.data()?.orderNo,
               name: doc.data()?.customerInfo?.name,
-              status: doc.data()?.status,
-              placedAt: doc.data().orderPlacedAt,
               docId: doc.id,
             };
             resultArray.push(obj);
@@ -61,18 +57,18 @@ const OrderOverview = () => {
     getAllOrderNumbersWithName();
   }, []);
 
-  // Når en bruger skriver i søgefeltet
-  const handleShowFilteredOrders = async (e) => {
-    const inputValue = e.target.value.toLowerCase();
-    if (inputValue) {
-      const filtered = allOrderNumbersWithName.filter(
-        (order) => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue)
-      );
-      setFilteredOrdersArray(filtered);
-    } else {
-      setFilteredOrdersArray();
-    }
-  };
+    // Når en bruger skriver i søgefeltet
+    const handleShowFilteredOrders = async (e) => {
+      const inputValue = e.target.value.toLowerCase();
+      if (inputValue) {
+        const filtered = allOrderNumbersWithName.filter(
+          (order) => order.name.toLowerCase().includes(inputValue) || order.orderNo.toString().includes(inputValue)
+        );
+        setFilteredOrdersArray(filtered);
+      } else {
+        setFilteredOrdersArray();
+      }
+    };
 
   useEffect(() => {
     listenToNewOrders();
@@ -87,6 +83,7 @@ const OrderOverview = () => {
     receiveFilteredOrders(setUserCancelledOrders, "status", "userCancelled");
     receiveFilteredOrders(setShopCancelledOrders, "status", "shopCancelled");
   }, []);
+
 
   const handleSortOrders = (e) => {
     const allArrays = [
@@ -103,21 +100,6 @@ const OrderOverview = () => {
     sortedArrays.forEach(({ state, setState }, index) => {
       setState(state); // Update the state in your component
     });
-  };
-
-  const checkOrderAge = (orderPlacedAt) => {
-    const currentDate = new Date().getTime(); // Current timestamp
-    const placedAt = new Date(orderPlacedAt.seconds * 1000).getTime(); // Timestamp from orderPlacedAt
-
-    const fiveMinutesInMillis = 5 * 60 * 1000; // 5 minutes in milliseconds
-
-    const timeDifference = currentDate - placedAt;
-
-    if (timeDifference <= fiveMinutesInMillis) {
-      return false;
-    } else {
-      return true;
-    }
   };
 
   return (
@@ -166,29 +148,7 @@ const OrderOverview = () => {
               </>
             )}
 
-            <div>
-              <h1 className="font-bold text-xl">Ordre Flow</h1>
-              <ScrollContainer className="flex gap-2 mt-2 overflow-auto">
-                {allOrderNumbersWithName?.toReversed().map((order, key) => {
-                  if (order.status !== "picked") {
-                    if (
-                      (order.status === "userCancelled" || order.status === "shopCancelled") &&
-                      checkOrderAge(order.placedAt)
-                    ) {
-                      return;
-                    } else {
-                      return (
-                        <div key={key}>
-                          <OrdreFlowCard status={order.status} orderNo={order.orderNo} docId={order.docId} />
-                        </div>
-                      );
-                    }
-                  }
-                })}
-              </ScrollContainer>
-            </div>
-
-            <div className="flex flex-wrap gap-3 my-5">
+            <div className="flex flex-wrap gap-3 mb-5">
               <OrderFiltering onChange={handleSortOrders} />
               <CategoryShowHideButton text="Nye ordre" state={newVisibility} setState={setNewVisibility} />
               <CategoryShowHideButton

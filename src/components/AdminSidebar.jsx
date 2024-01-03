@@ -10,10 +10,7 @@ import { useEffect } from "react";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
-
-  const storedSidebarOpen = localStorage.getItem("sidebarOpen");
-
-  const [sidebarOpen, setSidebarOpen] = useState(storedSidebarOpen ? storedSidebarOpen === "true" : true);
+  const [sidebarOpen, setSideBarOpen] = useState(false);
 
   // useWindowDimensions is in helperfunctions
   const { width } = useWindowDimensions();
@@ -21,7 +18,7 @@ const AdminSidebar = () => {
   useEffect(() => {
     // Sætter sidebaren til åben, hvis skærmen er større end 1034px
     if (width >= 1034) {
-      // setSidebarOpen(true);
+      setSideBarOpen(true);
     }
   }, [width]);
 
@@ -37,13 +34,8 @@ const AdminSidebar = () => {
       });
   };
 
-  // Update local storage whenever the state changes
-  useEffect(() => {
-    localStorage.setItem("sidebarOpen", sidebarOpen.toString());
-  }, [sidebarOpen]);
-
   const handleOpenCloseMenu = () => {
-    setSidebarOpen(!sidebarOpen);
+    setSideBarOpen(!sidebarOpen);
   };
 
   return (
@@ -51,205 +43,108 @@ const AdminSidebar = () => {
       <div
         id="adminMenu"
         className={`flex flex-col bg-mainGrey sticky left-0 top-0 z-[999] h-[100dvh] drop-shadow-lg ${
-          sidebarOpen ? "min-w-[270px] w-[270px] transition-none" : "min-w-[80px] w-[80px]"
-        } transition-all duration-200 ease-in-out`}
+          sidebarOpen ? "min-w-sidebarMinWidth" : "w-0"
+        }`}
       >
         <NavLink to={"/ordre-oversigt"} className="m-auto mt-10 mb-16">
-          <img className={`${sidebarOpen ? "w-48" : "w-14"}`} src={logo} alt="logo" />
+          <img className="w-48" src={logo} alt="logo" />
         </NavLink>
 
-        <div className="gap-2 absolute top-4 -right-3 cursor-pointer " onClick={handleOpenCloseMenu}>
-          <i
-            className={`fa-solid text-dark z-50 ${
-              sidebarOpen ? "fa-circle-chevron-left" : "fa-circle-chevron-right"
-            }  text-2xl hover:text-primary transition-all duration-200 ease-in-out`}
-          ></i>
-        </div>
-
-        <nav className="flex justify-between flex-col h-full">
-          <div className="relative flex flex-col">
-            <div className="relative group">
-              <NavLink
-                to={"/ordre-oversigt"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap relative`
-                }
-              >
-                <i className="fa-solid fa-house text-lg"></i>
-                {sidebarOpen && "Ordre oversigt"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Ordre oversigt
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/ordre-historik"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-clock-rotate-left text-lg"></i>
-                {sidebarOpen && "Tidl. ordre"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Tidl. ordre
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/statistik"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-chart-column text-lg"></i>
-                {sidebarOpen && "Statistik"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Statistik
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/menu-oversigt"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-utensils text-lg"></i>
-                {sidebarOpen && "Menu"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Menu
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/admin-guides"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-book-open text-lg"></i>
-                {sidebarOpen && "Guide"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Guide
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/admin-indstillinger"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white hover:bg-gdarkhover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white  ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-sliders text-lg"></i>
-                {sidebarOpen && "Indstillinger"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Indstillinger
-                </div>
-              )}
-            </div>
-            <div className="relative group">
-              <NavLink
-                to={"/"}
-                className={({ isActive }) =>
-                  isActive
-                    ? `flex gap-3 items-center font-medium text-lg p-4 bg-primary text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                    : `flex gap-3 items-center font-medium text-lg p-4 transition-all duration-75 ease-in-out hover:bg-dark hover:text-white ${
-                        sidebarOpen ? "pl-10" : "justify-center"
-                      } whitespace-nowrap`
-                }
-              >
-                <i className="fa-solid fa-users text-lg"></i>
-                {sidebarOpen && "Kundevisning"}
-              </NavLink>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Kundevisning
-                </div>
-              )}
-            </div>
+        <nav className="flex justify-between flex-col h-full overflow-hidden">
+          <div className="flex flex-col">
+            <NavLink
+              to={"/ordre-oversigt"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-house text-lg"></i>
+              Ordre oversigt
+            </NavLink>
+            <NavLink
+              to={"/ordre-historik"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-clock-rotate-left text-lg"></i>
+              Tidl. ordre
+            </NavLink>
+            <NavLink
+              to={"/statistik"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-chart-column text-lg"></i>
+              Statistik
+            </NavLink>
+            <NavLink
+              to={"/menu-oversigt"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-utensils text-lg"></i>
+              Menu
+            </NavLink>
+            <NavLink
+              to={"/admin-guides"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-book-open text-lg"></i>
+              Guide
+            </NavLink>
+            <NavLink
+              to={"/admin-indstillinger"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-sliders text-lg"></i>
+              Indstillinger
+            </NavLink>
+            <NavLink
+              to={"/"}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center font-medium text-lg p-4 pl-10 bg-primary text-white"
+                  : "flex gap-3 items-center font-medium text-lg p-4 pl-10"
+              }
+            >
+              <i className="fa-solid fa-users text-lg"></i>
+              Kundevisning
+            </NavLink>
           </div>
           <div className="justify-self-end">
-            <div className="relative group">
-              <Link
-                onClick={handleUserLogout}
-                className={`flex gap-3 items-center font-medium text-lg p-4 mb-5 ${
-                  sidebarOpen ? "pl-10" : "justify-center"
-                } whitespace-nowrap`}
-              >
-                <i className="fa-solid fa-arrow-right-from-bracket text-lg"></i>
-                {sidebarOpen && "Log ud"}
-              </Link>
-
-              {!sidebarOpen && (
-                <div className="absolute bottom-[90%] left-[90%] bg-dark text-white rounded-r-2xl rounded-tl-2xl p-3 whitespace-nowrap opacity-0 transition-all duration-75 transform scale-0 origin-bottom-left group-hover:opacity-100 group-hover:scale-100">
-                  Log ud
-                </div>
-              )}
-            </div>
+            <Link onClick={handleUserLogout} className="flex gap-3 items-center font-medium text-lg p-4 pl-10 mb-5">
+              <i className="fa-solid fa-arrow-right-from-bracket text-lg"></i>
+              Log ud
+            </Link>
           </div>
         </nav>
+        <div
+          onClick={handleOpenCloseMenu}
+          className={`${
+            sidebarOpen ? "bg-mainGrey" : "bg-dark text-white"
+          } fixed -right-8 top-1/2 transform py-10 px-2 -translate-y-1/2 block rounded-r-2xl cursor-pointer -z-[999]`}
+        >
+          <i className={`fa-solid ${sidebarOpen ? "fa-chevron-left" : "fa-chevron-right"} text-3xl`}></i>
+        </div>
       </div>
     </>
   );

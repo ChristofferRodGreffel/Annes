@@ -12,7 +12,9 @@ import { useNavigate } from "react-router-dom";
 // Udviklet fælles i gruppen
 
 const OrderHistory = () => {
+
   const navigate = useNavigate();
+
 
   const [allOrderNumbersWithName, setAllOrderNumbersWithName] = useState();
   const [filteredOrdersInput, setFilteredOrdersInput] = useState();
@@ -63,7 +65,7 @@ const OrderHistory = () => {
         <AdminSidebar />
         <AdminContentWrapper>
           <BackButtonWithArrow linkText="Tilbage til ordre oversigt" linkTo="/ordre-oversigt" />
-          <PageH1Title>Tidligere ordrer (afsluttede)</PageH1Title>
+          <PageH1Title>Her har du en oversigt over tidligere ordre</PageH1Title>
 
           <input
             type="text"
@@ -80,11 +82,11 @@ const OrderHistory = () => {
             <>
               {filteredOrdersArray.length !== 0 ? (
                 <>
-                  <p className="font-medium text-lg mb-2">Resultat:</p>
+                  <p className="font-semibold text-lg mb-2">Resultat:</p>
                 </>
               ) : (
                 <>
-                  <p className="font-medium text-lg mt-3">Ingen ordrer matcher denne søgning</p>
+                  <p className="font-semibold text-lg">Ingen ordrer matcher denne søgning</p>
                 </>
               )}
               <div className="flex gap-2 flex-wrap mb-10">
@@ -121,6 +123,7 @@ const OrderHistory = () => {
               })}
             </div>
           </div>
+
         </AdminContentWrapper>
       </div>
     </>

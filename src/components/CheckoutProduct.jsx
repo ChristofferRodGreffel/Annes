@@ -1,6 +1,7 @@
 import React from "react";
 
 const CheckoutProduct = (props) => {
+
   // Udviklet fælles i gruppen
 
   return (
@@ -14,10 +15,7 @@ const CheckoutProduct = (props) => {
               className={`fa-solid fa-circle-minus text-xl cursor-pointer ${props.product.amount === 1 && `text-grey`}`}
             ></i>
             <p className="font-bold text-2xl">{props.product.amount}</p>
-            <i
-              onClick={() => props.increase(props.product)}
-              className="fa-solid fa-circle-plus text-xl cursor-pointer"
-            ></i>
+            <i onClick={() => props.increase(props.product)} className="fa-solid fa-circle-plus text-xl cursor-pointer"></i>
           </div>
         </div>
         <div className="flex justify-between">
@@ -59,14 +57,7 @@ const CheckoutProduct = (props) => {
         </div>
         <div className="flex justify-between mt-3 items-center">
           <div className="flex gap-2 text-white">
-            <button
-              className="font-semibold px-10 py-2 bg-primary rounded-3xl"
-              onClick={() => {
-                props.handleEditProduct(props);
-              }}
-            >
-              Ret
-            </button>
+            <button className="font-semibold px-10 py-2 bg-primary rounded-3xl" onClick={() => { props.handleEditProduct(props) }}>Ret</button>
             <button
               onClick={() => props.handleDeleteProduct(props.index)}
               className="font-semibold px-6 py-2 bg-red rounded-3xl"

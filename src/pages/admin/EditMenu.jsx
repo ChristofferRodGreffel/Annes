@@ -33,7 +33,7 @@ const EditMenu = () => {
 
   const handleEditProduct = () => {
     toast.error("Funktionen er ikke lavet...", DefaultToastifySettings);
-  };
+  }
 
   return (
     <>
@@ -42,7 +42,7 @@ const EditMenu = () => {
         <AdminContentWrapper>
           <BackButtonWithArrow linkText="Tilbage til valgmuligheder" linkTo="/menu-oversigt" />
           <PageH1Title>Rediger Menu</PageH1Title>
-          <div className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 breakout mt-10 pb-32">
+          <div className="flex flex-col gap-5 mt-10 md:flex-row md:flex-wrap">
             {!loading ? (
               allProducts?.map((product, key) => {
                 return (

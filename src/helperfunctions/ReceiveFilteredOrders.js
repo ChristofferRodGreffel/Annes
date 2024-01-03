@@ -10,7 +10,7 @@ export function receiveFilteredOrders(setOrders, filterByOption, filterByValue) 
 
   // Henter alle ordre ud fra en specifik status og sorterer efter dato
   // For hver ordre bliver de sat i et midlertidig array
-  // Som til sidst bliver sat i dens useState.
+  // Som til sidst bliver sat i dens useState. 
   const q = query(
     collection(FIREBASE_DB, "orders"),
     where(filterByOption, "==", filterByValue),
@@ -23,7 +23,7 @@ export function receiveFilteredOrders(setOrders, filterByOption, filterByValue) 
       querySnapshot.forEach((doc) => {
         resultArray.push(doc.data());
       });
-      setOrders(resultArray.reverse());
+      setOrders(resultArray);
     }
   });
 }

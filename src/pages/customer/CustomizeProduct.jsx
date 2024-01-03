@@ -107,6 +107,7 @@ const CustomizeProduct = () => {
     // Henter alle ingredienser fra firestore
     const getAllIngredients = () => {
       const unsub = onSnapshot(doc(FIREBASE_DB, "ingredients/default"), (doc) => {
+
         const sorted = doc.data().ingredients.sort(compare);
 
         setAllIngredients(sorted);
@@ -228,7 +229,7 @@ const CustomizeProduct = () => {
     <>
       <CustomerHeader iconLeft="fa-solid fa-circle-arrow-left" iconRight="fa-solid fa-basket-shopping" />
       <img
-        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 object-cover lg:h-96 lg:w-2/4 md:mx-auto md:rounded-b-lg ${
+        className={`w-full md:w-3/4 h-44 sm:h-56 md:h-64 object-cover lg:h-96 md:mx-auto md:rounded-b-lg ${
           loadedImage ? null : "blur-lg"
         }`}
         src={productInfo?.imageURL}
@@ -267,11 +268,7 @@ const CustomizeProduct = () => {
                   <label className="text-lg font-semibold" htmlFor="ingredientsForm">
                     Standard ingredienser
                   </label>
-                  <form
-                    name="ingredientsForm"
-                    id="defaultIngredients"
-                    className="grid grid-cols-2 w-full gap-4 xs:w-max mt-1"
-                  >
+                  <form name="ingredientsForm" id="defaultIngredients" className="grid grid-cols-2 w-full gap-4 xs:w-max mt-1">
                     {defaultIngredients?.map((ingredient, key) => {
                       return (
                         <div key={key} className="flex items-center gap-1 py-2 md:py-1">
@@ -282,10 +279,7 @@ const CustomizeProduct = () => {
                             id={`${ingredient}`}
                             defaultChecked
                           />
-                          <label
-                            className="font-medium hover:text-primary hover:font-semibold cursor-pointer"
-                            htmlFor={ingredient}
-                          >
+                          <label className="font-medium hover:text-primary hover:font-semibold cursor-pointer" htmlFor={ingredient}>
                             {ingredient}
                           </label>
                         </div>
@@ -346,9 +340,7 @@ const CustomizeProduct = () => {
                       );
                     })}
                   </form>
-                  <p className="mt-3 max-w-readable">
-                    *Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.
-                  </p>
+                  <p className="mt-3 max-w-readable">*Ved mange tilvalg på bestillingen kan der forekomme merpris ved betaling.</p>
                 </div>
               </div>
               <div className="mt-5">
