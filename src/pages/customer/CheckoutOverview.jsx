@@ -29,19 +29,17 @@ function CheckoutOverview() {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
   const navigate = useNavigate();
 
   const currentDate = new Date();
   const [shopIsClosed, setShopIsClosed] = useState(false);
 
-  const uid = FIREBASE_AUTH.currentUser?.uid
-
+  const uid = FIREBASE_AUTH.currentUser?.uid;
 
   useEffect(() => {
-
-    CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed)
-
+    CheckIfShopIsClosed(chosenCollectionDate, setShopIsClosed);
   }, [chosenCollectionDate, currentDate]);
 
   useEffect(() => {
@@ -50,16 +48,16 @@ function CheckoutOverview() {
         const docRef = doc(FIREBASE_DB, "users", uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const email = FIREBASE_AUTH.currentUser?.email
-          setCustomerName(docSnap.data().name)
-          setCustomerPhone(docSnap.data().phone)
-          setCustomerEmail(email)
+          const email = FIREBASE_AUTH.currentUser?.email;
+          setCurrentUserId(docSnap.id);
+          setCustomerName(docSnap.data().name);
+          setCustomerPhone(docSnap.data().phone);
+          setCustomerEmail(email);
         }
       }
-    }
-    handleGetPersonalUserInformation()
-
-  }, [uid])
+    };
+    handleGetPersonalUserInformation();
+  }, [uid]);
 
   useEffect(() => {
     const todayHour = new Date().getHours();
@@ -133,8 +131,6 @@ function CheckoutOverview() {
       localStorage.setItem("customerCheckout", JSON.stringify(newBasket));
       setAllBasketProducts(newBasket);
       updateFromLocalStorage();
-    } else {
-      toast.error("Brug 'slet' knappen til at fjerne et produkt", DefaultToastifySettings);
     }
   };
 
@@ -143,18 +139,18 @@ function CheckoutOverview() {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const resultAmountOfBreadTypes = CalculateAmountOfEachBread(allBasketProducts)
+    const resultAmountOfBreadTypes = CalculateAmountOfEachBread(allBasketProducts);
     const bagCheckbox = document.querySelector("#bagId").checked;
     const smsCheckbox = document.querySelector("#customerNotification").checked;
 
-    const pickupDateYear = chosenCollectionDate.getFullYear()
-    const pickupDateMonth = chosenCollectionDate.getMonth() + 1
-    const pickupDateDate = chosenCollectionDate.getDate()
+    const pickupDateYear = chosenCollectionDate.getFullYear();
+    const pickupDateMonth = chosenCollectionDate.getMonth() + 1;
+    const pickupDateDate = chosenCollectionDate.getDate();
 
     let pickupDateTime;
 
     if (chosenCollectionTime !== "Hurtigst muligt") {
-      const tempDateString = `${pickupDateYear} ${pickupDateMonth} ${pickupDateDate} ${chosenCollectionTime}:00`;
+      const tempDateString = `${pickupDateYear}/${pickupDateMonth}/${pickupDateDate} ${chosenCollectionTime}:00`;
       pickupDateTime = new Date(tempDateString);
     } else {
       pickupDateTime = "Hurtigst muligt";
@@ -168,6 +164,7 @@ function CheckoutOverview() {
         time: pickupDateTime,
       },
       order: allBasketProducts,
+      orderOwner: currentUserId,
       customerInfo: {
         name: customerName,
         tel: customerPhone,
@@ -216,6 +213,20 @@ function CheckoutOverview() {
         setLoading(false);
       });
     }
+
+    if (currentUserId !== "") {
+      const updateUserOrders = async () => {
+        const userRef = doc(FIREBASE_DB, "users", currentUserId);
+
+        order.orderDocId = docRef.id;
+
+        await updateDoc(userRef, {
+          orders: arrayUnion(order),
+        });
+      };
+
+      updateUserOrders();
+    }
   };
 
   // Genereate a order number which is the next in the sequence starting from 1
@@ -250,8 +261,10 @@ function CheckoutOverview() {
 
   const handleEditProduct = (clickedProduct) => {
     // navigate(`/bestil-online/${clickedProduct.product.name}`, { product: clickedProduct.product}, {productIndex: clickedProduct.index } );
-    navigate(`/bestil-online/${clickedProduct.product.name}`, { state: { product: clickedProduct.product, productIndex: clickedProduct.index } });
-  }
+    navigate(`/bestil-online/${clickedProduct.product.name}`, {
+      state: { product: clickedProduct.product, productIndex: clickedProduct.index },
+    });
+  };
 
   return (
     <>

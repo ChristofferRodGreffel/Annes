@@ -43,15 +43,21 @@ const SignIn = () => {
   // Tjekker om brugeren er admin eller ej, derefter navigeres som nødvendigt
   const checkAdminStatus = async (user) => {
     const querySnapshot = await getDocs(collection(FIREBASE_DB, "admin"));
+
+    let isAdmin = false;
+
     querySnapshot.forEach((doc) => {
       if (doc.id === user) {
+        isAdmin = true;
         navigate("/ordre-oversigt");
-        setLoading(false);
-      } else {
-        navigate("/bestil-online");
         setLoading(false);
       }
     });
+
+    if (!isAdmin) {
+      navigate("/bestil-online");
+      setLoading(false);
+    }
   };
 
   // Ændrer input feltets type og ikon når man klikker på øjet.

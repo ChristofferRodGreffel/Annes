@@ -4,7 +4,7 @@ import React from "react";
 
 // Bruges til admin-siderne
 const AdminContentWrapper = ({ children }) => {
-  return <div className="mx-16 my-14 w-full">{children}</div>;
+  return <div className="overflow-x-hidden px-16 py-14 w-full">{children}</div>;
 };
 
 export default AdminContentWrapper;

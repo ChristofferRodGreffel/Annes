@@ -6,20 +6,18 @@ import BackButtonWithArrow from "../../components/BackButtonWithArrow";
 // Udviklet fælles i gruppen
 
 const Favorites = () => {
+  return (
+    <>
+      <CustomerHeader nav={false} />
+      <PageWrapperContainer>
+        <div className="mt-10">
+          <BackButtonWithArrow linkText="Gå til forsiden" linkTo="/bestil-online" />
 
-
-    return (
-        <>
-            <CustomerHeader nav={false} />
-            <PageWrapperContainer>
-                <div className="mt-28">
-                    <BackButtonWithArrow linkText="Gå til forsiden" linkTo="/bestil-online" />
-
-                    <p>Siden er ikke lavet</p>
-                </div>
-            </PageWrapperContainer>
-        </>
-    );
+          <p>Siden er ikke lavet endnu. Kom tilbage senere.</p>
+        </div>
+      </PageWrapperContainer>
+    </>
+  );
 };
 
 export default Favorites;

@@ -227,7 +227,7 @@ function CreateMenuProduct() {
         <AdminContentWrapper>
           <BackButtonWithArrow linkTo="/menu-oversigt" linkText="Tilbage til valgmuligheder" />
           <PageH1Title>Tilføj nyt produkt</PageH1Title>
-          <div className="flex flex-col gap-5 xl:flex-row w-2/3 min-w-productOverviewMinWidth">
+          <div className="flex flex-col gap-10 xl:flex-row w-2/3 min-w-productOverviewMinWidth">
             <div className="w-full">
               <div className="flex flex-col gap-7">
                 <CustomInputWithLabel
@@ -285,7 +285,7 @@ function CreateMenuProduct() {
             </div>
 
             <div className="xl:hidden flex flex-col justify-center items-center">
-              <div className="bg-mainGrey w-full h-4/5 rounded-tl-lg overflow-y-auto">
+              <div className="bg-mainGrey w-full h-4/5 rounded-t-lg overflow-y-auto">
                 <div className="flex flex-col gap-8 p-8">
                   <h3 className="font-semibold text-3xl border-solid border-b-2 border-grey pb-2 mb-2">
                     Produktoversigt
@@ -363,7 +363,7 @@ function CreateMenuProduct() {
 
               <button
                 onClick={handleAddProduct}
-                className="w-full bg-primary text-white text-lg rounded-bl-lg font-semibold p-3"
+                className="w-full bg-primary text-white text-lg rounded-b-lg font-semibold p-3"
               >
                 {addingProductLoader ? (
                   <>

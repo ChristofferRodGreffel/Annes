@@ -20,35 +20,41 @@ const OrderStatus = () => {
   const [currentOrderId, setCurrentOrderId] = useState("");
   const [currentOrder, setCurrentOrder] = useState();
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   // Kig først efter ordre id'et i params, ellers i localStorage
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     if (!orderId) {
-      setCurrentOrderId(JSON.parse(localStorage.getItem("currentOrder")))
-      setLoading(false)
-      return
+      setCurrentOrderId(JSON.parse(localStorage.getItem("currentOrder")));
+      setLoading(false);
+      return;
     }
 
     // Prøver først ID fra params, ellers falder den tilbage på ID fra localStorage
     const unsub = onSnapshot(doc(FIREBASE_DB, "orders", orderId), (doc) => {
-      setCurrentOrder(doc.data())
-      setLoading(false)
-    })
-
+      setCurrentOrder(doc.data());
+      setLoading(false);
+    });
   }, []);
 
-  const handleSaveOrderButtonClicked = () => {
+  const handleSaveOrder = () => {
     toast.error("Funktionen er ikke lavet", DefaultToastifySettings);
   };
 
   const handleShareOrder = async () => {
     await navigator.clipboard.writeText(location.href).then(() => {
       toast.success(`Link kopieret ${location.href}`, DefaultToastifySettings);
-    })
+    });
+  };
 
-  }
+  const totalOrderPrice = () => {
+    let totalPrice = 0;
+    currentOrder.order.forEach((product) => {
+      totalPrice += product.price;
+    });
+    return totalPrice;
+  };
 
   return (
     <>
@@ -57,17 +63,17 @@ const OrderStatus = () => {
         iconLeft="fa-solid fa-circle-arrow-left"
         iconRight="fa-solid fa-basket-shopping"
         hideRightIcon={true}
-        customLink="/bestil-online"
+        customLink="/bestillinger"
       />
       <PageWrapperContainer>
-        {loading ?
+        {loading ? (
           <>
-            <div className="">
+            <div className="text-center mt-16">
               <PulseLoader color="#000000" />
               <p>Søger efter ordre...</p>
             </div>
           </>
-          :
+        ) : (
           <>
             {!currentOrder && (
               <>
@@ -114,7 +120,9 @@ const OrderStatus = () => {
                               <div className="flex flex-col">
                                 <p className="text-xl text-primary font-semibold">Besked fra butikken:</p>
                                 <div className="p-4 border-dark border-2 rounded-xl w-full md:min-w-[300px] md:max-w-max">
-                                  <p className="text-md font-medium italic max-w-readable">"{comment.messageToCustomer}"</p>
+                                  <p className="text-md font-medium italic max-w-readable">
+                                    "{comment.messageToCustomer}"
+                                  </p>
                                 </div>
                               </div>
                               <p>{timestampConvert(comment.date.seconds, "stampToPreciseDate")}</p>
@@ -137,6 +145,10 @@ const OrderStatus = () => {
                     <h3 className="font-bold">Afhentningsdato</h3>
                     <p>{timestampConvert(currentOrder.pickup.date.seconds, "stampToDate")}</p>
                   </div>
+                  <div className="flex items-center mt-5 gap-2">
+                    <h3 className="font-medium">Til betaling:</h3>
+                    <p className="font-bold">{totalOrderPrice()} kr.</p>
+                  </div>
                   <p className="max-w-readable mt-4">
                     Har du spørgsmål, brug for hjælp eller lignende, er du velkommen til at ringe til butikken på tlf.{" "}
                     <span className="font-semibold">22 13 35 78</span>
@@ -152,7 +164,7 @@ const OrderStatus = () => {
                 <div className="mt-5">
                   <CustomButton
                     iconRight={true}
-                    function={handleSaveOrderButtonClicked}
+                    function={handleSaveOrder}
                     customWidth="w-full"
                     title="Gem bestilling"
                     icon={"fa-solid fa-heart"}
@@ -167,7 +179,7 @@ const OrderStatus = () => {
               </div>
             )}
           </>
-        }
+        )}
       </PageWrapperContainer>
     </>
   );

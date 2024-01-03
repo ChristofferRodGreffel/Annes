@@ -58,6 +58,7 @@ const OrderDetails = () => {
     await updateDoc(orderRef, {
       status: newStatus,
       updates: arrayUnion(newUpdate),
+      canCancel: false,
     }).then(() => {
       if (newStatus !== orderDetails.status) {
         toast.success(`Status ændret`, DefaultToastifySettings);
@@ -155,9 +156,7 @@ const OrderDetails = () => {
                 <div className="flex justify-between items-center border-b-2 border-dark">
                   <h1 className="text-2xl font-bold">
                     Ordre #{orderDetails.orderNo}{" "}
-                    <span className="text-primary text-lg font-semibold">
-                      - {translatedStatus(orderDetails.status)}
-                    </span>
+                    <span className="text-dark text-lg font-medium">- {translatedStatus(orderDetails.status)}</span>
                   </h1>
                   <div className="flex gap-6 items-center">
                     <p className="font-bold text-2xl">{orderDetails.amount} stk.</p>
@@ -191,7 +190,7 @@ const OrderDetails = () => {
                 <div className="flex flex-col lg:flex-row gap-5 mt-5 mb-8 ">
                   <div className="flex flex-col gap-3 text-sm">
                     <div>
-                      <h2 className="font-bold text-md mb-1">Kundeinfo</h2>
+                      <h2 className="font-bold mb-1">Kundeinfo</h2>
                       <div className="bg-mainGrey rounded-lg p-4">
                         <div className="flex justify-between">
                           <p className="font-semibold">Navn</p>
@@ -199,16 +198,16 @@ const OrderDetails = () => {
                         </div>
                         <div className="flex justify-between">
                           <p className="font-semibold">Tlf.:</p>
-                          <p>{orderDetails.customerInfo.tel}</p>
+                          <a href={`tel:${orderDetails.customerInfo.tel}`}>{orderDetails.customerInfo.tel}</a>
                         </div>
                         <div className="flex justify-between flex-wrap">
                           <p className="font-semibold">Email:</p>
-                          <p>{orderDetails.customerInfo.email}</p>
+                          <a href={`mailto:${orderDetails.customerInfo.email}`}>{orderDetails.customerInfo.email}</a>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <h2 className="font-bold text-md mb-1">Ordreinfo</h2>
+                      <h2 className="font-bold mb-1">Ordreinfo</h2>
                       <div className="bg-mainGrey rounded-lg p-4">
                         <div className="flex justify-between font-semibold">
                           <p>Forventet pris</p>
@@ -221,7 +220,7 @@ const OrderDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <h2 className="font-bold text-md mb-1">Kommentarer</h2>
+                      <h2 className="font-bold mb-1">Kommentarer</h2>
                       <div className="bg-mainGrey rounded-lg p-4">
                         {orderDetails.comment ? (
                           <p>{orderDetails.comment}</p>
@@ -231,7 +230,13 @@ const OrderDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full mt-7">
+                  <div className="w-full">
+                    <div className="flex justify-between px-3">
+                      <h2 className="font-bold text-sm mb-1 w-56 max-w-[250px]">Produkt</h2>
+                      <h2 className="font-bold text-sm mb-1 min-w-[210px]">Ændret fyld</h2>
+                      <h2 className="font-bold text-sm mb-1 pr-2">Brød</h2>
+                    </div>
+
                     <div className="bg-mainGrey min-h-[20rem] p-4 rounded-lg">
                       {orderDetails.order.map((order, key) => {
                         return (
